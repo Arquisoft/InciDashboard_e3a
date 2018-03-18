@@ -1,4 +1,4 @@
-package uo.asw.models;
+package uo.asw.incidashboard.models;
 
 /*Solo sirve para que veas como se hacen los repositorios
 Si vas a tener que acceder a la base de datos o a algún método de la 

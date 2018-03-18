@@ -1,14 +1,14 @@
-package uo.asw;
+package uo.asw.incidashboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InciManagerApplication {
+public class InciDashboardApplication {
 
 	
 	// Ahora no te dejará lanzarla porque no está mapeada la clase que se indica en el EjemploRepository
 	public static void main(String[] args) {
-		SpringApplication.run(InciManagerApplication.class, args);
+		SpringApplication.run(InciDashboardApplication.class, args);
 	}
 }
