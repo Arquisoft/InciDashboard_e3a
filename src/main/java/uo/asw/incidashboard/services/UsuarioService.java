@@ -6,9 +6,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.incidashboard.repositories.UsuarioRepository;
 
@@ -34,6 +36,8 @@ public class UsuarioService {
 	public Usuario getUsuarioByIdentificador(String identificador) {
 		return usersRepository.findByIdentificador(identificador);
 	}
+	
+	
 
 	public void addUsuario(Usuario usuario) {
 		usuario.setContrasena(bcPass.encode(usuario.getContrasena()));

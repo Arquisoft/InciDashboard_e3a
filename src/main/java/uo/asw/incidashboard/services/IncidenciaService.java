@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
+import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
@@ -30,6 +31,10 @@ public class IncidenciaService {
 	public void addIncidencia(Incidencia incidencia) {
 		
 		incidenciaRepository.save(incidencia);
+	}
+	public Page<Incidencia> getUserIncidencias(Pageable pageable,Long idUser)
+	{
+		return incidenciaRepository.findIncidenciasByIdUser(pageable,idUser);
 	}
 
 	public void deleteIncidencia(Long id) {
