@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
@@ -21,8 +23,8 @@ public class IncidenciaService {
 		incidenciaRepository.findAll().forEach(incidencias::add);
 		return incidencias;
 	}
-	public Incidencia getIncidenciaByNombre(String nombre) {
-		return incidenciaRepository.findByNombre(nombre);
+	public Page<Incidencia> getIncidencias(Pageable pageable, Long id_agente) {
+		return incidenciaRepository.findIncidenciasByIdAgent(pageable, id_agente);
 	}
 
 	public void addIncidencia(Incidencia incidencia) {
