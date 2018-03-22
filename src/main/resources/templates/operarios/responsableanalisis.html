@@ -3,9 +3,36 @@
 <head th:replace="fragments/head"/>
 <body>
 	<nav th:replace="fragments/nav"/>
-	<div class="container" style="text-align: center">
-	
-	</div>
+		<div class="container">
+		<h2 th:text="${nameUser}">Administrador de incidencias</h2>
+
+		<form class="form-horizontal" method="post" action="/Administrador">
+		<div class="filtroInci">
+			<h3>Filtro de incidencias</h3>
+				<p>Propiedad:</p>
+				<p>Max:</p>
+				<p>Min:</p>
+		</div>
+		<div class="tableAdmin">
+			<table class="table table-hover" th:fragment="tableInci"
+				id="tableInci">
+				<thead>
+					<tr>
+						<th >Propiedades</th>
+						<th>Max</th>
+						<th>Min</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="inci : ${incidenciasList}">
+						<td style="width:15px; vertical-align:middle" th:text="${inci.id}">Propiedades</td>
+						<td  style="width:100px; vertical-align:middle" th:text="${inci.propiedad}">Max³n</td>
+						<td  style="width:40px; vertical-align:middle" th:text="${inci.valor}">Min</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
 
 	<footer th:replace="fragments/footer" />
 </body>
