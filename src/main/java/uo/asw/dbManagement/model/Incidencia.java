@@ -23,6 +23,7 @@ import uo.asw.dbManagement.tipos.PerfilTipos;
 @Entity
 @Table(name = "TINCIDENCIAS")
 public class Incidencia {
+
 	@Id
 	@GeneratedValue /* (strategy = GenerationType.AUTO) */
 	private Long id;
@@ -41,11 +42,12 @@ public class Incidencia {
 	@Column(name = "fecha_caducidad")
 	@Temporal(TemporalType.DATE)
 	private Date fechaCaducidad;
-
+	private Double minimoValor;
+	private Double maximoValor;
 	// @Column(name = "id_agente")
 	@ManyToOne
 	private Agente agente;
-	
+
 	@ManyToOne
 	private Usuario operario;
 
@@ -72,8 +74,10 @@ public class Incidencia {
 	 * @param propiedades
 	 * @param categorias
 	 */
-	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud,
-			Date fechaEntrada, Date fechaCaducidad, Agente agente, String propiedades, String categorias) {
+	public Incidencia(@NotNull String nombreIncidencia, String descripcion, String latitud, String longitud,
+			EstadoTipos estado, Date fechaEntrada, Date fechaCaducidad, Double minimoValor, Double maximoValor,
+			Agente agente, String propiedades, String categorias) {
+
 		this.nombreIncidencia = nombreIncidencia;
 		this.descripcion = descripcion;
 		this.latitud = latitud;
@@ -81,14 +85,15 @@ public class Incidencia {
 		this.estado = EstadoTipos.ABIERTA;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaCaducidad = fechaCaducidad;
+		this.minimoValor = minimoValor;
+		this.maximoValor = maximoValor;
 		this.agente = agente;
 		this.addListaPropiedades(propiedades);
 		this.addListaCategorias(categorias);
 	}
 
-	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud,
-			Date fechaEntrada, Date fechaCaducidad, Agente agente, Set<Propiedad> propiedades,
-			Set<Categoria> categorias) {
+	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud, Date fechaEntrada,
+			Date fechaCaducidad, Agente agente, Set<Propiedad> propiedades, Set<Categoria> categorias) {
 		super();
 		this.nombreIncidencia = nombreIncidencia;
 		this.descripcion = descripcion;
@@ -267,8 +272,8 @@ public class Incidencia {
 	}
 
 	/**
-	 * Recibe un string de categorias separadas por comas y las añade al conjunto de
-	 * categorias de la incidencia
+	 * Recibe un string de categorias separadas por comas y las añade al
+	 * conjunto de categorias de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -281,8 +286,8 @@ public class Incidencia {
 	}
 
 	/**
-	 * REcibe un string de propiedades separadas por comas y las añade al conjunto
-	 * de propiedades de la incidencia
+	 * REcibe un string de propiedades separadas por comas y las añade al
+	 * conjunto de propiedades de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -299,40 +304,61 @@ public class Incidencia {
 
 	/**
 	 * Recibe un usuario de tipo operario y lo añade
-	 * @param operario de tipo Usuario
+	 * 
+	 * @param operario
+	 *            de tipo Usuario
 	 * @return true si se ha asignado false en caso contrario
 	 */
 	public boolean asignarOperario(Usuario operario) {
-		if(estado.equals(EstadoTipos.ABIERTA) && operario.getPerfil().equals(PerfilTipos.OPERARIO)) {
+		if (estado.equals(EstadoTipos.ABIERTA) && operario.getPerfil().equals(PerfilTipos.OPERARIO)) {
 			this.operario = operario;
 			this.estado = EstadoTipos.EN_PROCESO;
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada un operario
+	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada
+	 * un operario
+	 * 
 	 * @return true si se pasa a estado cerrada false en caso contrario
 	 */
 	public boolean cerrarIncidencia() {
-		if(estado.equals(EstadoTipos.EN_PROCESO) && operario != null) {
+		if (estado.equals(EstadoTipos.EN_PROCESO) && operario != null) {
 			this.estado = EstadoTipos.CERRADA;
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Anula la incidencia siempre que esta no este en estado cerrada
+	 * 
 	 * @return true si se ha anulado y false en caso contrario
 	 */
 	public boolean anularIncidencia() {
-		if(!estado.equals(EstadoTipos.CERRADA)){
+		if (!estado.equals(EstadoTipos.CERRADA)) {
 			this.estado = EstadoTipos.ANULADA;
 			return true;
 		}
 		return false;
-			
+
+	}
+
+	public Double getMinimoValor() {
+		return minimoValor;
+	}
+
+	public void setMinimoValor(Double minimoValor) {
+		this.minimoValor = minimoValor;
+	}
+
+	public Double getMaximoValor() {
+		return maximoValor;
+	}
+
+	public void setMaximoValor(Double maximoValor) {
+		this.maximoValor = maximoValor;
 	}
 }
