@@ -12,9 +12,12 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li class="active">
+
 				<a href="/incidencia/list" sec:authorize="isAuthenticated()">
 					Ver Incidencias</a>
+				
 				</li>
+
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/login" sec:authorize="!isAuthenticated()"> <span

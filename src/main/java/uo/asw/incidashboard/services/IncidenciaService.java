@@ -18,26 +18,31 @@ import uo.asw.incidashboard.repositories.IncidenciaRepository;
 public class IncidenciaService {
 	@Autowired
 	private IncidenciaRepository incidenciaRepository;
-	
+
 	public List<Incidencia> getIncidencias() {
-		List<Incidencia> incidencias= new ArrayList<Incidencia>();
+		List<Incidencia> incidencias = new ArrayList<Incidencia>();
 		incidenciaRepository.findAll().forEach(incidencias::add);
 		return incidencias;
 	}
+
 	public Page<Incidencia> getIncidencias(Pageable pageable, Long id_agente) {
 		return incidenciaRepository.findIncidenciasByIdAgent(pageable, id_agente);
 	}
 
 	public void addIncidencia(Incidencia incidencia) {
-		
+
 		incidenciaRepository.save(incidencia);
 	}
-	public Page<Incidencia> getUserIncidencias(Pageable pageable,Long idUser)
-	{
-		return incidenciaRepository.findIncidenciasByIdUser(pageable,idUser);
+
+	public Page<Incidencia> getUserIncidencias(Pageable pageable, Long idUser) {
+		return incidenciaRepository.findIncidenciasByIdUser(pageable, idUser);
 	}
 
 	public void deleteIncidencia(Long id) {
 		incidenciaRepository.deleteById(id);
+	}
+
+	public Incidencia getIncidenciaByName(String nombre) {
+		return incidenciaRepository.findIncidenciByName(nombre);
 	}
 }
