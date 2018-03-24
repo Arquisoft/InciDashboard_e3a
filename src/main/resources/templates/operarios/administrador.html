@@ -20,8 +20,8 @@
 				<tbody>
 					<tr th:each="inci : ${incidenciasList}">
 						<td style="width:15px; vertical-align:middle" th:text="${inci.nombreIncidencia}">Nombre de la incidencia</td>
-						<td  style="width:100px; vertical-align:middle" th:text="${inci.minimoValor}">Valor minimo de la incidencia</td>
-						<td  style="width:40px; vertical-align:middle" th:text="${inci.maximoValor}">Valor maximo de la incidencia</td>
+						<td  style="width:100px; vertical-align:middle" th:text="${inci.minimoValor}"><input type="text" name="minValor" value="inci.minimoValor"></td>
+						<td  style="width:40px; vertical-align:middle"  th:text="${inci.maximoValor}"><input type="text" name="maxValor" value="inci.maximoValor"></td>
 					</tr>
 				</tbody>
 			</table>

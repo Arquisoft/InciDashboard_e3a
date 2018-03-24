@@ -51,6 +51,25 @@ public class UsuarioController {
 		
 		return "/operarios/administrador";
 	}
+	
+//	@RequestMapping("/operarios/administrador" )
+//	
+//	public String getGuardar(){
+//		
+//		
+//		String emailAgent = principal.getName();
+//		Agente agent = agenteService.getAgentByEmail(emailAgent);
+//		
+//		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
+//		
+//		incidencias = incidenciaService.getIncidencias(pageable, agent.getId());
+//		
+//		model.addAttribute("incidenciasList", incidencias.getContent() );
+//		model.addAttribute("Agent", "Incidencias de "+agent.getNombre());
+//		model.addAttribute("page", incidencias);
+//		
+//		return "/operarios/administrador";
+//	}
 
 
 }
