@@ -54,7 +54,7 @@ public class UsuarioController {
 		return "/operarios/administrador";
 	}
 	
-	@RequestMapping(value="/mark/edit/{id}", method=RequestMethod.POST)
+	@RequestMapping(value="/operarios/administrador", method=RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable String nombre , @ModelAttribute Incidencia incidencia, Principal principal){
 		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
 		// modifica valor maximo y minimo
