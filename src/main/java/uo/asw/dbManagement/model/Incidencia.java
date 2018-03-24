@@ -75,7 +75,7 @@ public class Incidencia {
 	 * @param categorias
 	 */
 	public Incidencia(@NotNull String nombreIncidencia, String descripcion, String latitud, String longitud,
-			EstadoTipos estado, Date fechaEntrada, Date fechaCaducidad, Double minimoValor, Double maximoValor,
+			EstadoTipos estado, Date fechaEntrada, Date fechaCaducidad,
 			Agente agente, String propiedades, String categorias) {
 
 		this.nombreIncidencia = nombreIncidencia;
@@ -85,8 +85,6 @@ public class Incidencia {
 		this.estado = EstadoTipos.ABIERTA;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaCaducidad = fechaCaducidad;
-		this.minimoValor = minimoValor;
-		this.maximoValor = maximoValor;
 		this.agente = agente;
 		this.addListaPropiedades(propiedades);
 		this.addListaCategorias(categorias);

@@ -36,8 +36,6 @@ public class UsuarioService {
 	public Usuario getUsuarioByIdentificador(String identificador) {
 		return usersRepository.findByIdentificador(identificador);
 	}
-	
-	
 
 	public void addUsuario(Usuario usuario) {
 		usuario.setContrasena(bcPass.encode(usuario.getContrasena()));
