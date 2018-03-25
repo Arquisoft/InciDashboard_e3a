@@ -1,5 +1,6 @@
 package uo.asw.dbManagement.tipos;
 
+//@Document(collection = "propiedadTipos")
 public enum PropiedadTipos {
 	TEMPERATURA, 
 	PRESION, 
@@ -7,5 +8,4 @@ public enum PropiedadTipos {
 	VELOCIDAD_VIENTO, 
 	VELOCIDAD_CIRCULACION,
 	VALOR_NO_ASIGNADO
-
 }

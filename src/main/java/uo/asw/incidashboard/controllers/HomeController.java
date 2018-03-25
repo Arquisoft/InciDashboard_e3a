@@ -24,17 +24,11 @@ import uo.asw.incidashboard.services.UsuarioService;
 public class HomeController {
 	@Autowired
 	private UsuarioService usuarioService;
-	@Autowired
-	private SecurityService secService;
-	@Autowired
-	private IncidenciaService incidenciaService;
 
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
-
-	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String setEdit(Model model) {
@@ -51,7 +45,5 @@ public class HomeController {
 		return "redirect:/login";
 
 	}
-
-
 
 }

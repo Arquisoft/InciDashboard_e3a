@@ -25,6 +25,7 @@ public class UsuarioController {
 
 	@Autowired
 	private IncidenciaService incidenciaService;
+
 	@Autowired
 	private UsuarioService usuarioService;
 

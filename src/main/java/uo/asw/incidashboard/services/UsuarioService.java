@@ -5,12 +5,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.incidashboard.repositories.UsuarioRepository;
 
@@ -46,7 +45,7 @@ public class UsuarioService {
 		usersRepository.save(usuario);
 	}
 
-	public void deleteUser(Long id) {
+	public void deleteUser(ObjectId id) {
 		usersRepository.deleteById(id);
 	}
 }

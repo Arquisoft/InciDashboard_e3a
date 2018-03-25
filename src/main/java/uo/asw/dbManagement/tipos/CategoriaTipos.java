@@ -1,5 +1,6 @@
 package uo.asw.dbManagement.tipos;
 
+//@Document(collection = "categoriaTipos")
 public enum CategoriaTipos {
 	ACCIDENTE_CARRETERA,
 	FUEGO, 
