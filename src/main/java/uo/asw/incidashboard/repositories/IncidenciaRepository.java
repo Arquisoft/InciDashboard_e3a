@@ -1,5 +1,7 @@
 package uo.asw.incidashboard.repositories;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +20,5 @@ public interface IncidenciaRepository extends MongoRepository<Incidencia, Object
 
 	Incidencia findByNombreIncidencia(String nombreIncidencia);
 
+	List<Incidencia> findByOperario(Usuario operario);
 }

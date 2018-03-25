@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Usuario;
+import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.UsuarioService;
 
 @Service

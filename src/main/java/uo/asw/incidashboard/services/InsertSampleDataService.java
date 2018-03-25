@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,13 @@ public class InsertSampleDataService {
 	private IncidenciasService incidenciaService;
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private IncidenciasService incidenciasService;
 
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	@Autowired
 	private CategoriaService c;
 
@@ -133,6 +140,9 @@ public class InsertSampleDataService {
 		c.addCategoria(c5);
 		c.addCategoria(c6);
 		inci1.setOperario(op1);
+		inci2.setOperario(op1);
+		inci3.setOperario(op1);
+		inci4.setOperario(op1);
 		incidenciaService.addIncidencia(inci1);
 		incidenciaService.addIncidencia(inci2);
 		incidenciaService.addIncidencia(inci3);
@@ -143,5 +153,10 @@ public class InsertSampleDataService {
 		usuarioService.addUsuario(op4);
 		usuarioService.addUsuario(op5);
 
+	}
+	
+	@PreDestroy
+	public void end() {
+		
 	}
 }

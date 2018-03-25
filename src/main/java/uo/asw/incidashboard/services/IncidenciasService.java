@@ -79,4 +79,8 @@ public class IncidenciasService {
 	public Incidencia getIncidenciaByName(String nombre) {
 		return incidenciaRepository.findByNombreIncidencia(nombre);
 	}
+	
+	public List<Incidencia> getIncidenciasByOperario(Usuario operario){
+		return incidenciaRepository.findByOperario(operario);
+	}
 }

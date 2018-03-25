@@ -31,8 +31,7 @@ public class Usuario {
 	// @DBRef
 	private PerfilTipos perfil;
 
-	@DBRef
-	private Set<Incidencia> incidencias = new HashSet<Incidencia>();
+
 
 	public Usuario() {
 	}
@@ -104,13 +103,7 @@ public class Usuario {
 		this.perfil = perfil;
 	}
 
-	public Set<Incidencia> getIncidencias() {
-		return incidencias;
-	}
 
-	public void setIncidencias(Set<Incidencia> incidencias) {
-		this.incidencias = incidencias;
-	}
 
 	@Override
 	public int hashCode() {

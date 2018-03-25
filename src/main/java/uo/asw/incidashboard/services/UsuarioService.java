@@ -20,9 +20,13 @@ import uo.asw.incidashboard.repositories.UsuarioRepository;
 @Service
 public class UsuarioService {
 
+	
 	@Autowired
 	private UsuarioRepository usersRepository;
 
+	@Autowired
+	private IncidenciasService incidenciasService;
+	
 	@Autowired
 	private BCryptPasswordEncoder bcPass;
 
@@ -64,7 +68,7 @@ public class UsuarioService {
 		}
 		for (Usuario u : usuarios) {
 			if (u.getPerfil().equals(PerfilTipos.OPERARIO)) {
-				Set<Incidencia> incidencias = u.getIncidencias();
+				List<Incidencia> incidencias = incidenciasService.getIncidencias();
 				int contadorU = 0;
 				for (Incidencia i : incidencias) {
 					if (i.getEstado().equals(EstadoTipos.ABIERTA)) {
