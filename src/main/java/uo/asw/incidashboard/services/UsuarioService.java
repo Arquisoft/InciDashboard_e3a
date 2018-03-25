@@ -46,6 +46,6 @@ public class UsuarioService {
 	}
 
 	public void deleteUser(ObjectId id) {
-		usersRepository.deleteById(id);
+		usersRepository.delete(id);
 	}
 }

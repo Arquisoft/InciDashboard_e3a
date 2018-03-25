@@ -28,7 +28,7 @@ public class IncidenciasService {
 
 	@Autowired
 	public Page<Incidencia> getIncidencias(Pageable pageable, String id_agente) {
-		return incidenciaRepository.findIncidenciaByIdAgent(id_agente, pageable);
+		return incidenciaRepository.findByIdAgente(id_agente, pageable);
 	}
 
 	@Autowired
@@ -44,16 +44,16 @@ public class IncidenciasService {
 
 	@Autowired
 	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario operario) {
-		return incidenciaRepository.findIncidenciaByOperario(operario, pageable);
+		return incidenciaRepository.findByOperario(operario, pageable);
 	}
 
 	@Autowired
 	public void deleteIncidencia(ObjectId id) {
-		incidenciaRepository.deleteById(id);
+		incidenciaRepository.delete(id);
 	}
 
 	@Autowired
 	public Incidencia getIncidenciaByName(String nombre) {
-		return incidenciaRepository.findIncidenciabyNombreIncidencia(nombre);
+		return incidenciaRepository.findByNombreIncidencia(nombre);
 	}
 }

@@ -12,12 +12,10 @@ import uo.asw.dbManagement.model.Usuario;
 @EnableMongoRepositories
 public interface IncidenciaRepository extends MongoRepository<Incidencia, ObjectId> {
 
-	Page<Incidencia> findIncidenciaByIdAgent(String idAgente,Pageable pageable);
+	Page<Incidencia> findByIdAgente(String idAgente,Pageable pageable);
 
-	Page<Incidencia> findIncidenciaByOperario(Usuario operario, Pageable pageable);
+	Page<Incidencia> findByOperario(Usuario operario, Pageable pageable);
 
-	Incidencia findIncidenciabyNombreIncidencia(String nombreIncidencia);
-
-	
+	Incidencia findByNombreIncidencia(String nombreIncidencia);
 
 }
