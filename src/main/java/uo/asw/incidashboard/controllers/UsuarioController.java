@@ -67,6 +67,7 @@ public class UsuarioController {
 		return "redirect:/operarios/administrador";
 	}
 
+
 	@RequestMapping("/operarios/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
 
