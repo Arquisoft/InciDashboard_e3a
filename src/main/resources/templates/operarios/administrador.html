@@ -6,22 +6,22 @@
 		<div class="container">
 		
 
-		<form class="form-horizontal" method="post" action="/Agente">
+		<form class="form-horizontal" method="post" action="/incidencia">
 		<div class="table-responsive">
-			<table class="table table-hover" th:fragment="tableInciAgent"
+			<table class="table table-hover" th:fragment="tableInci"
 				id="tableInciAgent">
 				<thead>
 					<tr>
-						<th >Nombre del Agente</th>
+						<th >Nombre de incidencia</th>
 						<th>Valor minimo para enviar incidencias del agente</th>
 						<th>Valor maximo para enviar incidencias del agente</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="agen : ${agentesList}">
-						<td style="width:15px; vertical-align:middle" th:text="${agen.nombre}">Nombre del agente</td>
-						<td  style="width:100px; vertical-align:middle" th:text="${agen.minimoValor}"><input type="text" name="minValor" value="agen.minimoValor"></td>
-						<td  style="width:40px; vertical-align:middle"  th:text="${agen.maximoValor}"><input type="text" name="maxValor" value="agen.maximoValor"></td>
+					<tr th:each="inci : ${incidenciasList}">
+						<td style="width:15px; vertical-align:middle" th:text="${inci.nombre}">Nombre de incidencia</td>
+						<td  style="width:100px; vertical-align:middle" th:text="${inci.minimoValor}"><input type="text" name="minValor" value="agen.minimoValor"></td>
+						<td  style="width:40px; vertical-align:middle"  th:text="${inci.maximoValor}"><input type="text" name="maxValor" value="agen.maximoValor"></td>
 					</tr>
 					
 				</tbody>

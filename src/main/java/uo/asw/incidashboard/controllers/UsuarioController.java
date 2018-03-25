@@ -2,7 +2,6 @@ package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,21 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import uo.asw.dbManagement.model.Agente;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
-import uo.asw.incidashboard.services.AgenteService;
 import uo.asw.incidashboard.services.IncidenciaService;
 import uo.asw.incidashboard.services.UsuarioService;
 
 @Controller
 public class UsuarioController {
 
-	@Autowired
-	private AgenteService agenteService;
 	@Autowired
 	private IncidenciaService incidenciaService;
 	@Autowired
@@ -43,10 +36,10 @@ public class UsuarioController {
 	@RequestMapping("/operarios/administrador")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 
-		Page<Agente> agentes = new PageImpl<Agente>(new LinkedList<Agente>());
-		agentes = agenteService.getAgentes(pageable);
-		model.addAttribute("agentesList", agentes.getContent());
-		model.addAttribute("page", agentes);
+		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
+		incidencias = incidenciaService.getIncis(pageable);
+		model.addAttribute("incidenciasList", incidencias.getContent());
+		model.addAttribute("page", incidencias);
 
 		return "/operarios/administrador";
 	}
@@ -56,8 +49,8 @@ public class UsuarioController {
 			Principal principal) {
 		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
 		// modifica valor maximo y minimo
-		inciOr.getAgente().setMinimoValor(incidencia.getAgente().getMinimoValor());
-		inciOr.getAgente().setMaximoValor(incidencia.getAgente().getMaximoValor());
+		inciOr.setMinimoValor(incidencia.getMinimoValor());
+		inciOr.setMaximoValor(incidencia.getMaximoValor());
 		incidenciaService.addIncidencia(inciOr);
 		return "redirect:/operarios/administrador";
 	}
@@ -78,18 +71,16 @@ public class UsuarioController {
 
 		return "/operarios/operario";
 	}
-	
+
 	@RequestMapping("/operarios/responsableanalisis")
 	public String getResponsable(Model model, Pageable pageable, Principal principal) {
-
-		
 
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 
 		incidencias = incidenciaService.getIncis(pageable);
 
 		model.addAttribute("incidenciasList", incidencias.getContent());
-	
+
 		model.addAttribute("page", incidencias);
 
 		return "/operarios/responsableanalisis";

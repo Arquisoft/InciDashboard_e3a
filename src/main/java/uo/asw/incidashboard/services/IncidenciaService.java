@@ -3,6 +3,7 @@ package uo.asw.incidashboard.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,8 +39,8 @@ public class IncidenciaService {
 		incidenciaRepository.save(incidencia);
 	}
 
-	public Page<Incidencia> getUserIncidencias(Pageable pageable, Long idUser) {
-		return incidenciaRepository.findIncidenciasByIdUser(pageable, idUser);
+	public Page<Incidencia> getUserIncidencias(Pageable pageable, ObjectId objectId) {
+		return incidenciaRepository.findIncidenciasByIdUser(pageable, objectId);
 	}
 
 	public void deleteIncidencia(Long id) {

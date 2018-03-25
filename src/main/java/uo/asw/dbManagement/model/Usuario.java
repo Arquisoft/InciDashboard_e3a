@@ -3,38 +3,35 @@ package uo.asw.dbManagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotNull;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.PerfilTipos;
 
-@Entity
-@Table (name = "TUSUARIOS")
+@Document(collection = "usuarios")
 public class Usuario {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private ObjectId id = new ObjectId();
+	
 	private String nombre;
 	private String apellidos;
 	private String email;
+	
 	@NotNull
 	@Column(unique = true)
 	private String identificador;
 	@NotNull
 	private String contrasena;
-	@Enumerated(EnumType.STRING)
+	
+//	@DBRef
 	private PerfilTipos perfil;
 	
-	@OneToMany(mappedBy = "operario", cascade = CascadeType.ALL)
+	@DBRef
 	private Set<Incidencia> incidencias = new HashSet<Incidencia>();
 	
 	public Usuario() {}
@@ -50,11 +47,11 @@ public class Usuario {
 		this.perfil = perfil;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 	

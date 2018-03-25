@@ -1,57 +1,41 @@
 package uo.asw.dbManagement.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.PropiedadTipos;
 
-@Entity
-@Table (name = "TPROPIEDADES")
+@Document(collection = "propiedades")
 public class Propiedad {
 	@Id
-	@GeneratedValue /*(strategy = GenerationType.AUTO)*/
-	private Long id;
+	private ObjectId id = new ObjectId();
 	
-	@Enumerated(EnumType.STRING) private PropiedadTipos propiedad;
-	
-	//@Column(name = "id_incidencia")
-	
-	@ManyToOne
-//	@JoinColumn(name = "id_incidencia")
-	private Incidencia incidencia;
-	
-	//private Long idIncidencia;
+	private PropiedadTipos propiedad;
 	
 	private Double valor;
 	
 	public Propiedad() {}
 
-	public Propiedad(PropiedadTipos propiedad, Incidencia idIncidencia, Double valor) {
+	public Propiedad(PropiedadTipos propiedad, Double valor) {
 		super();
 		this.propiedad = propiedad;
-		//this.idIncidencia = idIncidencia;
-		this.incidencia = idIncidencia;
 		this.valor = valor;
 	}
 	
-	public Propiedad(String propiedad, Incidencia idIncidencia, Double valor) {
+	public Propiedad(String propiedad, Double valor) {
 		super();
 		this.propiedad = obtenerPropiedad(propiedad);
-		//this.idIncidencia = idIncidencia;
-		this.incidencia = idIncidencia;
 		this.valor = valor;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -63,13 +47,6 @@ public class Propiedad {
 		this.propiedad = propiedad;
 	}
 
-	public Incidencia getIdIncidencia() {
-		return incidencia;
-	}
-
-	public void setIdIncidencia(Incidencia idIncidencia) {
-		this.incidencia = idIncidencia;
-	}
 
 	public Double getValor() {
 		return valor;
@@ -159,7 +136,7 @@ public class Propiedad {
 
 	@Override
 	public String toString() {
-		return "Propiedad [id=" + id + ", propiedad=" + propiedad + ", incidencia=" + incidencia + ", valor=" + valor
+		return "Propiedad [id=" + id + ", propiedad=" + propiedad + ", valor=" + valor
 				+ "]";
 	}
 

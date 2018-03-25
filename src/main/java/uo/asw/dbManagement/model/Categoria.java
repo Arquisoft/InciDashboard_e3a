@@ -1,47 +1,37 @@
 package uo.asw.dbManagement.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.CategoriaTipos;
 
-@Entity
-@Table (name = "TCATEGORIAS")
+@Document(collection = "categorias")
 public class Categoria {
 	@Id
-	@GeneratedValue /*(strategy = GenerationType.AUTO)*/
-	private Long id;
+	private ObjectId id = new ObjectId();
 	
-	@Enumerated(EnumType.STRING) private CategoriaTipos categoria;
-	
-	@ManyToOne
-//	@JoinColumn(name = "id_incidencia")
-	private Incidencia incidenciaC;
+	private CategoriaTipos categoria;
 	
 	public Categoria() {}
 
-	public Categoria(CategoriaTipos categoria, Incidencia idIncidenciaC) {
+	public Categoria(CategoriaTipos categoria) {
 		super();
 		this.categoria = categoria;
-		this.incidenciaC = idIncidenciaC;
 	}
 	
-	public Categoria(String categoria, Incidencia idIncidenciaC) {
+	public Categoria(String categoria) {
 		super();
 		this.categoria = this.obtenerCategoria(categoria);
-		this.incidenciaC = idIncidenciaC;
 	}
-
-	public Long getId() {
+	
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -53,20 +43,10 @@ public class Categoria {
 		this.categoria = categoria;
 	}
 
-	public Incidencia getIdIncidenciaC() {
-		return incidenciaC;
-	}
-
-	public void setIdIncidenciaC(Incidencia idIncidenciaC) {
-		this.incidenciaC = idIncidenciaC;
-	}
-
-	
-
 	@Override
 	public String toString() {
 		return "Categoria [id=" + id + ", categoria=" + categoria 
-				+ ", incidenciaC=" + incidenciaC + "]";
+				+ "]";
 	}
 
 	@Override

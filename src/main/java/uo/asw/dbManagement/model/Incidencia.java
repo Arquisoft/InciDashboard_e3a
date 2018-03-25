@@ -1,40 +1,32 @@
 package uo.asw.dbManagement.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import uo.asw.dbManagement.tipos.EstadoTipos;
-import uo.asw.dbManagement.tipos.PerfilTipos;
 
-@Entity
-@Table(name = "TINCIDENCIAS")
+@Document(collection = "incidencias")
 public class Incidencia {
-
 	@Id
-	@GeneratedValue /* (strategy = GenerationType.AUTO) */
-	private Long id;
+	private ObjectId id = new ObjectId();
 
 	@NotNull
-	@Column(name = "nombre_incidencia")
 	private String nombreIncidencia;
 	private String descripcion;
 	private String latitud;
 	private String longitud;
-	@Enumerated(EnumType.STRING)
 	private EstadoTipos estado;
 	@Column(name = "fecha_entrada")
 	@Temporal(TemporalType.DATE)
@@ -43,18 +35,20 @@ public class Incidencia {
 	@Temporal(TemporalType.DATE)
 	private Date fechaCaducidad;
 
-	// @Column(name = "id_agente")
-	@ManyToOne
-	private Agente agente;
+	@NotNull
+	private String idAgente;
 
-	@ManyToOne
+	@DBRef
 	private Usuario operario;
 
-	@OneToMany(mappedBy = "incidencia")
+	@DBRef
 	private Set<Propiedad> propiedades = new HashSet<Propiedad>();
 
-	@OneToMany(mappedBy = "incidenciaC")
+	@DBRef
 	private Set<Categoria> categorias = new HashSet<Categoria>();
+	
+	private Double minimoValor;
+	private Double maximoValor;
 
 	public Incidencia() {
 	}
@@ -73,10 +67,8 @@ public class Incidencia {
 	 * @param propiedades
 	 * @param categorias
 	 */
-	public Incidencia(@NotNull String nombreIncidencia, String descripcion, String latitud, String longitud,
-			EstadoTipos estado, Date fechaEntrada, Date fechaCaducidad,
-			Agente agente, String propiedades, String categorias) {
-
+	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud, Date fechaEntrada,
+			Date fechaCaducidad, String idAgente, String propiedades, String categorias) {
 		this.nombreIncidencia = nombreIncidencia;
 		this.descripcion = descripcion;
 		this.latitud = latitud;
@@ -84,13 +76,13 @@ public class Incidencia {
 		this.estado = EstadoTipos.ABIERTA;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaCaducidad = fechaCaducidad;
-		this.agente = agente;
+		this.idAgente = idAgente;
 		this.addListaPropiedades(propiedades);
 		this.addListaCategorias(categorias);
 	}
 
 	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud, Date fechaEntrada,
-			Date fechaCaducidad, Agente agente, Set<Propiedad> propiedades, Set<Categoria> categorias) {
+			Date fechaCaducidad, String idAgente, Set<Propiedad> propiedades, Set<Categoria> categorias) {
 		super();
 		this.nombreIncidencia = nombreIncidencia;
 		this.descripcion = descripcion;
@@ -99,16 +91,16 @@ public class Incidencia {
 		this.estado = EstadoTipos.ABIERTA;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaCaducidad = fechaCaducidad;
-		this.agente = agente;
+		this.idAgente = idAgente;
 		this.propiedades = propiedades;
 		this.categorias = categorias;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -147,6 +139,10 @@ public class Incidencia {
 	public EstadoTipos getEstado() {
 		return estado;
 	}
+	
+	public void setEstado(EstadoTipos estado) {
+		this.estado=estado;
+	}
 
 	public Date getFechaEntrada() {
 		return fechaEntrada;
@@ -163,23 +159,30 @@ public class Incidencia {
 	public void setFechaCaducidad(Date fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
 	}
+	
+	public void setEnterDate() {
+		Date d = new Date();
+//		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss"); 
+//		String today = dt.format(d);
+		this.fechaEntrada=d;
+	}
+	
+	public void setCaducityDate() {
+		Calendar CunaSemana = Calendar.getInstance(); 
+		CunaSemana.add(Calendar.DAY_OF_MONTH, 7); 
+		this.fechaCaducidad = CunaSemana.getTime();
+	}
 
-	/*
-	 * public Long getIdAgente() { return idAgente; }
-	 * 
-	 * public void setIdAgente(Long idAgente) { this.idAgente = idAgente; }
-	 */
+	public String getIdAgente() {
+		return idAgente;
+	}
+
+	public void setIdAgente(String idAgente) {
+		this.idAgente = idAgente;
+	}
 
 	public Set<Propiedad> getPropiedades() {
 		return propiedades;
-	}
-
-	public Agente getAgente() {
-		return agente;
-	}
-
-	public void setAgente(Agente agente) {
-		this.agente = agente;
 	}
 
 	public void setPropiedades(Set<Propiedad> propiedades) {
@@ -204,7 +207,6 @@ public class Incidencia {
 		int result = 1;
 		result = prime * result + ((fechaEntrada == null) ? 0 : fechaEntrada.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((agente == null) ? 0 : agente.hashCode());
 		result = prime * result + ((nombreIncidencia == null) ? 0 : nombreIncidencia.hashCode());
 		return result;
 	}
@@ -228,11 +230,6 @@ public class Incidencia {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (agente == null) {
-			if (other.agente != null)
-				return false;
-		} else if (!agente.equals(other.agente))
-			return false;
 		if (nombreIncidencia == null) {
 			if (other.nombreIncidencia != null)
 				return false;
@@ -241,11 +238,27 @@ public class Incidencia {
 		return true;
 	}
 
+	public Double getMinimoValor() {
+		return minimoValor;
+	}
+
+	public void setMinimoValor(Double minimoValor) {
+		this.minimoValor = minimoValor;
+	}
+
+	public Double getMaximoValor() {
+		return maximoValor;
+	}
+
+	public void setMaximoValor(Double maximoValor) {
+		this.maximoValor = maximoValor;
+	}
+
 	@Override
 	public String toString() {
 		return "Incidencia [id=" + id + ", nombreIncidencia=" + nombreIncidencia + ", descripcion=" + descripcion
 				+ ", latitud=" + latitud + ", longitud=" + longitud + ", estado=" + estado + ", fechaEntrada="
-				+ fechaEntrada + ", fechaCaducidad=" + fechaCaducidad + ", agente=" + agente + ", propiedades="
+				+ fechaEntrada + ", fechaCaducidad=" + fechaCaducidad + ", idAgente=" + idAgente + ", propiedades="
 				+ propiedades + ", categorias=" + categorias + "]";
 	}
 
@@ -269,8 +282,8 @@ public class Incidencia {
 	}
 
 	/**
-	 * Recibe un string de categorias separadas por comas y las añade al
-	 * conjunto de categorias de la incidencia
+	 * Recibe un string de categorias separadas por comas y las añade al conjunto de
+	 * categorias de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -278,13 +291,13 @@ public class Incidencia {
 	public void addListaCategorias(String lista) {
 		String[] categorias = lista.split(",");
 		for (int i = 0; i < categorias.length; i++) {
-			this.addCategoria(new Categoria(categorias[i], this));
+			this.addCategoria(new Categoria(categorias[i]));
 		}
 	}
 
 	/**
-	 * REcibe un string de propiedades separadas por comas y las añade al
-	 * conjunto de propiedades de la incidencia
+	 * REcibe un string de propiedades separadas por comas y las añade al conjunto
+	 * de propiedades de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -295,29 +308,13 @@ public class Incidencia {
 			String[] propiedad = propiedades[i].split("/");
 			// this.addPropiedad(new Propiedad(propiedad[0],
 			// this.getId(), Double.parseDouble(propiedad[1])));
-			this.addPropiedad(new Propiedad(propiedad[0], this, Double.parseDouble(propiedad[1])));
+			this.addPropiedad(new Propiedad(propiedad[0], Double.parseDouble(propiedad[1])));
 		}
 	}
 
 	/**
-	 * Recibe un usuario de tipo operario y lo añade
-	 * 
-	 * @param operario
-	 *            de tipo Usuario
-	 * @return true si se ha asignado false en caso contrario
-	 */
-	public boolean asignarOperario(Usuario operario) {
-		if (estado.equals(EstadoTipos.ABIERTA) && operario.getPerfil().equals(PerfilTipos.OPERARIO)) {
-			this.operario = operario;
-			this.estado = EstadoTipos.EN_PROCESO;
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada
-	 * un operario
+	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada un
+	 * operario
 	 * 
 	 * @return true si se pasa a estado cerrada false en caso contrario
 	 */
@@ -342,6 +339,4 @@ public class Incidencia {
 		return false;
 
 	}
-
-	
 }
