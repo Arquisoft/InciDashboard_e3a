@@ -17,7 +17,7 @@ import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
-import uo.asw.incidashboard.services.SecurityService;
+
 import uo.asw.incidashboard.services.UsuarioService;
 
 @Controller
