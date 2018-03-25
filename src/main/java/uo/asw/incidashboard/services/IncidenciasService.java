@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
+import uo.asw.dbManagement.model.Usuario;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 
 @Service
@@ -42,8 +43,8 @@ public class IncidenciasService {
 	}
 
 	@Autowired
-	public Page<Incidencia> getUserIncidencias(Pageable pageable, ObjectId objectId) {
-		return incidenciaRepository.findIncidenciaByIdUser(objectId, pageable);
+	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario operario) {
+		return incidenciaRepository.findIncidenciaByOperario(operario, pageable);
 	}
 
 	@Autowired
