@@ -46,7 +46,7 @@ public class Incidencia {
 
 	@DBRef
 	private Set<Categoria> categorias = new HashSet<Categoria>();
-
+	
 	private Double minimoValor;
 	private Double maximoValor;
 
@@ -139,9 +139,9 @@ public class Incidencia {
 	public EstadoTipos getEstado() {
 		return estado;
 	}
-
+	
 	public void setEstado(EstadoTipos estado) {
-		this.estado = estado;
+		this.estado=estado;
 	}
 
 	public Date getFechaEntrada() {
@@ -159,17 +159,17 @@ public class Incidencia {
 	public void setFechaCaducidad(Date fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
 	}
-
+	
 	public void setEnterDate() {
 		Date d = new Date();
-		// SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		// String today = dt.format(d);
-		this.fechaEntrada = d;
+//		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss"); 
+//		String today = dt.format(d);
+		this.fechaEntrada=d;
 	}
-
+	
 	public void setCaducityDate() {
-		Calendar CunaSemana = Calendar.getInstance();
-		CunaSemana.add(Calendar.DAY_OF_MONTH, 7);
+		Calendar CunaSemana = Calendar.getInstance(); 
+		CunaSemana.add(Calendar.DAY_OF_MONTH, 7); 
 		this.fechaCaducidad = CunaSemana.getTime();
 	}
 
@@ -200,7 +200,6 @@ public class Incidencia {
 	public Usuario getOperario() {
 		return operario;
 	}
-
 	public void setOperario(Usuario operario) {
 		this.operario = operario;
 	}
@@ -286,8 +285,8 @@ public class Incidencia {
 	}
 
 	/**
-	 * Recibe un string de categorias separadas por comas y las añade al
-	 * conjunto de categorias de la incidencia
+	 * Recibe un string de categorias separadas por comas y las añade al conjunto de
+	 * categorias de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -295,13 +294,13 @@ public class Incidencia {
 	public void addListaCategorias(String lista) {
 		String[] categorias = lista.split(",");
 		for (int i = 0; i < categorias.length; i++) {
-			this.addCategoria(new Categoria(categorias[i], this));
+			this.addCategoria(new Categoria(categorias[i],this));
 		}
 	}
 
 	/**
-	 * REcibe un string de propiedades separadas por comas y las añade al
-	 * conjunto de propiedades de la incidencia
+	 * REcibe un string de propiedades separadas por comas y las añade al conjunto
+	 * de propiedades de la incidencia
 	 * 
 	 * @param String
 	 *            lista
@@ -317,8 +316,8 @@ public class Incidencia {
 	}
 
 	/**
-	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada
-	 * un operario
+	 * Cierra la incidencia si esta se encuentra en proceso y si tiene asignada un
+	 * operario
 	 * 
 	 * @return true si se pasa a estado cerrada false en caso contrario
 	 */
