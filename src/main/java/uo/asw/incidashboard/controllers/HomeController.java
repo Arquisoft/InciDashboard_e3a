@@ -3,6 +3,7 @@ package uo.asw.incidashboard.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,10 @@ public class HomeController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String setEdit(Model model) {
-		String mail = secService.findLoggedInEmail();
-		Usuario user = usuarioService.getUsuarioByIdentificador(mail);
+		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		Usuario user = usuarioService.getUsuarioByMail(mail);
+		if (user == null)
+			return "redirect:/login";
 		if (user.getPerfil().equals(PerfilTipos.OPERARIO))
 			return "redirect:/operarios/operario";
 		else if (user.getPerfil().equals(PerfilTipos.ADMIN_CM))

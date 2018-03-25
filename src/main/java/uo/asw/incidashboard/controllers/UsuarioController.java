@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,32 +31,34 @@ public class UsuarioController {
 	private AgenteService agenteService;
 	@Autowired
 	private IncidenciaService incidenciaService;
-	
+	@Autowired
+	private UsuarioService usuarioService;
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
 	}
-	
-	
-	@RequestMapping("/operarios/administrador" )
-	public String getListado(Model model, Pageable pageable, Principal principal){
-		
+
+	@RequestMapping("/operarios/administrador")
+	public String getListado(Model model, Pageable pageable, Principal principal) {
+
 		String emailAgent = principal.getName();
 		Agente agent = agenteService.getAgentByEmail(emailAgent);
-		
+
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-		
+
 		incidencias = incidenciaService.getIncidencias(pageable, agent.getId());
-		
-		model.addAttribute("incidenciasList", incidencias.getContent() );
-		model.addAttribute("Agent", "Incidencias de "+agent.getNombre());
+
+		model.addAttribute("incidenciasList", incidencias.getContent());
+		model.addAttribute("Agent", "Incidencias de " + agent.getNombre());
 		model.addAttribute("page", incidencias);
-		
+
 		return "/operarios/administrador";
 	}
-	
-	@RequestMapping(value="/operarios/administrador", method=RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable String nombre , @ModelAttribute Incidencia incidencia, Principal principal){
+
+	@RequestMapping(value = "/operarios/administrador", method = RequestMethod.POST)
+	public String getAdmin(Model model, @PathVariable String nombre, @ModelAttribute Incidencia incidencia,
+			Principal principal) {
 		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
 		// modifica valor maximo y minimo
 		inciOr.setMinimoValor(incidencia.getMinimoValor());
@@ -63,4 +66,22 @@ public class UsuarioController {
 		incidenciaService.addIncidencia(inciOr);
 		return "redirect:/operarios/administrador";
 	}
+
+	@RequestMapping("/operarios/operario")
+	public String getOperarios(Model model, Pageable pageable, Principal principal) {
+
+		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		Usuario user = usuarioService.getUsuarioByMail(mail);
+
+		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
+
+		incidencias = incidenciaService.getUserIncidencias(pageable, user.getId());
+
+		model.addAttribute("incidenciasList", incidencias.getContent());
+		model.addAttribute("nameUser", "Incidencias de " + user.getNombre());
+		model.addAttribute("page", incidencias);
+
+		return "/operarios/operario";
+	}
+
 }

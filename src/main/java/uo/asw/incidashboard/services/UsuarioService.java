@@ -37,6 +37,10 @@ public class UsuarioService {
 		return usersRepository.findByIdentificador(identificador);
 	}
 
+	public Usuario getUsuarioByMail(String mail) {
+		return usersRepository.findByEmail(mail);
+	}
+
 	public void addUsuario(Usuario usuario) {
 		usuario.setContrasena(bcPass.encode(usuario.getContrasena()));
 		usersRepository.save(usuario);
