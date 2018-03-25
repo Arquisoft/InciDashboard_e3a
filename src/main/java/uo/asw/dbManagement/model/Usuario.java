@@ -17,24 +17,25 @@ import uo.asw.dbManagement.tipos.PerfilTipos;
 public class Usuario {
 	@Id
 	private ObjectId id = new ObjectId();
-	
+
 	private String nombre;
 	private String apellidos;
 	private String email;
-	
+
 	@NotNull
 	@Column(unique = true)
 	private String identificador;
 	@NotNull
 	private String contrasena;
-	
-//	@DBRef
+
+	// @DBRef
 	private PerfilTipos perfil;
-	
+
 	@DBRef
 	private Set<Incidencia> incidencias = new HashSet<Incidencia>();
-	
-	public Usuario() {}
+
+	public Usuario() {
+	}
 
 	public Usuario(String nombre, String apellidos, String email, String identificador, String contrasena,
 			PerfilTipos perfil) {
@@ -54,7 +55,7 @@ public class Usuario {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -102,8 +103,6 @@ public class Usuario {
 	public void setPerfil(PerfilTipos perfil) {
 		this.perfil = perfil;
 	}
-	
-	
 
 	public Set<Incidencia> getIncidencias() {
 		return incidencias;
@@ -149,7 +148,5 @@ public class Usuario {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", identificador=" + identificador + ", contrasena=" + contrasena + ", perfil=" + perfil + "]";
 	}
-	
-	
 
 }

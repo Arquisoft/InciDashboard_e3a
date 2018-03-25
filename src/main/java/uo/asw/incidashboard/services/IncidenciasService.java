@@ -2,6 +2,7 @@ package uo.asw.incidashboard.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -26,7 +27,7 @@ public class IncidenciasService {
 
 	@PostConstruct
 	public void init() {
-		
+
 	}
 
 	public void asignacionIncidencias() {
@@ -34,9 +35,15 @@ public class IncidenciasService {
 		for (int i = 0; i < incidencias.size(); i++) {
 			if (incidencias.get(i).getEstado().equals(EstadoTipos.ABIERTA)
 					&& incidencias.get(i).getOperario() == null) {
-				incidencias.get(i).setOperario(usuarioService.getUsuarioConMenosIncis());
+				Usuario user = usuarioService.getUsuarioConMenosIncis();
+				Set<Incidencia> incides = user.getIncidencias();
+				incides.add(incidencias.get(i));
+				incidencias.get(i).setOperario(user);
+				usuarioService.deleteUser(user.getId());
+				usuarioService.addUsuario(user);
 				incidenciaRepository.delete(incidencias.get(i).getId());
 				incidenciaRepository.save(incidencias.get(i));
+
 			}
 		}
 	}

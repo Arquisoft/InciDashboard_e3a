@@ -2,6 +2,7 @@ package uo.asw.incidashboard.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -54,24 +55,29 @@ public class UsuarioService {
 
 	public Usuario getUsuarioConMenosIncis() {
 		List<Usuario> usuarios = getUsuarios();
-		int contador = 0;
-		int contadorMin = Integer.MAX_VALUE;
-		Usuario userMenor = null;
-		for (int i = 0; i < usuarios.size(); i++) {
-			contador = 0;
-			for (Incidencia inc : usuarios.get(i).getIncidencias()) {
-				if (usuarios.get(i).getPerfil().equals(PerfilTipos.OPERARIO)) {
-					if (inc.getEstado().equals(EstadoTipos.ABIERTA)) {
-						contador++;
-					}
-					if (contador < contadorMin) {
-						contadorMin = contador;
-						userMenor = usuarios.get(i);
-					}
-				}
+		int contadorT = Integer.MAX_VALUE;
+		Usuario userA = null;
+		for (Usuario u : usuarios) {
+			if (u.getPerfil().equals(PerfilTipos.OPERARIO)) {
+				 userA = u;
 			}
 		}
-		return userMenor;
+		for (Usuario u : usuarios) {
+			if (u.getPerfil().equals(PerfilTipos.OPERARIO)) {
+				Set<Incidencia> incidencias = u.getIncidencias();
+				int contadorU = 0;
+				for (Incidencia i : incidencias) {
+					if (i.getEstado().equals(EstadoTipos.ABIERTA)) {
+						contadorU++;
+					}
+				}
+				if (contadorU < contadorT) {
+					userA = u;
+				}
 
+			}
+		}
+		return userA;
 	}
+
 }
