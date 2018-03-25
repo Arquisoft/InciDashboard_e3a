@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>uo.asw</groupId>
-	<artifactId>inciManager_e3a</artifactId>
+	<artifactId>inciDashboard_e3a</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>inciManager_e3a</name>
+	<name>inciDashboard_e3a</name>
 	<description>Gestion de incidencias - ASW</description>
 
 	<parent>
