@@ -12,16 +12,16 @@ import uo.asw.dbManagement.model.Incidencia;
 @Repository
 public interface IncidenciaRepository extends MongoRepository<Incidencia, ObjectId> {
 
-	@Query("SELECT i FROM Incidencia i WHERE i.idAgente = ?1 ORDER BY i.id ASC ")
-	Page<Incidencia> findIncidenciasByIdAgent(Pageable pageable, String id);
+	@Query("SELECT i FROM incidencias i WHERE i.idAgente = ?1 ORDER BY i.id ASC ")
+	Page<Incidencia> findIncidenciasByIdAgent(Pageable pageable, String idAgente);
 
-	@Query("SELECT i FROM Incidencia i WHERE i.operario.id = ?1 ORDER BY i.id ASC ")
-	Page<Incidencia> findIncidenciasByIdUser(Pageable pageable, ObjectId objectId);
+	@Query("SELECT i FROM incidencias i WHERE i.operario.id = ?1 ORDER BY i.id ASC ")
+	Page<Incidencia> findIncidenciasByIdUser(Pageable pageable, ObjectId id);
 
-	@Query("SELECT i FROM Incidencia i WHERE i.nombreIncidencia = ?1 ")
+	@Query("SELECT i FROM incidencias i WHERE i.nombreIncidencia = ?1 ")
 	Incidencia findIncidenciByName(String nombre);
 
-	@Query("SELECT i FROM Incidencia i ORDER BY i.id ASC ")
+	@Query("SELECT i FROM incidencias i ORDER BY i.id ASC ")
 	Page<Incidencia> findIncidencias(Pageable pageable);
 
 }
