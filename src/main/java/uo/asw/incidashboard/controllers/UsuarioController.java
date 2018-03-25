@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
+import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.UsuarioService;
 
@@ -33,7 +34,7 @@ public class UsuarioController {
 	public String login(Model model) {
 		return "login";
 	}
-
+	
 	@RequestMapping("/operarios/administrador")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 
