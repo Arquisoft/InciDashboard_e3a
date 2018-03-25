@@ -2,7 +2,6 @@ package uo.asw.incidashboard.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -16,6 +15,7 @@ import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
+import uo.asw.incidashboard.repositories.UsuarioRepository;
 
 @Service
 public class IncidenciasService {
@@ -24,6 +24,9 @@ public class IncidenciasService {
 
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@PostConstruct
 	public void init() {
@@ -36,13 +39,10 @@ public class IncidenciasService {
 			if (incidencias.get(i).getEstado().equals(EstadoTipos.ABIERTA)
 					&& incidencias.get(i).getOperario() == null) {
 				Usuario user = usuarioService.getUsuarioConMenosIncis();
-				Set<Incidencia> incides = user.getIncidencias();
-				incides.add(incidencias.get(i));
-				incidencias.get(i).setOperario(user);
-				usuarioService.deleteUser(user.getId());
-				usuarioService.addUsuario(user);
-				incidenciaRepository.delete(incidencias.get(i).getId());
-				incidenciaRepository.save(incidencias.get(i));
+				user.getIncidencias().add(incidencias.get(i));
+				getIncidencias().get(i).setOperario(user);
+				usuarioRepository.save(user);
+				incidenciaRepository.save(getIncidencias().get(i));
 
 			}
 		}
@@ -69,8 +69,8 @@ public class IncidenciasService {
 		incidenciaRepository.save(incidencia);
 	}
 
-	public Page<Incidencia> getUserIncidencias(Pageable pageable, ObjectId objectId) {
-		return incidenciaRepository.findByOperario(usuarioService.getUsuario(objectId), pageable);
+	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario u) {
+		return incidenciaRepository.findByOperario(u, pageable);
 	}
 
 	public void deleteIncidencia(ObjectId id) {

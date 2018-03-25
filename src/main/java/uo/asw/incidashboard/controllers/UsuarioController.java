@@ -65,7 +65,7 @@ public class UsuarioController {
 
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 
-		incidencias = incidenciaService.getUserIncidencias(pageable, user.getId());
+		incidencias = incidenciaService.getUserIncidencias(pageable, user);
 
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "Incidencias de " + user.getNombre());
