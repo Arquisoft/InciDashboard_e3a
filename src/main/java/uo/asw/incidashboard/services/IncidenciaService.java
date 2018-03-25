@@ -29,6 +29,10 @@ public class IncidenciaService {
 		return incidenciaRepository.findIncidenciasByIdAgent(pageable, id_agente);
 	}
 
+	public Page<Incidencia> getIncis(Pageable pageable) {
+		return incidenciaRepository.findIncidencias(pageable);
+	}
+
 	public void addIncidencia(Incidencia incidencia) {
 
 		incidenciaRepository.save(incidencia);

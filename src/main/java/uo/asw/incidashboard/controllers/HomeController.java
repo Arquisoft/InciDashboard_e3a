@@ -34,10 +34,7 @@ public class HomeController {
 		return "index";
 	}
 
-	// @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	// public String home(Model model) {
-	// return "home";
-	// }
+	
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String setEdit(Model model) {
@@ -55,6 +52,6 @@ public class HomeController {
 
 	}
 
-	
+
 
 }

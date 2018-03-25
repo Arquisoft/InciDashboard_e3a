@@ -42,8 +42,7 @@ public class Incidencia {
 	@Column(name = "fecha_caducidad")
 	@Temporal(TemporalType.DATE)
 	private Date fechaCaducidad;
-	private Double minimoValor;
-	private Double maximoValor;
+
 	// @Column(name = "id_agente")
 	@ManyToOne
 	private Agente agente;
@@ -344,19 +343,5 @@ public class Incidencia {
 
 	}
 
-	public Double getMinimoValor() {
-		return minimoValor;
-	}
-
-	public void setMinimoValor(Double minimoValor) {
-		this.minimoValor = minimoValor;
-	}
-
-	public Double getMaximoValor() {
-		return maximoValor;
-	}
-
-	public void setMaximoValor(Double maximoValor) {
-		this.maximoValor = maximoValor;
-	}
+	
 }

@@ -2,6 +2,7 @@ package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,16 +43,10 @@ public class UsuarioController {
 	@RequestMapping("/operarios/administrador")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 
-		String emailAgent = principal.getName();
-		Agente agent = agenteService.getAgentByEmail(emailAgent);
-
-		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-
-		incidencias = incidenciaService.getIncidencias(pageable, agent.getId());
-
-		model.addAttribute("incidenciasList", incidencias.getContent());
-		model.addAttribute("Agent", "Incidencias de " + agent.getNombre());
-		model.addAttribute("page", incidencias);
+		Page<Agente> agentes = new PageImpl<Agente>(new LinkedList<Agente>());
+		agentes = agenteService.getAgentes(pageable);
+		model.addAttribute("agentesList", agentes.getContent());
+		model.addAttribute("page", agentes);
 
 		return "/operarios/administrador";
 	}
@@ -61,12 +56,11 @@ public class UsuarioController {
 			Principal principal) {
 		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
 		// modifica valor maximo y minimo
-		inciOr.setMinimoValor(incidencia.getMinimoValor());
-		inciOr.setMaximoValor(incidencia.getMaximoValor());
+		inciOr.getAgente().setMinimoValor(incidencia.getAgente().getMinimoValor());
+		inciOr.getAgente().setMaximoValor(incidencia.getAgente().getMaximoValor());
 		incidenciaService.addIncidencia(inciOr);
 		return "redirect:/operarios/administrador";
 	}
-
 
 	@RequestMapping("/operarios/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {

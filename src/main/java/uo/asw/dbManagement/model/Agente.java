@@ -13,29 +13,31 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "TAGENTES")
+@Table(name = "TAGENTES")
 public class Agente {
 	@Id
-	@GeneratedValue /*(strategy = GenerationType.AUTO)*/
+	@GeneratedValue /* (strategy = GenerationType.AUTO) */
 	private Long id;
 	private String nombre;
 	private String contrasena;
 	private String kindCode;
-	
+
 	@NotNull
 	@Column(unique = true)
 	private String identificador;
 	private String latitud;
 	private String longitud;
 	private String email;
-	
+	private Double minimoValor;
+	private Double maximoValor;
 	@Column(name = "permiso_envio")
-	private String permisoEnvio; //'si' o 'no'
-	
+	private String permisoEnvio; // 'si' o 'no'
+
 	@OneToMany(mappedBy = "agente", cascade = CascadeType.ALL)
 	private Set<Incidencia> incidencias = new HashSet<Incidencia>();
-	
-	public Agente() {}
+
+	public Agente() {
+	}
 
 	public Agente(String nombre, String contrasena, String kindCode, String identificador, String latitud,
 			String longitud, String email, String permisoEnvio) {
@@ -49,7 +51,7 @@ public class Agente {
 		this.email = email;
 		this.permisoEnvio = permisoEnvio;
 	}
-	
+
 	public void addInci(Incidencia inci) {
 		incidencias.add(inci);
 	}
@@ -167,15 +169,25 @@ public class Agente {
 
 	@Override
 	public String toString() {
-		return "Agente [id=" + id + ", nombre=" + nombre + ", contrasena=" 
-	+ contrasena + ", kindCode=" + kindCode
-				+ ", identificador=" + identificador + ", latitud=" 
-	+ latitud + ", longitud=" + longitud + ", email="
-				+ email + ", permisoEnvio=" + permisoEnvio + ", incidencias=" 
-	+ incidencias + "]";
+		return "Agente [id=" + id + ", nombre=" + nombre + ", contrasena=" + contrasena + ", kindCode=" + kindCode
+				+ ", identificador=" + identificador + ", latitud=" + latitud + ", longitud=" + longitud + ", email="
+				+ email + ", permisoEnvio=" + permisoEnvio + ", incidencias=" + incidencias + "]";
 	}
 
-	
-	
+	public Double getMinimoValor() {
+		return minimoValor;
+	}
+
+	public void setMinimoValor(Double minimoValor) {
+		this.minimoValor = minimoValor;
+	}
+
+	public Double getMaximoValor() {
+		return maximoValor;
+	}
+
+	public void setMaximoValor(Double maximoValor) {
+		this.maximoValor = maximoValor;
+	}
 
 }

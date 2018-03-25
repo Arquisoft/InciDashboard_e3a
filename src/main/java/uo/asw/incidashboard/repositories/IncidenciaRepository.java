@@ -18,5 +18,8 @@ public interface IncidenciaRepository extends CrudRepository<Incidencia, Long> {
 	
 	@Query("SELECT i FROM Incidencia i WHERE i.nombreIncidencia = ?1 ")
 	Incidencia findIncidenciByName(String nombre);
+	
+	@Query("SELECT i FROM Incidencia i ORDER BY i.id ASC ")
+	Page<Incidencia> findIncidencias(Pageable pageable);
 
 }

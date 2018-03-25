@@ -4,7 +4,7 @@
 <body>
 	<nav th:replace="fragments/nav"/>
 		<div class="container">
-		<h2 th:text="${Agent}">Agente</h2>
+		
 
 		<form class="form-horizontal" method="post" action="/Agente">
 		<div class="table-responsive">
@@ -12,17 +12,18 @@
 				id="tableInciAgent">
 				<thead>
 					<tr>
-						<th >Nombre de la incidencia</th>
-						<th>Valor minimo de la incidencia</th>
-						<th>Valor maximo de la incidencia</th>
+						<th >Nombre del Agente</th>
+						<th>Valor minimo para enviar incidencias del agente</th>
+						<th>Valor maximo para enviar incidencias del agente</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="inci : ${incidenciasList}">
-						<td style="width:15px; vertical-align:middle" th:text="${inci.nombreIncidencia}">Nombre de la incidencia</td>
-						<td  style="width:100px; vertical-align:middle" th:text="${inci.minimoValor}"><input type="text" name="minValor" value="inci.minimoValor"></td>
-						<td  style="width:40px; vertical-align:middle"  th:text="${inci.maximoValor}"><input type="text" name="maxValor" value="inci.maximoValor"></td>
+					<tr th:each="agen : ${agentesList}">
+						<td style="width:15px; vertical-align:middle" th:text="${agen.nombre}">Nombre del agente</td>
+						<td  style="width:100px; vertical-align:middle" th:text="${agen.minimoValor}"><input type="text" name="minValor" value="agen.minimoValor"></td>
+						<td  style="width:40px; vertical-align:middle"  th:text="${agen.maximoValor}"><input type="text" name="maxValor" value="agen.maximoValor"></td>
 					</tr>
+					
 				</tbody>
 			</table>
 			<div class="form-group">
