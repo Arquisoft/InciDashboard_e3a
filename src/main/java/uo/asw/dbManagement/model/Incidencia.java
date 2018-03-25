@@ -291,7 +291,7 @@ public class Incidencia {
 	public void addListaCategorias(String lista) {
 		String[] categorias = lista.split(",");
 		for (int i = 0; i < categorias.length; i++) {
-			this.addCategoria(new Categoria(categorias[i]));
+			this.addCategoria(new Categoria(categorias[i],this));
 		}
 	}
 

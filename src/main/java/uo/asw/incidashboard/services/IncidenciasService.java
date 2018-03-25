@@ -10,49 +10,45 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
-import uo.asw.dbManagement.model.Usuario;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 
 @Service
 public class IncidenciasService {
-
 	@Autowired
 	private IncidenciaRepository incidenciaRepository;
-
+	
 	@Autowired
+	private UsuarioService usuarioService;
+
 	public List<Incidencia> getIncidencias() {
 		List<Incidencia> incidencias = new ArrayList<Incidencia>();
 		incidenciaRepository.findAll().forEach(incidencias::add);
 		return incidencias;
 	}
 
-	@Autowired
-	public Page<Incidencia> getIncidencias(Pageable pageable, String id_agente) {
-		return incidenciaRepository.findByIdAgente(id_agente, pageable);
-	}
+//	public Page<Incidencia> getIncidencias(Pageable pageable, ObjectId id_agente) {
+//		return incidenciaRepository.findIncidenciasByIdAgent(pageable, id_agente);
+//	}
 
-	@Autowired
 	public Page<Incidencia> getIncis(Pageable pageable) {
 		return incidenciaRepository.findAll(pageable);
 	}
 
-	@Autowired
+	
+
 	public void addIncidencia(Incidencia incidencia) {
 
 		incidenciaRepository.save(incidencia);
 	}
 
-	@Autowired
-	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario operario) {
-		return incidenciaRepository.findByOperario(operario, pageable);
+	public Page<Incidencia> getUserIncidencias(Pageable pageable, ObjectId objectId) {
+		return incidenciaRepository.findByOperario(usuarioService.getUsuario(objectId), pageable);
 	}
 
-	@Autowired
 	public void deleteIncidencia(ObjectId id) {
 		incidenciaRepository.delete(id);
 	}
 
-	@Autowired
 	public Incidencia getIncidenciaByName(String nombre) {
 		return incidenciaRepository.findByNombreIncidencia(nombre);
 	}

@@ -48,4 +48,7 @@ public class UsuarioService {
 	public void deleteUser(ObjectId id) {
 		usersRepository.delete(id);
 	}
+	public Usuario getUsuario(ObjectId objectId) {
+		return usersRepository.findOne(objectId);
+	}
 }
