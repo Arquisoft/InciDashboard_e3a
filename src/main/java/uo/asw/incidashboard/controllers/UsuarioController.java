@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
-import uo.asw.incidashboard.services.IncidenciaService;
+import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.UsuarioService;
 
 @Controller
 public class UsuarioController {
 
 	@Autowired
-	private IncidenciaService incidenciaService;
+	private IncidenciasService incidenciaService;
 
 	@Autowired
 	private UsuarioService usuarioService;

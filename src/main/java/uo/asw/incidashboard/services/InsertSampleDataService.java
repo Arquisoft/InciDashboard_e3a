@@ -19,7 +19,7 @@ import uo.asw.dbManagement.tipos.PropiedadTipos;
 public class InsertSampleDataService {
 	
 	@Autowired
-	private IncidenciaService incidenciaService;
+	private IncidenciasService incidenciaService;
 	
 	@Autowired
 	private CategoriaService c;
@@ -32,9 +32,9 @@ public class InsertSampleDataService {
 		
 		// ID's agentes
 		String idAgente1 = "Id1";
-		String idAgente2 = "Id1";
-		String idAgente3 = "Id1";
-		String idAgente4 = "Id1";	
+		String idAgente2 = "Id2";
+		String idAgente3 = "Id3";
+		String idAgente4 = "Id4";	
 		
 		// Creación de propiedades 
 		Propiedad p1 = new Propiedad(PropiedadTipos.TEMPERATURA, 100.0); /* ¿UNIDADES? */

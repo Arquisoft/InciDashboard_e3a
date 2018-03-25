@@ -5,23 +5,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Repository;
 
 import uo.asw.dbManagement.model.Incidencia;
 
-@Repository
+@EnableMongoRepositories
 public interface IncidenciaRepository extends MongoRepository<Incidencia, ObjectId> {
 
-	@Query("SELECT i FROM incidencias i WHERE i.idAgente = ?1 ORDER BY i.id ASC ")
-	Page<Incidencia> findIncidenciasByIdAgent(Pageable pageable, String idAgente);
+	Page<Incidencia> findIncidenciaByIdAgent(String idAgente,Pageable pageable);
 
-	@Query("SELECT i FROM incidencias i WHERE i.operario.id = ?1 ORDER BY i.id ASC ")
-	Page<Incidencia> findIncidenciasByIdUser(Pageable pageable, ObjectId id);
+	Page<Incidencia> findIncidenciaByIdUser(ObjectId id, Pageable pageable);
 
-	@Query("SELECT i FROM incidencias i WHERE i.nombreIncidencia = ?1 ")
-	Incidencia findIncidenciByName(String nombre);
+	Incidencia findIncidenciabyNombreIncidencia(String nombreIncidencia);
 
-	@Query("SELECT i FROM incidencias i ORDER BY i.id ASC ")
-	Page<Incidencia> findIncidencias(Pageable pageable);
+	
 
 }
