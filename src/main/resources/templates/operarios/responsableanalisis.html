@@ -4,7 +4,7 @@
 <body>
 	<nav th:replace="fragments/nav"/>
 		<div class="container">
-		<h2 th:text="${nameUser}">Administrador de incidencias</h2>
+		<h2 th:text="${nameUser}">Analisis de incidencias</h2>
 
 		<form class="form-horizontal" method="post" action="/Administrador">
 		<div class="filtroInci">
@@ -18,16 +18,22 @@
 				id="tableInci">
 				<thead>
 					<tr>
-						<th >Propiedades</th>
-						<th>Max</th>
-						<th>Min</th>
+						<th >Nombre</th>
+						<th>Descripción</th>
+						<th>Fecha de Entrada</th>
+						<th>Fecha de Caducidad</th>
+						<th>Estado</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="inci : ${incidenciasList}">
-						<td style="width:15px; vertical-align:middle" th:text="${inci.id}">Propiedades</td>
-						<td  style="width:100px; vertical-align:middle" th:text="${inci.propiedad}">Max�n</td>
-						<td  style="width:40px; vertical-align:middle" th:text="${inci.valor}">Min</td>
+						<td style="width:15px; vertical-align:middle" th:text="${inci.nombreIncidencia}">Nombre</td>
+						<td  style="width:250px; vertical-align:middle" th:text="${inci.descripcion}">Descripción</td>
+						<td  style="width:250px; vertical-align:middle" th:text="${inci.fechaEntrada}">Fecha de Entrada</td>
+						<td  style="width:250px; vertical-align:middle" th:text="${inci.fechaCaducidad}">Fecha de Caducidad</td>
+                        <td  style="width:250px; vertical-align:middle" th:text="${inci.estado}">Estado</td>
 					</tr>
 				</tbody>
 			</table>

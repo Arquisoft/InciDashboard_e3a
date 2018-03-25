@@ -78,5 +78,21 @@ public class UsuarioController {
 
 		return "/operarios/operario";
 	}
+	
+	@RequestMapping("/operarios/responsableanalisis")
+	public String getResponsable(Model model, Pageable pageable, Principal principal) {
+
+		
+
+		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
+
+		incidencias = incidenciaService.getIncis(pageable);
+
+		model.addAttribute("incidenciasList", incidencias.getContent());
+	
+		model.addAttribute("page", incidencias);
+
+		return "/operarios/responsableanalisis";
+	}
 
 }
