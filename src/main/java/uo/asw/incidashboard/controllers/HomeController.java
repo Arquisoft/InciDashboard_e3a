@@ -34,7 +34,7 @@ public class HomeController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String setEdit(Model model) {
-		incidenciaService.asignacionIncidencias();
+		
 		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
 		if (user == null)

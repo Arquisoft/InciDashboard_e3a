@@ -34,7 +34,7 @@ public class UsuarioController {
 	public String login(Model model) {
 		return "login";
 	}
-	
+
 	@RequestMapping("/operarios/administrador")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 
@@ -59,7 +59,7 @@ public class UsuarioController {
 
 	@RequestMapping("/operarios/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
-
+		
 		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
 

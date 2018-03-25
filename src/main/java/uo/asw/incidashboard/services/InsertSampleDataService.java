@@ -39,12 +39,6 @@ public class InsertSampleDataService {
 		Usuario op4 = new Usuario("nombre4", "apellido4", "operario4@prueba.es", "Id4", "123456", PerfilTipos.ADMIN_CM);
 		Usuario op5 = new Usuario("nombre5", "apellido5", "operario5@prueba.es", "Id5", "123456",
 				PerfilTipos.ANALISIS_DATOS);
-		
-		usuarioService.addUsuario(op1);
-		usuarioService.addUsuario(op2);
-		usuarioService.addUsuario(op3);
-		usuarioService.addUsuario(op4);
-		usuarioService.addUsuario(op5);
 
 		// ID's agentes
 		String idAgente1 = "Id1";
@@ -138,10 +132,16 @@ public class InsertSampleDataService {
 		c.addCategoria(c4);
 		c.addCategoria(c5);
 		c.addCategoria(c6);
+		inci1.setOperario(op1);
 		incidenciaService.addIncidencia(inci1);
 		incidenciaService.addIncidencia(inci2);
 		incidenciaService.addIncidencia(inci3);
 		incidenciaService.addIncidencia(inci4);
+		usuarioService.addUsuario(op1);
+		usuarioService.addUsuario(op2);
+		usuarioService.addUsuario(op3);
+		usuarioService.addUsuario(op4);
+		usuarioService.addUsuario(op5);
 
 	}
 }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,17 +11,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Usuario;
-import uo.asw.incidashboard.repositories.UsuarioRepository;
+import uo.asw.incidashboard.services.UsuarioService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepositorio;
+	private UsuarioService usuarioService;
 
 	@Override
 	public UserDetails loadUserByUsername(String inden) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepositorio.findByIdentificador(inden);
+		Usuario usuario = usuarioService.getUsuarioByIdentificador(inden);
 		if (usuario != null) {
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
@@ -32,5 +31,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		throw new UsernameNotFoundException(inden);
 	}
 
-	
 }

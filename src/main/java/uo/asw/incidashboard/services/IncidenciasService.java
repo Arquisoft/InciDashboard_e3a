@@ -30,7 +30,7 @@ public class IncidenciasService {
 
 	@PostConstruct
 	public void init() {
-
+		asignacionIncidencias();
 	}
 
 	public void asignacionIncidencias() {
@@ -39,9 +39,8 @@ public class IncidenciasService {
 			if (incidencias.get(i).getEstado().equals(EstadoTipos.ABIERTA)
 					&& incidencias.get(i).getOperario() == null) {
 				Usuario user = usuarioService.getUsuarioConMenosIncis();
-				user.getIncidencias().add(incidencias.get(i));
 				getIncidencias().get(i).setOperario(user);
-				usuarioRepository.save(user);
+				getIncidencias().get(i).setEstado(EstadoTipos.EN_PROCESO);
 				incidenciaRepository.save(getIncidencias().get(i));
 
 			}
