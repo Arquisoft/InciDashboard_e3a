@@ -24,6 +24,8 @@ import uo.asw.incidashboard.services.UsuarioService;
 public class HomeController {
 	@Autowired
 	private UsuarioService usuarioService;
+	@Autowired
+	private IncidenciasService incidenciaService;
 
 	@RequestMapping("/")
 	public String index() {
@@ -32,6 +34,7 @@ public class HomeController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String setEdit(Model model) {
+		incidenciaService.asignacionIncidencias();
 		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
 		if (user == null)
