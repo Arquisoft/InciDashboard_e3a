@@ -8,7 +8,7 @@ InciDashboard_e3a
 
 ## Índice
 
-- [Introducción al proyecto](#inciDashboard_e3a)
+- [Introducción al proyecto](#incidashboard_e3a)
 - [Cómo ejecutar el proyecto](#cómo-ejecutar-el-proyecto)
     - [Detalles](#detalles)	     
     - [Instrucciones](#instrucciones)	  
