@@ -15,5 +15,9 @@ public class CategoriaService {
 	public void addCategoria(Categoria c1) {
 		c.save(c1);
 	}
+	
+	public void deleteAll() {
+		c.deleteAll();
+	}
 
 }

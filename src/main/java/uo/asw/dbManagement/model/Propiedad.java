@@ -1,9 +1,7 @@
 package uo.asw.dbManagement.model;
 
-import org.springframework.data.annotation.Id;
-
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.PropiedadTipos;
@@ -17,6 +15,9 @@ public class Propiedad {
 	
 	private Double valor;
 	
+	private Double minValor;
+	private Double maxValor;
+	
 	public Propiedad() {}
 
 	public Propiedad(PropiedadTipos propiedad, Double valor) {
@@ -29,6 +30,23 @@ public class Propiedad {
 		super();
 		this.propiedad = obtenerPropiedad(propiedad);
 		this.valor = valor;
+	}
+
+	
+	public Double getMinValor() {
+		return minValor;
+	}
+
+	public void setMinValor(Double minValor) {
+		this.minValor = minValor;
+	}
+
+	public Double getMaxValor() {
+		return maxValor;
+	}
+
+	public void setMaxValor(Double maxValor) {
+		this.maxValor = maxValor;
 	}
 
 	public ObjectId getId() {

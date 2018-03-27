@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head"/>
+<head th:replace="fragments/head" />
 <body>
-	<nav th:replace="fragments/nav"/>
-		<div class="container">
+	<nav th:replace="fragments/nav" />
+	<div class="container">
 		<h2 th:text="${nameUser}">Nombre operario</h2>
 
 		<form class="form-horizontal" method="post" action="/operario">
-		<div class="table-responsive">
-			<table class="table table-hover" th:fragment="tableInci"
-				id="tableInci">
-				<thead>
-					<tr>
-						<th >Nombre</th>
-						<th>Descripción</th>
-						<th>Fecha de Entrada</th>
-						<th>Fecha de Caducidad</th>
-						<th>Estado</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="inci : ${incidenciasList}">
-						<td style="width:250px; vertical-align:middle" th:text="${inci.nombreIncidencia}">Nombre</td>
-						<td  style="width:250px; vertical-align:middle" th:text="${inci.descripcion}">Descripción</td>
-						<td  style="width:250px; vertical-align:middle" th:text="${inci.fechaEntrada}">Fecha de Entrada</td>
-						<td  style="width:250px; vertical-align:middle" th:text="${inci.fechaCaducidad}">Fecha de Caducidad</td>
-                        <td  style="width:250px; vertical-align:middle" th:text="${inci.estado}">Estado</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<footer th:replace="fragments/pagination" />
-
+			<div class="table-responsive">
+				<table class="table table-hover" th:fragment="tableInci"
+					id="tableInci">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Descripción</th>
+							<th>Fecha de Entrada</th>
+							<th>Fecha de Caducidad</th>
+							<th>Estado</th>
+							<th class="col-md-1"></th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="inci : ${incidenciasList}">
+							<td style="width: 250px; vertical-align: middle"
+								th:text="${inci.nombreIncidencia}">Nombre</td>
+							<td style="width: 250px; vertical-align: middle"
+								th:text="${inci.descripcion}">Descripción</td>
+							<td style="width: 250px; vertical-align: middle"
+								th:text="${inci.fechaEntrada}">Fecha de Entrada</td>
+							<td style="width: 250px; vertical-align: middle"
+								th:text="${inci.fechaCaducidad}">Fecha de Caducidad</td>
+							<td style="width: 250px; vertical-align: middle"
+								th:text="${inci.estado}">Estado</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<footer th:replace="fragments/pagination" />
+	</div>
 	<footer th:replace="fragments/footer" />
 </body>
 </html>

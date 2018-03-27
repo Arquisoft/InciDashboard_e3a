@@ -1,58 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head"/>
-
-<script language="javascript"> 
-	var valorMin=0;
-	var valorMax=10000;     
-    function recibir() 
-    { 
-        valorMin = document.getElementsByName("Min").value; 
-        valorMax = document.getElementsByName("Max").value; 
-         
-    }         
-</script>  
-
+<head th:replace="fragments/head" />
 <body>
-	<nav th:replace="fragments/nav"/>
-		<div class="container">
-		
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<form class="form-horizontal" method="post"
+			action="/operarios/administrador">
+			<div class="table-responsive">
+				<h3>Configuración de propiedades</h3>
+				<div class="col-sm-10">
+					Propiedad: <input  name="propiedad" placeholder="TEMPERATURA">
+				</div>
+				<div class="col-sm-10">
+					Valor minimo: <input type="number" name="minValor" placeholder="0">
+				</div>
+				<div class="col-sm-10">
+					Valor maximo: <input type="number" name="maxValor" placeholder="1000">
+				</div >
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</form>
 
-		<form class="form-horizontal" method="post" action="/operarios/administrador">
-		<div class="table-responsive">
-			<h3>Filtro de incidencias a mostrar en el control de mandos</h3>
-				<form>
-  					Valor minimo:<br>
- 						 <input type="number" name="Min"><br>
- 					Valor maximo:<br>
- 						 <input type="number" name="Max"><br>
- 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="button" class="btn btn-primary" onClick="recibir();">Guardar cambios</button>
-						</div>
-					</div>
-				</form>
-			<table class="table table-hover" th:fragment="tableInci"
-				id="tableInci">
-				<thead>
-					<tr>
-						<th >Nombre de incidencia</th>
-						<th>Id del agente</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="inci : ${incidenciasList}"
-							th:if="${inci.minimoValor}">valorMin"
-								th:if="${inci.maximoValor}"<valorMax>
-									<td style="width:150px; vertical-align:middle" th:text="${inci.nombreIncidencia}">Nombre de incidencia</td>
-									<td style="width:150px; vertical-align:middle" th:text="${inci.idAgente}">Id del agente</td>
-					</tr>
-					
-				</tbody>
-			</table>
-		</div>
+		<table class="table table-hover" th:fragment="tableInci"
+			id="tableInci">
+			<thead>
+				<tr>
+					<th>Propiedad</th>
+					<th>Min</th>
+					<th>Max</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p : ${props}">
+					<td style="width: 150px; vertical-align: middle"
+						th:text="${p.propiedad}"></td>
+					<td style="width: 150px; vertical-align: middle"
+						th:text="${p.minValor}"></td>
+					<td style="width: 150px; vertical-align: middle"
+						th:text="${p.maxValor}"></td>
+				</tr>
+			</tbody>
+		</table>
 		<footer th:replace="fragments/pagination" />
-
+	</div>
 	<footer th:replace="fragments/footer" />
 </body>
 </html>

@@ -46,9 +46,9 @@ public class Incidencia {
 
 	@DBRef
 	private Set<Categoria> categorias = new HashSet<Categoria>();
-	
-	private Double minimoValor;
-	private Double maximoValor;
+//	
+//	private Double minimoValor;
+//	private Double maximoValor;
 
 	public Incidencia() {
 	}
@@ -241,21 +241,21 @@ public class Incidencia {
 		return true;
 	}
 
-	public Double getMinimoValor() {
-		return minimoValor;
-	}
-
-	public void setMinimoValor(Double minimoValor) {
-		this.minimoValor = minimoValor;
-	}
-
-	public Double getMaximoValor() {
-		return maximoValor;
-	}
-
-	public void setMaximoValor(Double maximoValor) {
-		this.maximoValor = maximoValor;
-	}
+//	public Double getMinimoValor() {
+//		return minimoValor;
+//	}
+//
+//	public void setMinimoValor(Double minimoValor) {
+//		this.minimoValor = minimoValor;
+//	}
+//
+//	public Double getMaximoValor() {
+//		return maximoValor;
+//	}
+//
+//	public void setMaximoValor(Double maximoValor) {
+//		this.maximoValor = maximoValor;
+//	}
 
 	@Override
 	public String toString() {
@@ -294,7 +294,7 @@ public class Incidencia {
 	public void addListaCategorias(String lista) {
 		String[] categorias = lista.split(",");
 		for (int i = 0; i < categorias.length; i++) {
-			this.addCategoria(new Categoria(categorias[i],this));
+			this.addCategoria(new Categoria(categorias[i]));
 		}
 	}
 
@@ -342,4 +342,5 @@ public class Incidencia {
 		return false;
 
 	}
+
 }

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
+import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
+import uo.asw.incidashboard.services.PropiedadesService;
 import uo.asw.incidashboard.services.UsuarioService;
 
 @Controller
@@ -26,7 +28,10 @@ public class UsuarioController {
 
 	@Autowired
 	private IncidenciasService incidenciaService;
-
+	
+	@Autowired
+	private PropiedadesService p;
+	
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -37,23 +42,21 @@ public class UsuarioController {
 
 	@RequestMapping("/operarios/administrador")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
-
-		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-		incidencias = incidenciaService.getIncis(pageable);
-		model.addAttribute("incidenciasList", incidencias.getContent());
-		model.addAttribute("page", incidencias);
-
+		Page<Propiedad> props = new PageImpl<Propiedad>(new LinkedList<Propiedad>());
+		props = p.findAll(pageable);
+		model.addAttribute("props", props.getContent());
+		model.addAttribute("page", props);
 		return "/operarios/administrador";
 	}
 
 	@RequestMapping(value = "/operarios/administrador", method = RequestMethod.POST)
-	public String getAdmin(Model model, @PathVariable String nombre, @ModelAttribute Incidencia incidencia,
-			Principal principal) {
-		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
-		// modifica valor maximo y minimo
-		inciOr.setMinimoValor(incidencia.getMinimoValor());
-		inciOr.setMaximoValor(incidencia.getMaximoValor());
-		incidenciaService.addIncidencia(inciOr);
+	public String getAdmin(Model model,@ModelAttribute Propiedad property) {
+//		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
+//		// modifica valor maximo y minimo
+//		inciOr.setMinimoValor(incidencia.getMinimoValor());
+//		inciOr.setMaximoValor(incidencia.getMaximoValor());
+//		incidenciaService.addIncidencia(inciOr);
+		incidenciaService.modifyProperties(property);
 		return "redirect:/operarios/administrador";
 	}
 

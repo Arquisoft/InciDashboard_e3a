@@ -14,9 +14,7 @@ public class Categoria {
 	private ObjectId id = new ObjectId();
 	
 	private CategoriaTipos categoria;
-	
-	@DBRef
-	private Incidencia incidenciaC;
+
 
 	
 	public Categoria() {}
@@ -26,10 +24,10 @@ public class Categoria {
 		this.categoria = categoria;
 	}
 	
-	public Categoria(String categoria,Incidencia idIncidenciaC) {
+	public Categoria(String categoria) {
 		super();
 		this.categoria = this.obtenerCategoria(categoria);
-		this.incidenciaC = idIncidenciaC;
+
 	}
 	
 	public ObjectId getId() {
@@ -46,14 +44,6 @@ public class Categoria {
 
 	public void setCategoria(CategoriaTipos categoria) {
 		this.categoria = categoria;
-	}
-
-	public Incidencia getIdIncidenciaC() {
-		return incidenciaC;
-	}
-
-	public void setIdIncidenciaC(Incidencia idIncidenciaC) {
-		this.incidenciaC = idIncidenciaC;
 	}
 
 
