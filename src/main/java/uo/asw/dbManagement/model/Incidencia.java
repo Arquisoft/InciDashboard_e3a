@@ -264,6 +264,19 @@ public class Incidencia {
 				+ fechaEntrada + ", fechaCaducidad=" + fechaCaducidad + ", idAgente=" + idAgente + ", propiedades="
 				+ propiedades + ", categorias=" + categorias + "]";
 	}
+	
+	/**
+	 * Devuelve una incidencia formateada como JSON
+	 * @return String
+	 */
+	public String toStringJson() {
+		String json = String.format("{ 'nombreIncidencia': %s, 'descripcion': %s, "
+				+ "'latitud': %s, 'longitud': %s, 'estado': %s}",
+				
+				nombreIncidencia, descripcion, latitud, longitud, estado);
+		return json;
+	}
+	
 
 	/**
 	 * Añade una categoria al conjunto de categorias de la Incidencia
