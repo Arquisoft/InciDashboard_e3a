@@ -46,9 +46,7 @@ public class Incidencia {
 
 	@DBRef
 	private Set<Categoria> categorias = new HashSet<Categoria>();
-//	
-//	private Double minimoValor;
-//	private Double maximoValor;
+
 
 	public Incidencia() {
 	}
