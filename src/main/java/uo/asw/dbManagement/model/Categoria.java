@@ -14,8 +14,6 @@ public class Categoria {
 	private ObjectId id = new ObjectId();
 	
 	private CategoriaTipos categoria;
-
-
 	
 	public Categoria() {}
 

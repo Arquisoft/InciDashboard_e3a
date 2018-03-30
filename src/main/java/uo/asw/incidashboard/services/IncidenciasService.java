@@ -105,8 +105,7 @@ public class IncidenciasService {
 	private void modifyPropInci(Incidencia i, Propiedad property) {
 		for(Propiedad p: i.getPropiedades()) {
 			if(p.getPropiedad() == property.getPropiedad()) {
-				p.setMaxValor(property.getMaxValor());
-				p.setMinValor(property.getMinValor());
+			
 				pService.addPropiedad(p);
 			}
 		}

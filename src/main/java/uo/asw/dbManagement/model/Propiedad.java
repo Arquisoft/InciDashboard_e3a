@@ -10,43 +10,24 @@ import uo.asw.dbManagement.tipos.PropiedadTipos;
 public class Propiedad {
 	@Id
 	private ObjectId id = new ObjectId();
-	
+
 	private PropiedadTipos propiedad;
-	
+
 	private Double valor;
-	
-	private Double minValor;
-	private Double maxValor;
-	
-	public Propiedad() {}
+
+	public Propiedad() {
+	}
 
 	public Propiedad(PropiedadTipos propiedad, Double valor) {
 		super();
 		this.propiedad = propiedad;
 		this.valor = valor;
 	}
-	
+
 	public Propiedad(String propiedad, Double valor) {
 		super();
 		this.propiedad = obtenerPropiedad(propiedad);
 		this.valor = valor;
-	}
-
-	
-	public Double getMinValor() {
-		return minValor;
-	}
-
-	public void setMinValor(Double minValor) {
-		this.minValor = minValor;
-	}
-
-	public Double getMaxValor() {
-		return maxValor;
-	}
-
-	public void setMaxValor(Double maxValor) {
-		this.maxValor = maxValor;
 	}
 
 	public ObjectId getId() {
@@ -65,7 +46,6 @@ public class Propiedad {
 		this.propiedad = propiedad;
 	}
 
-
 	public Double getValor() {
 		return valor;
 	}
@@ -73,50 +53,27 @@ public class Propiedad {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
-	
 
-	/*@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((idIncidencia == null) ? 0 : idIncidencia.hashCode());
-		result = prime * result + ((propiedad == null) ? 0 : propiedad.hashCode());
-		return result;
-	}
+	/*
+	 * @Override public int hashCode() { final int prime = 31; int result = 1;
+	 * result = prime * result + ((id == null) ? 0 : id.hashCode()); result = prime
+	 * * result + ((idIncidencia == null) ? 0 : idIncidencia.hashCode()); result =
+	 * prime * result + ((propiedad == null) ? 0 : propiedad.hashCode()); return
+	 * result; }
+	 * 
+	 * @Override public boolean equals(Object obj) { if (this == obj) return true;
+	 * if (obj == null) return false; if (getClass() != obj.getClass()) return
+	 * false; Propiedad other = (Propiedad) obj; if (id == null) { if (other.id !=
+	 * null) return false; } else if (!id.equals(other.id)) return false; if
+	 * (idIncidencia == null) { if (other.idIncidencia != null) return false; } else
+	 * if (!idIncidencia.equals(other.idIncidencia)) return false; if (propiedad !=
+	 * other.propiedad) return false; return true; }
+	 * 
+	 * @Override public String toString() { return "Propiedad [id=" + id +
+	 * ", propiedad=" + propiedad + ", idIncidencia=" + idIncidencia + ", valor=" +
+	 * valor + "]"; }
+	 */
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Propiedad other = (Propiedad) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (idIncidencia == null) {
-			if (other.idIncidencia != null)
-				return false;
-		} else if (!idIncidencia.equals(other.idIncidencia))
-			return false;
-		if (propiedad != other.propiedad)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Propiedad [id=" + id + ", propiedad=" 
-				+ propiedad + ", idIncidencia=" + idIncidencia + ", valor="
-				+ valor + "]";
-	}*/
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,17 +107,15 @@ public class Propiedad {
 			return false;
 		return true;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Propiedad [id=" + id + ", propiedad=" + propiedad + ", valor=" + valor
-				+ "]";
+		return "Propiedad [id=" + id + ", propiedad=" + propiedad + ", valor=" + valor + "]";
 	}
 
 	/**
-	 * Devuelve un tipo de propiedad según la propiedad pasada como 
-	 * parámetro
+	 * Devuelve un tipo de propiedad según la propiedad pasada como parámetro
+	 * 
 	 * @param propiedad
 	 * @return PropiedadTipos
 	 */

@@ -55,23 +55,17 @@ public class InsertSampleDataService {
 
 		// Creación de propiedades
 		Propiedad p1 = new Propiedad(PropiedadTipos.TEMPERATURA, 100.0); /* ¿UNIDADES? */
-		p1.setMinValor(80.0);
-		p1.setMaxValor(110.0);
+		
 		Propiedad p2 = new Propiedad(PropiedadTipos.HUMEDAD, 90.0);
-		p2.setMinValor(80.0);
-		p2.setMaxValor(110.0);
+		
 		Propiedad p3 = new Propiedad(PropiedadTipos.PRESION, 1.1);
-		p3.setMinValor(0.01);
-		p3.setMaxValor(2.0);
+		
 		Propiedad p4 = new Propiedad(PropiedadTipos.VELOCIDAD_CIRCULACION, 110.0);
-		p4.setMinValor(90.0);
-		p4.setMaxValor(120.0);
+		
 		Propiedad p5 = new Propiedad(PropiedadTipos.VELOCIDAD_VIENTO, 120.0);
-		p5.setMinValor(90.0);
-		p5.setMaxValor(130.0);
+		
 		Propiedad p6 = new Propiedad(PropiedadTipos.VALOR_NO_ASIGNADO, 0.0);
-		p5.setMinValor(0.0);
-		p5.setMaxValor(0.0);
+	
 		// Categorias
 		Categoria c1 = new Categoria(CategoriaTipos.ACCIDENTE_AEREO);
 		Categoria c2 = new Categoria(CategoriaTipos.ACCIDENTE_CARRETERA);
