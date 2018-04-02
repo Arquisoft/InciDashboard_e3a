@@ -11,14 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
-import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.PropiedadesService;
 import uo.asw.incidashboard.services.UsuarioService;
@@ -28,10 +26,10 @@ public class UsuarioController {
 
 	@Autowired
 	private IncidenciasService incidenciaService;
-	
+
 	@Autowired
 	private PropiedadesService p;
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -40,55 +38,40 @@ public class UsuarioController {
 		return "login";
 	}
 
-	@RequestMapping("/operarios/administrador")
+	@RequestMapping("/users/admin")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 		Page<Propiedad> props = new PageImpl<Propiedad>(new LinkedList<Propiedad>());
 		props = p.findAll(pageable);
 		model.addAttribute("props", props.getContent());
 		model.addAttribute("page", props);
-		return "/operarios/administrador";
+		return "/users/admin";
 	}
 
-	@RequestMapping(value = "/operarios/administrador", method = RequestMethod.POST)
-	public String getAdmin(Model model,@ModelAttribute Propiedad property) {
-//		Incidencia inciOr = incidenciaService.getIncidenciaByName(nombre);
-//		// modifica valor maximo y minimo
-//		inciOr.setMinimoValor(incidencia.getMinimoValor());
-//		inciOr.setMaximoValor(incidencia.getMaximoValor());
-//		incidenciaService.addIncidencia(inciOr);
+	@RequestMapping(value = "/users/admin", method = RequestMethod.POST)
+	public String getAdmin(Model model, @ModelAttribute Propiedad property) {
 		incidenciaService.modifyProperties(property);
-		return "redirect:/operarios/administrador";
+		return "redirect:/users/admin";
 	}
 
-	@RequestMapping("/operarios/operario")
+	@RequestMapping("/users/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
-		
 		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
-
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);
-
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
-
-		return "/operarios/operario";
+		return "/users/operario";
 	}
 
-	@RequestMapping("/operarios/responsableanalisis")
+	@RequestMapping("/users/analisis")
 	public String getResponsable(Model model, Pageable pageable, Principal principal) {
-
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-
 		incidencias = incidenciaService.getIncis(pageable);
-
 		model.addAttribute("incidenciasList", incidencias.getContent());
-
 		model.addAttribute("page", incidencias);
-
-		return "/operarios/responsableanalisis";
+		return "/users/analisis";
 	}
 
 }

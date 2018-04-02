@@ -23,14 +23,9 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private IncidenciasService incidenciaService;
-	@Autowired
-	private UsuarioService usuarioService;
 	
 	@Autowired
-	private IncidenciasService incidenciasService;
-
-	@Autowired
-	private CategoriaService categoriaService;
+	private UsuarioService usuarioService;
 	
 	@Autowired
 	private CategoriaService c;

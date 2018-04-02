@@ -1,14 +1,10 @@
 package uo.asw.dbManagement.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
-import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.PerfilTipos;
