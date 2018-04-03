@@ -1,9 +1,7 @@
 package uo.asw.dbManagement.model;
 
-import org.springframework.data.annotation.Id;
-
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.CategoriaTipos;
@@ -14,8 +12,6 @@ public class Categoria {
 	private ObjectId id = new ObjectId();
 	
 	private CategoriaTipos categoria;
-
-
 	
 	public Categoria() {}
 

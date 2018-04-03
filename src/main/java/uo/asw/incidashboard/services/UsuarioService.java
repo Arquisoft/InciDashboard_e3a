@@ -2,9 +2,6 @@ package uo.asw.incidashboard.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
