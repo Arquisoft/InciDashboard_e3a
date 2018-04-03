@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head" />
-<body>
-	<nav th:replace="fragments/nav" />
+<head th:replace="fragments/priviliged/head" />
+<body class="bg-dark">
 	<div class="container">
-		<h2>Introduce tus datos de operario</h2>
-		<form class="form-horizontal" method="post" action="/login">
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="username">Identificador de operario:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" name="username"
-						placeholder="Ejemplo: Bomberojuan" required="true" />
-				</div>
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Login</div>
+			<div class="card-body">
+				<form method="post" action="/login">
+					<div class="form-group">
+						<label for="username">Usuario</label> <input class="form-control"
+							id="username" placeholder="Id5" required="true" name="username">
+					</div>
+					<div class="form-group">
+						<label for="password">Contraseña</label> <input
+							class="form-control" id="password" type="password"
+							placeholder="123456" required="true" name="password">
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+							<label class="form-check-label"> <input
+								class="form-check-input" type="checkbox"> Remember
+								Password
+							</label>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block">Login</button>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-sm-2" for="username">Contraseña:</label>
-				<div class="col-sm-10">
-					<input type="password" class="form-control" name="password"
-						placeholder="Introduzca la Contraseña" required="true" />
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary">Login</button>
-				</div>
-			</div>
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-		</form>
+		</div>
+		<footer th:replace="fragments/footer" />
 	</div>
-	<footer th:replace="fragments/footer" />
 </body>
+
 </html>
