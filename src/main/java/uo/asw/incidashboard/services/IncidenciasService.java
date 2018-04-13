@@ -1,12 +1,20 @@
 package uo.asw.incidashboard.services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.bson.types.ObjectId;
+import org.omg.CORBA.portable.IndirectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +28,7 @@ import uo.asw.dbManagement.tipos.CategoriaTipos;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.dbManagement.tipos.PropiedadTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
+import uo.asw.incidashboard.util.DateUtil;
 
 @Service
 public class IncidenciasService {
@@ -171,5 +180,62 @@ public class IncidenciasService {
 							idAgente2, propiedades2, categorias2);
 
 				
+		}
+		
+		
+		public Map<String, Integer> getIncidencias10dias(){
+			Map<String, Integer> datos = new HashMap<>();
+			Date hoy = new Date();
+			
+			Calendar c1 = Calendar.getInstance();
+			c1.setTime(hoy);
+			
+			datos.put((new SimpleDateFormat("dd/MM/yyyy")).format(hoy), 0);
+			for(int i=0; i<9;i++) {
+				c1.add(Calendar.DAY_OF_MONTH, -1);
+				Date hace10dias = c1.getTime();
+				datos.put((new SimpleDateFormat("dd/MM/yyyy")).format(hace10dias), 0);
+				c1.setTime(hace10dias);
+			}
+			
+			for(Incidencia inci: incidenciaRepository.findAll()) {
+				String f = (new SimpleDateFormat("dd/MM/yyyy")).format(inci.getFechaEntrada());
+				Integer a = datos.get(f);
+				if(datos.get(f) != null) {
+						datos.put(f, (datos.get(f) +1));	
+				}
+			}
+			
+			return datos;
+		}
+		
+		public String[] getDays(){
+			Map<String, Integer> datos = getIncidencias10dias();
+			List<String> dias = new ArrayList<String>();
+			
+			
+			for (Entry<String, Integer> entry : datos.entrySet()) {
+				dias.add(entry.getKey());
+			}
+			Collections.sort(dias);
+			String[] result = new String[dias.size()];
+			for(int i=0; i<result.length;i++) {
+				result[i] = dias.get(i);
+			}
+			
+			return result;
+		}
+		
+		public int[] getNum(){
+			Map<String, Integer> datos = getIncidencias10dias();
+			String[] aux = getDays();
+					
+			int[] result = new int[aux.length];
+			
+			for(int i=0; i<result.length;i++) {
+				result[i] = datos.get(aux[i]);
+			}
+			
+			return result;
 		}
 }
