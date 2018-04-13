@@ -71,6 +71,7 @@ public class UsuarioController {
 		incidencias = incidenciaService.getIncis(pageable);
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("page", incidencias);
+		model.addAttribute("prueba", "Pruebo mes");
 		return "/users/analisis";
 	}
 
