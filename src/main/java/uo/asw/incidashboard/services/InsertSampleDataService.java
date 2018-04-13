@@ -33,7 +33,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private PropiedadesService p;
 
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		Usuario op1 = new Usuario("nombre1", "apellido1", "operario1@prueba.es", "Id1", "123456", PerfilTipos.OPERARIO);
 		Usuario op2 = new Usuario("nombre2", "apellido2", "operario2@prueba.es", "Id2", "123456", PerfilTipos.OPERARIO);
@@ -155,7 +155,7 @@ public class InsertSampleDataService {
 //		incidenciaService.init();
 	}
 	
-	@PreDestroy
+	//@PreDestroy
 	public void end() {
 		c.deleteAll();
 		incidenciaService.deleteAll();
