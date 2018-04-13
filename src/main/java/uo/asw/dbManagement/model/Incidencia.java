@@ -34,7 +34,6 @@ public class Incidencia {
 	@Column(name = "fecha_caducidad")
 	@Temporal(TemporalType.DATE)
 	private Date fechaCaducidad;
-
 	@NotNull
 	private String idAgente;
 

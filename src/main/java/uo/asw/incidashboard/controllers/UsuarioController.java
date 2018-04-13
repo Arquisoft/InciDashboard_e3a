@@ -73,6 +73,7 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		model.addAttribute("datos", incidenciaService.getNum());
 		model.addAttribute("fechas", incidenciaService.getDays());
+		model.addAttribute("gCircular", incidenciaService.getDataCircle());
 		return "/users/analisis";
 	}
 

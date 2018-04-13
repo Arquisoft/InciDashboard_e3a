@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +102,7 @@ public class InsertSampleDataService {
 		 */
 		Incidencia inci1 = new Incidencia("Inci1", "descripcion1", "Lat1", "Lon1", Choy.getTime(), CunaSemana.getTime(),
 				idAgente1, propiedades1, categorias1);
+		inci1.anularIncidencia();
 
 		/*
 		 * PROPIEDADES = PRESION, VELOCIDAD_CIRCULACION CATEGORIAS = FUEGO,
