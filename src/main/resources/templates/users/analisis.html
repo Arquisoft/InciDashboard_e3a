@@ -77,9 +77,20 @@
 			<!-- Area Chart Example-->
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-area-chart"></i> Gráfico de puntos de propiedades
+					<i class="fa fa-area-chart"></i> Gráfico de número de incidencias últimos 10 días
 				</div>
 				<div class="card-body">
+					<select style="margin-bottom: 5%; margin-right: 4%;"class="form-control" name="category" id="category" onchange="comprobador()">
+	       				<option value="TODAS" selected="selected">Cualquier Categoría</option>
+	       				<option value="ACCIDENTE_CARRETERA">Accidente en Carretera</option>
+	       				<option value="ACCIDENTE_AEREO">Accidente Aéreo</option>
+	        			<option value="FUEGO">Incendio</option>
+	        			<option value="INUNDACION">Inundación</option>
+	        			<option value="METEOROLOGICA">Meteorología</option>
+	        			<option value="VALOR_NO_ASIGNADO">Otro</option>
+      				</select>
+      				
+      				
 					<canvas id="myAreaChart" width="100%" height="30"></canvas>
 				</div>
 				<div class="card-footer small text-muted">Updated yesterday at
@@ -207,6 +218,8 @@
 		<a class="scroll-to-top rounded" href="#page-top"> <i
 			class="fa fa-angle-up"></i>
 		</a>
+		
+		
 		<!-- Bootstrap core JavaScript-->
 		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
 		<script
@@ -230,7 +243,7 @@
 					data : {
 						labels : [[${fechas}]] ,
 						datasets : [ {
-							label : "Sessions",
+							label : "Número de incidencias",
 							lineTension : .3,
 							backgroundColor : "rgba(2,117,216,0.2)",
 							borderColor : "rgba(2,117,216,1)",
@@ -260,8 +273,8 @@
 							yAxes : [ {
 								ticks : {
 									min: 0,
-									  max: 30,
-									  stepSize: 2,
+									max: [[${max}]],
+									stepSize: 1,
 								},
 								gridLines : {
 									color : "rgba(0, 0, 0, .125)"

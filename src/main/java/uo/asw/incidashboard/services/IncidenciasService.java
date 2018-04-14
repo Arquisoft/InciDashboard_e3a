@@ -200,7 +200,7 @@ public class IncidenciasService {
 			
 			for(Incidencia inci: incidenciaRepository.findAll()) {
 				String f = (new SimpleDateFormat("dd/MM/yyyy")).format(inci.getFechaEntrada());
-				Integer a = datos.get(f);
+				
 				if(datos.get(f) != null) {
 						datos.put(f, (datos.get(f) +1));	
 				}
@@ -209,7 +209,7 @@ public class IncidenciasService {
 			return datos;
 		}
 		
-		public String[] getDays(){
+		public Object[] getDays(){
 			Map<String, Integer> datos = getIncidencias10dias();
 			List<String> dias = new ArrayList<String>();
 			
@@ -219,16 +219,14 @@ public class IncidenciasService {
 			}
 			Collections.sort(dias);
 			String[] result = new String[dias.size()];
-			for(int i=0; i<result.length;i++) {
-				result[i] = dias.get(i);
-			}
+
 			
-			return result;
+			return dias.toArray();
 		}
 		
 		public int[] getNum(){
 			Map<String, Integer> datos = getIncidencias10dias();
-			String[] aux = getDays();
+			Object[] aux = getDays();
 					
 			int[] result = new int[aux.length];
 			

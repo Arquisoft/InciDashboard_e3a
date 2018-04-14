@@ -73,6 +73,12 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		model.addAttribute("datos", incidenciaService.getNum());
 		model.addAttribute("fechas", incidenciaService.getDays());
+		
+		int numMax =0;
+		for(int i=0;i<incidenciaService.getNum().length;i++) {
+			if(numMax < incidenciaService.getNum()[i]) numMax = incidenciaService.getNum()[i];
+		}
+		model.addAttribute("max", numMax+2);
 		return "/users/analisis";
 	}
 
