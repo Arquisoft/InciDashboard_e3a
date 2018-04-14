@@ -2,6 +2,7 @@ package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -67,16 +68,16 @@ public class UsuarioController {
 
 	@RequestMapping("/users/analisis")
 	public String getResponsable(Model model, Pageable pageable, Principal principal) {
-		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
-		incidencias = incidenciaService.getIncis(pageable);
-		model.addAttribute("incidenciasList", incidencias.getContent());
+		
+		List<Incidencia> incidencias = incidenciaService.getAllIncidencias();
+		model.addAttribute("incidenciasList", incidencias);
 		model.addAttribute("page", incidencias);
-		model.addAttribute("datos", incidenciaService.getNum());
-		model.addAttribute("fechas", incidenciaService.getDays());
+		model.addAttribute("datos", incidenciaService.getNum(incidencias));
+		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
 		
 		int numMax =0;
-		for(int i=0;i<incidenciaService.getNum().length;i++) {
-			if(numMax < incidenciaService.getNum()[i]) numMax = incidenciaService.getNum()[i];
+		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
+			if(numMax < incidenciaService.getNum(incidencias)[i]) numMax = incidenciaService.getNum(incidencias)[i];
 		}
 		model.addAttribute("max", numMax+2);
 		model.addAttribute("gCircular", incidenciaService.getDataCircle());

@@ -2,6 +2,7 @@ package uo.asw.incidashboard.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -125,7 +126,7 @@ public class IncidenciasService {
 		return (values.size() * 100.0) / inci.size();
 	}
 
-	public Map<String, Integer> getIncidencias10dias() {
+	private Map<String, Integer> getIncidencias10dias(List<Incidencia> incidencias) {
 		Map<String, Integer> datos = new HashMap<>();
 		Date hoy = new Date();
 
@@ -140,9 +141,8 @@ public class IncidenciasService {
 			c1.setTime(hace10dias);
 		}
 
-		for (Incidencia inci : incidenciaRepository.findAll()) {
+		for (Incidencia inci : incidencias) {
 			String f = (new SimpleDateFormat("dd/MM/yyyy")).format(inci.getFechaEntrada());
-			Integer a = datos.get(f);
 			if (datos.get(f) != null) {
 				datos.put(f, (datos.get(f) + 1));
 			}
@@ -151,25 +151,22 @@ public class IncidenciasService {
 		return datos;
 	}
 
-	public String[] getDays() {
-		Map<String, Integer> datos = getIncidencias10dias();
-		List<String> dias = new ArrayList<String>();
-
+	public String[] getDays(List<Incidencia> incidencias) {
+		Map<String, Integer> datos = getIncidencias10dias(incidencias);
+		String[] result = new String[datos.size()];
+		
+		int i=0;
 		for (Entry<String, Integer> entry : datos.entrySet()) {
-			dias.add(entry.getKey());
+			result[i] = entry.getKey();
+			i++;
 		}
-		Collections.sort(dias);
-		String[] result = new String[dias.size()];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = dias.get(i);
-		}
-
+		Arrays.sort(result);
 		return result;
 	}
 
-	public int[] getNum() {
-		Map<String, Integer> datos = getIncidencias10dias();
-		String[] aux = getDays();
+	public int[] getNum(List<Incidencia> incidencias) {
+		Map<String, Integer> datos = getIncidencias10dias(incidencias);
+		String[] aux = getDays(incidencias);
 
 		int[] result = new int[aux.length];
 
@@ -178,5 +175,9 @@ public class IncidenciasService {
 		}
 
 		return result;
+	}
+	
+	public List<Incidencia> getAllIncidencias(){
+		return incidenciaRepository.findAll();
 	}
 }
