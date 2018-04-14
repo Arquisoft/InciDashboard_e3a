@@ -79,6 +79,7 @@ public class UsuarioController {
 			if(numMax < incidenciaService.getNum()[i]) numMax = incidenciaService.getNum()[i];
 		}
 		model.addAttribute("max", numMax+2);
+		model.addAttribute("gCircular", incidenciaService.getDataCircle());
 		return "/users/analisis";
 	}
 
