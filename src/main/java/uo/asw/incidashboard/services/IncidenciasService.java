@@ -46,7 +46,7 @@ public class IncidenciasService {
 					&& incidencias.get(i).getOperario() == null) {
 				Usuario user = usuarioService.getUsuarioConMenosIncis();
 				getIncidencias().get(i).setOperario(user);
-				getIncidencias().get(i).setEstado(EstadoTipos.EN_PROCESO);
+	
 				incidenciaRepository.save(getIncidencias().get(i));
 
 			}
