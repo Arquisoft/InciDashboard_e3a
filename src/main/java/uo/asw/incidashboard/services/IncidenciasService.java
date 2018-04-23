@@ -37,15 +37,15 @@ public class IncidenciasService {
 	@Autowired
 	private PropiedadesService pService;
 
-	private List<Incidencia> listaIncidencias;
+	private List<Incidencia> listaIncidenciasKafka;
 
 	public void init() {
-		listaIncidencias = new ArrayList<Incidencia>();
+		listaIncidenciasKafka = new ArrayList<Incidencia>();
 		asignacionIncidencias();
 	}
 
 	public void addIncidenciaDesdeKafka(Incidencia incidencia) {
-		listaIncidencias.add(incidencia);
+		listaIncidenciasKafka.add(incidencia);
 	}
 
 	public void asignacionIncidencias() {
