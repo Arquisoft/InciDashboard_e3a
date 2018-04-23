@@ -14,7 +14,8 @@ public class KafkaConsumer {
 
 	@KafkaListener(topics = "${kafka.topic}")
 	public void processMessage(Incidencia incidencia) {
-		inci.addIncidencia(incidencia);
-//		System.out.println("Recibida = " + incidencia.toStringJson()); // quitar y enviar a un log
+		inci.addIncidenciaDesdeKafka(incidencia);
+		// System.out.println("Recibida = " + incidencia.toStringJson()); // quitar y
+		// enviar a un log
 	}
 }
