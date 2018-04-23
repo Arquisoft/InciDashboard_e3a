@@ -4,7 +4,7 @@ jdk:
 # git strips the wrapper jar file so we have to force its download during the build
 install:
 - mvn -N io.takari:maven:wrapper
-- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+#- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 after_success:
   - bash <(curl -s https://codecov.io/bash)
  # - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
