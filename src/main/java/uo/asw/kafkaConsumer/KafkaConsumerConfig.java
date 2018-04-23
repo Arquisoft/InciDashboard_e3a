@@ -13,10 +13,11 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
 
-
+@Service
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {

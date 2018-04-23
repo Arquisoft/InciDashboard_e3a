@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +21,8 @@ import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
+import uo.asw.kafkaConsumer.KafkaConsumer;
+import uo.asw.kafkaConsumer.KafkaConsumerConfig;
 
 @Service
 public class IncidenciasService {
@@ -31,7 +32,8 @@ public class IncidenciasService {
 
 	@Autowired
 	private UsuarioService usuarioService;
-
+	@Autowired
+	private KafkaConsumer kafkaConsumer;
 	@Autowired
 	private PropiedadesService pService;
 
@@ -46,7 +48,7 @@ public class IncidenciasService {
 					&& incidencias.get(i).getOperario() == null) {
 				Usuario user = usuarioService.getUsuarioConMenosIncis();
 				getIncidencias().get(i).setOperario(user);
-	
+
 				incidenciaRepository.save(getIncidencias().get(i));
 
 			}
@@ -56,6 +58,7 @@ public class IncidenciasService {
 	public List<Incidencia> getIncidencias() {
 		List<Incidencia> incidencias = new ArrayList<Incidencia>();
 		incidenciaRepository.findAll().forEach(incidencias::add);
+
 		return incidencias;
 	}
 
@@ -154,8 +157,8 @@ public class IncidenciasService {
 	public String[] getDays(List<Incidencia> incidencias) {
 		Map<String, Integer> datos = getIncidencias10dias(incidencias);
 		String[] result = new String[datos.size()];
-		
-		int i=0;
+
+		int i = 0;
 		for (Entry<String, Integer> entry : datos.entrySet()) {
 			result[i] = entry.getKey();
 			i++;
@@ -176,8 +179,8 @@ public class IncidenciasService {
 
 		return result;
 	}
-	
-	public List<Incidencia> getAllIncidencias(){
+
+	public List<Incidencia> getAllIncidencias() {
 		return incidenciaRepository.findAll();
 	}
 }
