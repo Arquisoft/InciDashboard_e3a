@@ -14,7 +14,7 @@ public class ValorLimite {
 
 	private double valorMax;
 	private double valorMin;
-	private PropiedadTipos propiedad;
+	private String propiedad;
 	private boolean maxCritico;
 	private boolean minCritico;
 
@@ -23,7 +23,7 @@ public class ValorLimite {
 	}
 	
 	
-	public ValorLimite(double valorMax, double valorMin, PropiedadTipos propiedad, boolean maxCritico,
+	public ValorLimite(double valorMax, double valorMin, String propiedad, boolean maxCritico,
 			boolean minCritico) {
 		this.valorMax = valorMax;
 		this.valorMin = valorMin;
@@ -33,7 +33,7 @@ public class ValorLimite {
 	}
 
 
-	public ValorLimite(PropiedadTipos propiedad, double valorMax, double valorMin) {
+	public ValorLimite(String propiedad, double valorMax, double valorMin) {
 		this.propiedad = propiedad;
 		this.valorMax = valorMax;
 		this.valorMin = valorMin;
@@ -102,11 +102,11 @@ public class ValorLimite {
 		this.valorMin = valorMin;
 	}
 
-	public PropiedadTipos getPropiedad() {
+	public String getPropiedad() {
 		return propiedad;
 	}
 
-	public void setPropiedad(PropiedadTipos propiedad) {
+	public void setPropiedad(String propiedad) {
 		this.propiedad = propiedad;
 	}
 

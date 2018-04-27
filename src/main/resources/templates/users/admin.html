@@ -3,7 +3,6 @@
 <head th:replace="fragments/priviliged/head" />
 <body >
 	<nav th:replace="fragments/priviliged/navAdmin" />
-	<script src="/script/filtradoCuadroDeMando.js"></script>
 	<div class="content-wrapper">
 		<div class="container-fluid">
 			<div class="card mb-3" style="margin-top: 5%;">
@@ -137,8 +136,48 @@
 		<script src="/startbootstrap/vendor/chart.js/Chart.min.js"></script>
 		<!-- Custom scripts for all pages-->
 		<script src="/startbootstrap/js/sb-admin.min.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
 
-		
+			function comprobador() {
+				var seleccionado = $("#propiedadUmbral option:selected").text();
+
+				if (seleccionado === "Temperatura") {
+					controlador("ºC", seleccionado);
+				} else if (seleccionado === "Presión") {
+					controlador("atm", seleccionado);
+				} else if (seleccionado === "Humedad") {
+					controlador("%", seleccionado);
+				} else if (seleccionado === "Velocidad del Viento") {
+					controlador("km/h", seleccionado);
+				} else if (seleccionado === "Velocidad de Circulación") {
+					controlador("km/h", seleccionado);
+				} else if (seleccionado === "Nivel de Polución") {
+					controlador("mg/m3", seleccionado);
+				} else if (seleccionado === "Calidad del Aire") {
+					controlador("índ.", seleccionado)
+				}
+			}
+
+			function controlador(unidadMedida, seleccionado) {
+				[[${valoresList}]].forEach(function(valor) {
+					var value = $("#propiedadUmbral option:selected").val();
+					if(valor.propiedad == value){
+					$('#valorMinimo').val(valor.valorMin);
+					$('#valorMaximo').val(valor.valorMax);
+					$('#criticoMin').prop('checked', valor.minCritico);
+					$('#criticoMax').prop('checked', valor.maxCritico);
+					
+					}
+				});
+				$("#valormaxUnd").text(unidadMedida);
+				$("#valorminUnd").text(unidadMedida);
+				
+			}
+			/*]]>*/
+		</script>
+
+
 	</div>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private ValorLimiteService valorLimiteService;
 
-//	@PostConstruct
+	@PostConstruct
 	public void init() {
 		Usuario op1 = new Usuario("nombre1", "apellido1", "operario1@prueba.es", "Id1", "123456", PerfilTipos.OPERARIO);
 		Usuario op2 = new Usuario("nombre2", "apellido2", "operario2@prueba.es", "Id2", "123456", PerfilTipos.OPERARIO);
@@ -158,13 +158,13 @@ public class InsertSampleDataService {
 //		usuarioService.addUsuario(op5);
 //		incidenciaService.init();
 		
-		ValorLimite valorLimite1 = new ValorLimite(100, 10, PropiedadTipos.TEMPERATURA, true, false);
-		ValorLimite valorLimite2 = new ValorLimite(90, 10, PropiedadTipos.HUMEDAD, false, false);
-		ValorLimite valorLimite3 = new ValorLimite(110, 5, PropiedadTipos.PRESION, false, false);
-		ValorLimite valorLimite4 = new ValorLimite(320, 30, PropiedadTipos.VELOCIDAD_CIRCULACION, true, true);
-		ValorLimite valorLimite5 = new ValorLimite(400, 1, PropiedadTipos.VELOCIDAD_VIENTO, true, false);
-		ValorLimite valorLimite6 = new ValorLimite(200, 10, PropiedadTipos.NIVEL_POLUCION, true, false);
-		ValorLimite valorLimite7 = new ValorLimite(100, 0, PropiedadTipos.CALIDAD_AIRE, true, false);
+		ValorLimite valorLimite1 = new ValorLimite(100, 10, "TEMPERATURA", true, false);
+		ValorLimite valorLimite2 = new ValorLimite(90, 10, "HUMEDAD", false, false);
+		ValorLimite valorLimite3 = new ValorLimite(110, 5, "PRESION", false, false);
+		ValorLimite valorLimite4 = new ValorLimite(320, 30, "VELOCIDAD_CIRCULACION", true, true);
+		ValorLimite valorLimite5 = new ValorLimite(400, 1,"VELOCIDAD_VIENTO", true, false);
+		ValorLimite valorLimite6 = new ValorLimite(200, 10, "NIVEL_POLUCION", true, false);
+		ValorLimite valorLimite7 = new ValorLimite(100, 0, "CALIDAD_AIRE", true, false);
 		
 		valorLimiteService.addValorLimite(valorLimite1);
 		valorLimiteService.addValorLimite(valorLimite2);
