@@ -3,22 +3,24 @@
 <head th:replace="fragments/priviliged/head" />
 <body >
 	<nav th:replace="fragments/priviliged/navAdmin" />
-	<div class="content-wrapper">
+	
+    
+	<div class="content-wrapper"id="alarmaAqui">
 		<div class="container-fluid">
 			<div class="card mb-3" style="margin-top: 5%;">
-				<div class="card-header">
+				<div class="card-header" >
 					<i class="fa fa-cog" aria-hidden="true"></i> Modificar Umbrales
 				</div>
-				<div onload="rellenar()" class="card-body">
+				<div  class="card-body" >
 
-					<div style="margin-left: 2%; margin-right: 5%;" class="form-row">
+					<div style="margin-left: 2%; margin-right: 5%;" class="form-row" >
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text" for="propiedadUmbral">Seleccione una Propiedad: </label>
 							</div>
 							<select class="custom-select" name="propiedadUmbral"
 								id="propiedadUmbral" onchange="comprobador()">
-								<option value="TEMPERATURA">Temperatura</option>
+								<option name="propiedadUmbral" value="TEMPERATURA">Temperatura</option>
 								<option value="PRESION">Presión</option>
 								<option value="HUMEDAD">Humedad</option>
 								<option value="VELOCIDAD_VIENTO">Velocidad del Viento</option>
@@ -38,15 +40,15 @@
 							</div>
 
 							<input type="text" class="form-control col-md-4"
-								name="valorMaximo" id="valorMaximo">
+								name="valorMaximo" id="valorMaximo" th:value="${temp.valorMax}">
 							<div class="input-group-apend">
 								<span class="input-group-text" id="valormaxUnd">ºC</span>
 							</div>
 							<div style="margin-left: 5%;"
 								class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox"
-									id="criticoMax" value="option1"> <label
-									class="form-check-label" for="criticoMax">Crítico</label>
+									id="criticoMax" value="criticoMax" th:checked="${temp.maxCritico}"> <label
+									class="form-check-label" for="criticoMax" >Crítico</label>
 							</div>
 						</div>
 
@@ -59,7 +61,7 @@
 							</div>
 
 							<input type="text" class="form-control col-md-4"
-								name="valorMinimo" id="valorMinimo">
+								name="valorMinimo" id="valorMinimo" th:value="${temp.valorMin}">
 							<div class="input-group-apend">
 								<span class="input-group-text" id="valorminUnd">ºC</span>
 							</div>
@@ -67,15 +69,15 @@
 							<div style="margin-left: 5%;"
 								class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox"
-									id="criticoMin" value="option1"> <label
+									id="criticoMin" value="criticoMin"  th:checked="${temp.minCritico}"> <label
 									class="form-check-label" for="criticoMin">Crítico</label>
 							</div>
 						</div>
 
 					</div>
 
-				<button type="button" class="btn btn-outline-success btn-lg btn-block">Cambiar</button>
-				<button type="button" class="btn btn-outline-danger btn-lg btn-block">Cancelar</button>
+				<button type="button" class="btn btn-outline-success btn-lg btn-block" onclick="cambiar()" >Cambiar</button>
+				<button type="button" class="btn btn-outline-danger btn-lg btn-block" onclick="cancelar()">Cancelar</button>
 				</div>
 
 			</div>
@@ -140,6 +142,7 @@
 			/*<![CDATA[*/
 
 			function comprobador() {
+				$(".alert").remove();
 				var seleccionado = $("#propiedadUmbral option:selected").text();
 
 				if (seleccionado === "Temperatura") {
@@ -174,8 +177,41 @@
 				$("#valorminUnd").text(unidadMedida);
 				
 			}
+			
+			function cambiar() {
+				
+				 var http = new XMLHttpRequest();			    	
+			    	http.open("POST", "/admin/cambiarUmbral", true);
+			    	http.setRequestHeader("Content-Type", "application/json");
+			    	http.send(JSON.stringify({
+			    		propiedadUmbral: $("#propiedadUmbral option:selected").val(),
+			    		valorMaximo: $('#valorMaximo').val(),
+			    		valorMinimo:  $('#valorMinimo').val(),  
+			    		criticoMin: $('#criticoMin').prop('checked'),  
+			    		criticoMax: $('#criticoMax').prop('checked')
+			    		}));  
+			    	
+			
+			    	$(".alert").remove();
+			            $("#alarmaAqui")
+			                .append("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
+			                		+ "Propiedad " +  $("#propiedadUmbral option:selected").text() + " cambiada" + 
+			                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+			                		+"<span aria-hidden='true'>&times;</span></button></div>");
+			           
+			        
+			}
+			function cancelar() {
+				comprobador();
+				
+            $("#alarmaAqui")
+                .append("<div role='alert' class='alert " + 'alert-warning alert-dismissible fade show' + "'>" 
+                		+ "Se han vuelto a los valores anteriores de la propiedad " +  $("#propiedadUmbral option:selected").text() + 
+                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+                		+"<span aria-hidden='true'>&times;</span></button></div>");}
 			/*]]>*/
 		</script>
+		
 
 
 	</div>

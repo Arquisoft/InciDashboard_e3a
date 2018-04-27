@@ -12,8 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
@@ -51,18 +54,53 @@ public class UsuarioController {
 		valoresLimite = valorLimiteService.findAll(pageable);
 		
 		model.addAttribute("valoresList", valoresLimite.getContent());
-		
+		for(ValorLimite vL:valoresLimite) {
+			if (vL.getPropiedad().equals("TEMPERATURA")) {
+				model.addAttribute("temp", vL);
+				break;
+			}
+		}
 		model.addAttribute("operariosList", operarios.getContent());
 		model.addAttribute("page", operarios);
 		model.addAttribute("conectado", "operario4@prueba.es");
 		return "/users/admin";
 	}
 
-	@RequestMapping(value = "/users/admin", method = RequestMethod.POST)
-	public String getAdmin(Model model, @ModelAttribute Propiedad property) {
-		incidenciaService.modifyProperties(property);
+	@RequestMapping(value = "/admin/cambiarUmbral", method = RequestMethod.POST)
+	public String cambiarUmbral(Model model,Pageable pageable, @RequestBody String json) {
+		
+		
+		//{"propiedadUmbral":"TEMPERATURA","valorMaximo":"100.3","valorMinimo":"10.0","criticoMin":true,"criticoMax":false}
+		
+		String propiedadUmbral = json.split(",")[0].split(":")[1].split("\"")[1];
+		String valorMaximo = json.split(",")[1].split(":")[1].split("\"")[1];
+		String valorMinimo = json.split(",")[2].split(":")[1].split("\"")[1];
+		String criticoMin = json.split(",")[3].split(":")[1];
+		String criticoMax = json.split(",")[4].split(":")[1].split("}")[0];
+		valorLimiteService.update(propiedadUmbral, valorMaximo, valorMinimo, criticoMax, criticoMin);
+		
+		
+		Page<Usuario> operarios = new PageImpl<Usuario>(new LinkedList<Usuario>());
+		operarios = usuarioService.findAll(pageable);
+		
+		Page<ValorLimite> valoresLimite = new PageImpl<ValorLimite>(new LinkedList<ValorLimite>());
+		valoresLimite = valorLimiteService.findAll(pageable);
+		
+		model.addAttribute("valoresList", valoresLimite.getContent());
+		for(ValorLimite vL:valoresLimite) {
+			if (vL.getPropiedad().equals("TEMPERATURA")) {
+				model.addAttribute("temp", vL);
+				break;
+			}
+		}
+		model.addAttribute("operariosList", operarios.getContent());
+		model.addAttribute("page", operarios);
+		model.addAttribute("conectado", "operario4@prueba.es");
 		return "redirect:/users/admin";
 	}
+	
+	
+
 
 	@RequestMapping("/users/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {

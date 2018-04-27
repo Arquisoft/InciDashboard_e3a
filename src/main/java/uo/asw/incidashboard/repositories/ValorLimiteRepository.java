@@ -10,4 +10,6 @@ import uo.asw.dbManagement.model.ValorLimite;
 @EnableMongoRepositories
 public interface ValorLimiteRepository extends MongoRepository<ValorLimite, ObjectId> {
 
+	ValorLimite findByPropiedad(String propiedad);
+
 }
