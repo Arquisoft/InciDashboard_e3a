@@ -23,3 +23,7 @@ function controlador(unidadMedida, seleccionado) {
 	$("#valorminUnd").text(unidadMedida);
 }
 
+function rellenar() {
+	
+}
+

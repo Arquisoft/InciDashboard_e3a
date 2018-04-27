@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="fragments/priviliged/head" />
-<body>
+<body onload="rellenar()">
 	<nav th:replace="fragments/priviliged/navAdmin" />
+	<script src="/script/filtradoCuadroDeMando.js"></script>
 	<div class="content-wrapper">
 		<div class="container-fluid">
-		
-				<script src="/script/filtradoCuadroDeMando.js"></script>
 			<div class="card mb-3" style="margin-top: 5%;">
 				<div class="card-header">
-					<i class="fa fa-area-chart"></i> Modificar umbrales
+					<i class="fa fa-cog" aria-hidden="true"></i> Modificar Umbrales
 				</div>
 				<div class="card-body">
 
@@ -76,6 +75,8 @@
 
 					</div>
 
+				<button type="button" class="btn btn-outline-success btn-lg btn-block">Cambiar</button>
+				<button type="button" class="btn btn-outline-danger btn-lg btn-block">Cancelar</button>
 				</div>
 
 			</div>
