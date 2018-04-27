@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,5 +85,10 @@ public class UsuarioService {
 
 	public void deleteAll() {
 		usersRepository.deleteAll();
+	}
+
+	public Page<Usuario> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return usersRepository.findAll(pageable);
 	}
 }

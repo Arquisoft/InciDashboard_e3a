@@ -29,8 +29,9 @@ public class UsuarioController {
 	private IncidenciasService incidenciaService;
 
 	@Autowired
-	private PropiedadesService p;
-
+	private PropiedadesService propiedadesService;
+	
+	
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -41,10 +42,12 @@ public class UsuarioController {
 
 	@RequestMapping("/users/admin")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
-		Page<Propiedad> props = new PageImpl<Propiedad>(new LinkedList<Propiedad>());
-		props = p.findAll(pageable);
-		model.addAttribute("props", props.getContent());
-		model.addAttribute("page", props);
+		Page<Usuario> operarios = new PageImpl<Usuario>(new LinkedList<Usuario>());
+		operarios = usuarioService.findAll(pageable);
+		
+		model.addAttribute("operariosList", operarios.getContent());
+		model.addAttribute("page", operarios);
+		model.addAttribute("conectado", "operario4@prueba.es");
 		return "/users/admin";
 	}
 

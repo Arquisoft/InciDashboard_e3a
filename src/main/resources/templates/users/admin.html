@@ -2,10 +2,124 @@
 <html lang="en">
 <head th:replace="fragments/priviliged/head" />
 <body>
-	<nav th:replace="fragments/priviliged/nav" />
-	<div class="container"></div>
-	<footer th:replace="fragments/footer" />
-	<div>
+	<nav th:replace="fragments/priviliged/navAdmin" />
+	<div class="content-wrapper">
+		<div class="container-fluid">
+		
+				<script src="/script/filtradoCuadroDeMando.js"></script>
+			<div class="card mb-3" style="margin-top: 5%;">
+				<div class="card-header">
+					<i class="fa fa-area-chart"></i> Modificar umbrales
+				</div>
+				<div class="card-body">
+
+					<div style="margin-left: 2%; margin-right: 5%;" class="form-row">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="propiedadUmbral">Seleccione una Propiedad: </label>
+							</div>
+							<select class="custom-select" name="propiedadUmbral"
+								id="propiedadUmbral" onchange="comprobador()">
+								<option value="TEMPERATURA">Temperatura</option>
+								<option value="PRESION">Presión</option>
+								<option value="HUMEDAD">Humedad</option>
+								<option value="VELOCIDAD_VIENTO">Velocidad del Viento</option>
+								<option value="VELOCIDAD_CIRCULACION">Velocidad de Circulación</option>
+								<option value="NIVEL_POLUCION">Nivel de Polución</option>
+								<option value="CALIDAD_AIRE">Calidad del Aire</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div style="margin-left: 4%;" class="form-group row">
+					<div class="form-row">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Máximo</span>
+							</div>
+
+							<input type="text" class="form-control col-md-4"
+								name="valorMaximo">
+							<div class="input-group-apend">
+								<span class="input-group-text" id="valormaxUnd">ºC</span>
+							</div>
+						</div>
+
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox"
+									id="inlineCheckbox1" value="option1"> <label
+									class="form-check-label" for="inlineCheckbox1">1</label>
+							</div>
+						</div>
+
+					</div>
+
+					<div style="margin-left: 4%;" class="form-group row">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Mínimo</span>
+							</div>
+
+							<input type="text" class="form-control col-md-4"
+								name="valorMinimo">
+							<div class="input-group-apend">
+								<span class="input-group-text" id="valorminUnd">ºC</span>
+							</div>
+						</div>
+
+					</div>
+
+					<canvas id="myAreaChart" width="100%" height="30"></canvas>
+				</div>
+
+			</div>
+
+
+
+
+
+
+			<!--  <div class="mb-0 mt-4">
+			<table class="table table-hover" th:fragment="tableUsers"
+				id="tableUsers">
+				<thead>
+					<tr>
+						<th>Identificador</th>
+						<th >Email</th>
+						<th >Nombre</th>
+						<th >Apellidos</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="operario : operariosList">
+						<td th:text="${operario.identificador}">Id2</td>
+						<td th:text="${operario.email}">pepe@uniovi.es</td>
+						<td th:text="${operario.name}">Nombre del alumno</td>
+						<td th:text="${operario.lastName}">Apellidos del alumno</td>
+						<td ><div>
+								
+									<button type="button" th:id="${'addButton' + operario.id}"
+										class="btn btn-info">Ver Incidencias</button>
+									<script th:inline="javascript">
+									/*<![CDATA[*/
+									$("#addButton[[${operario.id}]]").click(function() {
+										$.get("/admin/[[${operario.id}]]/incidencias", function(data){})
+									});
+									/*]]>*/
+									</script>
+						
+							</div></td>
+							
+					</tr>
+				</tbody>
+			</table> -->
+	
+		</div>
 		<!-- Bootstrap core JavaScript-->
 		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
 		<script
@@ -17,8 +131,8 @@
 		<script src="/startbootstrap/vendor/chart.js/Chart.min.js"></script>
 		<!-- Custom scripts for all pages-->
 		<script src="/startbootstrap/js/sb-admin.min.js"></script>
-		<!-- Custom scripts for this page-->
-		<script src="/startbootstrap/js/sb-admin-charts.min.js"></script>
+
+		
 	</div>
 </body>
 </html>
