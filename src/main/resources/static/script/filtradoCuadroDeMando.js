@@ -21,9 +21,10 @@ function comprobador() {
 function controlador(unidadMedida, seleccionado) {
 	$("#valormaxUnd").text(unidadMedida);
 	$("#valorminUnd").text(unidadMedida);
+	$('#valorMinimo').val(10);
+	$('#valorMaximo').val(10);
+	$('#criticoMin').prop('checked', true);
+	$('#criticoMax').prop('checked', true);
 }
 
-function rellenar() {
-	
-}
 

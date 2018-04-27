@@ -15,6 +15,23 @@ public class ValorLimite {
 	private double valorMax;
 	private double valorMin;
 	private PropiedadTipos propiedad;
+	private boolean maxCritico;
+	private boolean minCritico;
+
+	public ValorLimite() {
+		
+	}
+	
+	
+	public ValorLimite(double valorMax, double valorMin, PropiedadTipos propiedad, boolean maxCritico,
+			boolean minCritico) {
+		this.valorMax = valorMax;
+		this.valorMin = valorMin;
+		this.propiedad = propiedad;
+		this.maxCritico = maxCritico;
+		this.minCritico = minCritico;
+	}
+
 
 	public ValorLimite(PropiedadTipos propiedad, double valorMax, double valorMin) {
 		this.propiedad = propiedad;
@@ -96,5 +113,23 @@ public class ValorLimite {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
+
+	public boolean isMaxCritico() {
+		return maxCritico;
+	}
+
+	public void setMaxCritico(boolean maxCritico) {
+		this.maxCritico = maxCritico;
+	}
+
+	public boolean isMinCritico() {
+		return minCritico;
+	}
+
+	public void setMinCritico(boolean minCritico) {
+		this.minCritico = minCritico;
+	}
+	
+	
 
 }

@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
+import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.PropiedadesService;
 import uo.asw.incidashboard.services.UsuarioService;
+import uo.asw.incidashboard.services.ValorLimiteService;
 
 @Controller
 public class UsuarioController {
@@ -29,7 +31,7 @@ public class UsuarioController {
 	private IncidenciasService incidenciaService;
 
 	@Autowired
-	private PropiedadesService propiedadesService;
+	private ValorLimiteService valorLimiteService;
 	
 	
 	@Autowired
@@ -44,6 +46,11 @@ public class UsuarioController {
 	public String getListado(Model model, Pageable pageable, Principal principal) {
 		Page<Usuario> operarios = new PageImpl<Usuario>(new LinkedList<Usuario>());
 		operarios = usuarioService.findAll(pageable);
+		
+		Page<ValorLimite> valoresLimite = new PageImpl<ValorLimite>(new LinkedList<ValorLimite>());
+		valoresLimite = valorLimiteService.findAll(pageable);
+		
+		model.addAttribute("valoresList", valoresLimite.getContent());
 		
 		model.addAttribute("operariosList", operarios.getContent());
 		model.addAttribute("page", operarios);

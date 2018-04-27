@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import uo.asw.dbManagement.model.Categoria;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
+import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.dbManagement.tipos.CategoriaTipos;
 import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.dbManagement.tipos.PropiedadTipos;
@@ -29,8 +32,11 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private PropiedadesService p;
+	
+	@Autowired
+	private ValorLimiteService valorLimiteService;
 
-	//@PostConstruct
+//	@PostConstruct
 	public void init() {
 		Usuario op1 = new Usuario("nombre1", "apellido1", "operario1@prueba.es", "Id1", "123456", PerfilTipos.OPERARIO);
 		Usuario op2 = new Usuario("nombre2", "apellido2", "operario2@prueba.es", "Id2", "123456", PerfilTipos.OPERARIO);
@@ -125,32 +131,48 @@ public class InsertSampleDataService {
 		Incidencia inci4 = new Incidencia("Inci4", "descripcion4", "Lat4", "Lon4", Choy.getTime(), CunaSemana.getTime(),
 				idAgente4, propiedades4, categorias4);
 
-		p.addPropiedad(p1);
-		p.addPropiedad(p2);
-		p.addPropiedad(p3);
-		p.addPropiedad(p4);
-		p.addPropiedad(p5);
-		p.addPropiedad(p5);
-		c.addCategoria(c1);
-		c.addCategoria(c2);
-		c.addCategoria(c3);
-		c.addCategoria(c4);
-		c.addCategoria(c5);
-		c.addCategoria(c6);
-		inci1.setOperario(op1);
-		inci2.setOperario(op1);
-		inci3.setOperario(op1);
-		inci4.setOperario(op1);
-		incidenciaService.addIncidencia(inci1);
-		incidenciaService.addIncidencia(inci2);
-		incidenciaService.addIncidencia(inci3);
-		incidenciaService.addIncidencia(inci4);
-		usuarioService.addUsuario(op1);
-		usuarioService.addUsuario(op2);
-		usuarioService.addUsuario(op3);
-		usuarioService.addUsuario(op4);
-		usuarioService.addUsuario(op5);
+//		p.addPropiedad(p1);
+//		p.addPropiedad(p2);
+//		p.addPropiedad(p3);
+//		p.addPropiedad(p4);
+//		p.addPropiedad(p5);
+//		p.addPropiedad(p5);
+//		c.addCategoria(c1);
+//		c.addCategoria(c2);
+//		c.addCategoria(c3);
+//		c.addCategoria(c4);
+//		c.addCategoria(c5);
+//		c.addCategoria(c6);
+//		inci1.setOperario(op1);
+//		inci2.setOperario(op1);
+//		inci3.setOperario(op1);
+//		inci4.setOperario(op1);
+//		incidenciaService.addIncidencia(inci1);
+//		incidenciaService.addIncidencia(inci2);
+//		incidenciaService.addIncidencia(inci3);
+//		incidenciaService.addIncidencia(inci4);
+//		usuarioService.addUsuario(op1);
+//		usuarioService.addUsuario(op2);
+//		usuarioService.addUsuario(op3);
+//		usuarioService.addUsuario(op4);
+//		usuarioService.addUsuario(op5);
 //		incidenciaService.init();
+		
+		ValorLimite valorLimite1 = new ValorLimite(100, 10, PropiedadTipos.TEMPERATURA, true, false);
+		ValorLimite valorLimite2 = new ValorLimite(90, 10, PropiedadTipos.HUMEDAD, false, false);
+		ValorLimite valorLimite3 = new ValorLimite(110, 5, PropiedadTipos.PRESION, false, false);
+		ValorLimite valorLimite4 = new ValorLimite(320, 30, PropiedadTipos.VELOCIDAD_CIRCULACION, true, true);
+		ValorLimite valorLimite5 = new ValorLimite(400, 1, PropiedadTipos.VELOCIDAD_VIENTO, true, false);
+		ValorLimite valorLimite6 = new ValorLimite(200, 10, PropiedadTipos.NIVEL_POLUCION, true, false);
+		ValorLimite valorLimite7 = new ValorLimite(100, 0, PropiedadTipos.CALIDAD_AIRE, true, false);
+		
+		valorLimiteService.addValorLimite(valorLimite1);
+		valorLimiteService.addValorLimite(valorLimite2);
+		valorLimiteService.addValorLimite(valorLimite3);
+		valorLimiteService.addValorLimite(valorLimite4);
+		valorLimiteService.addValorLimite(valorLimite5);
+		valorLimiteService.addValorLimite(valorLimite6);
+		valorLimiteService.addValorLimite(valorLimite7);
 	}
 	
 	//@PreDestroy
