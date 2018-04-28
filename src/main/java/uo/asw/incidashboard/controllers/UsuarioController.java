@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
@@ -66,20 +68,8 @@ public class UsuarioController {
 		return "/users/admin";
 	}
 
-	@RequestMapping(value = "/admin/cambiarUmbral", method = RequestMethod.POST)
-	public String cambiarUmbral(Model model,Pageable pageable, @RequestBody String json) {
-		
-		
-		//{"propiedadUmbral":"TEMPERATURA","valorMaximo":"100.3","valorMinimo":"10.0","criticoMin":true,"criticoMax":false}
-		
-		String propiedadUmbral = json.split(",")[0].split(":")[1].split("\"")[1];
-		String valorMaximo = json.split(",")[1].split(":")[1].split("\"")[1];
-		String valorMinimo = json.split(",")[2].split(":")[1].split("\"")[1];
-		String criticoMin = json.split(",")[3].split(":")[1];
-		String criticoMax = json.split(",")[4].split(":")[1].split("}")[0];
-		valorLimiteService.update(propiedadUmbral, valorMaximo, valorMinimo, criticoMax, criticoMin);
-		
-		
+	@RequestMapping("/users/admin/update") 
+	public String updateList(Model model, Pageable pageable, Principal principal){
 		Page<Usuario> operarios = new PageImpl<Usuario>(new LinkedList<Usuario>());
 		operarios = usuarioService.findAll(pageable);
 		
@@ -96,6 +86,19 @@ public class UsuarioController {
 		model.addAttribute("operariosList", operarios.getContent());
 		model.addAttribute("page", operarios);
 		model.addAttribute("conectado", "operario4@prueba.es");
+		return "/users/admin :: update";
+	}
+	
+	@RequestMapping(value = "/admin/cambiarUmbral", method = RequestMethod.POST)
+	public String cambiarUmbral(Model model,Pageable pageable, @RequestBody String json) {
+		
+		String propiedadUmbral = json.split("%2C%22")[0].split("%22%3A%22")[1].split("%22")[0];
+		String valorMaximo = json.split("%2C%22")[1].split("%22%3A%22")[1].split("%22")[0];
+		String valorMinimo = json.split("%2C%22")[2].split("%22%3A%22")[1].split("%22")[0];
+		String criticoMin = json.split("%2C%22")[3].split("%22%3A")[1];
+		String criticoMax = json.split("%2C%22")[4].split("%22%3A")[1].split("%7D=")[0];
+		valorLimiteService.update(propiedadUmbral, valorMaximo, valorMinimo, criticoMax, criticoMin);
+		
 		return "redirect:/users/admin";
 	}
 	

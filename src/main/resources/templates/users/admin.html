@@ -11,15 +11,16 @@
 				<div class="card-header" >
 					<i class="fa fa-cog" aria-hidden="true"></i> Modificar Umbrales
 				</div>
-				<div  class="card-body" >
+				<div  class="card-body" th:fragment="update"
+				id="update">
 
-					<div style="margin-left: 2%; margin-right: 5%;" class="form-row" >
+					<div style="margin-left: 2%; margin-right: 5%;" class="form-row"  >
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text" for="propiedadUmbral">Seleccione una Propiedad: </label>
 							</div>
 							<select class="custom-select" name="propiedadUmbral"
-								id="propiedadUmbral" onchange="comprobador()">
+								id="propiedadUmbral" onchange="comprobador()" >
 								<option name="propiedadUmbral" value="TEMPERATURA">Temperatura</option>
 								<option value="PRESION">Presión</option>
 								<option value="HUMEDAD">Humedad</option>
@@ -32,7 +33,7 @@
 					</div>
 
 
-					<div style="margin-left: 20%;" class="form-group row">
+					<div style="margin-left: 20%;" class="form-group row" >
 
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -40,7 +41,7 @@
 							</div>
 
 							<input type="text" class="form-control col-md-4"
-								name="valorMaximo" id="valorMaximo" th:value="${temp.valorMax}">
+								name="valorMaximo" id="valorMaximo" th:value="${temp.valorMax}" >
 							<div class="input-group-apend">
 								<span class="input-group-text" id="valormaxUnd">ºC</span>
 							</div>
@@ -83,49 +84,6 @@
 			</div>
 
 
-
-
-
-
-			<!--  <div class="mb-0 mt-4">
-			<table class="table table-hover" th:fragment="tableUsers"
-				id="tableUsers">
-				<thead>
-					<tr>
-						<th>Identificador</th>
-						<th >Email</th>
-						<th >Nombre</th>
-						<th >Apellidos</th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="operario : operariosList">
-						<td th:text="${operario.identificador}">Id2</td>
-						<td th:text="${operario.email}">pepe@uniovi.es</td>
-						<td th:text="${operario.name}">Nombre del alumno</td>
-						<td th:text="${operario.lastName}">Apellidos del alumno</td>
-						<td ><div>
-								
-									<button type="button" th:id="${'addButton' + operario.id}"
-										class="btn btn-info">Ver Incidencias</button>
-									<script th:inline="javascript">
-									/*<![CDATA[*/
-									$("#addButton[[${operario.id}]]").click(function() {
-										$.get("/admin/[[${operario.id}]]/incidencias", function(data){})
-									});
-									/*]]>*/
-									</script>
-						
-							</div></td>
-							
-					</tr>
-				</tbody>
-			</table> -->
-	
 		</div>
 		<!-- Bootstrap core JavaScript-->
 		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
@@ -166,10 +124,10 @@
 				[[${valoresList}]].forEach(function(valor) {
 					var value = $("#propiedadUmbral option:selected").val();
 					if(valor.propiedad == value){
-					$('#valorMinimo').val(valor.valorMin);
-					$('#valorMaximo').val(valor.valorMax);
-					$('#criticoMin').prop('checked', valor.minCritico);
-					$('#criticoMax').prop('checked', valor.maxCritico);
+						$('#valorMinimo').val(valor.valorMin);
+						$('#valorMaximo').val(valor.valorMax);
+						$('#criticoMin').prop('checked', valor.minCritico);
+						$('#criticoMax').prop('checked', valor.maxCritico);
 					
 					}
 				});
@@ -180,24 +138,28 @@
 			
 			function cambiar() {
 				
-				 var http = new XMLHttpRequest();			    	
-			    	http.open("POST", "/admin/cambiarUmbral", true);
-			    	http.setRequestHeader("Content-Type", "application/json");
-			    	http.send(JSON.stringify({
-			    		propiedadUmbral: $("#propiedadUmbral option:selected").val(),
-			    		valorMaximo: $('#valorMaximo').val(),
-			    		valorMinimo:  $('#valorMinimo').val(),  
-			    		criticoMin: $('#criticoMin').prop('checked'),  
-			    		criticoMax: $('#criticoMax').prop('checked')
-			    		}));  
+				 
 			    	
-			
+			    	$.post("/admin/cambiarUmbral",JSON.stringify({
+			    		'propiedadUmbral': $("#propiedadUmbral option:selected").val(),
+			    		'valorMaximo': $('#valorMaximo').val(),
+			    		'valorMinimo':  $('#valorMinimo').val(),  
+			    		'criticoMin': $('#criticoMin').prop('checked'),  
+			    		'criticoMax': $('#criticoMax').prop('checked')
+			    		}),function(data){
+						
+						//var urlUpdate = '/users/admin/update';										
+						//$("#update").load(urlUpdate);							
+				});
+		            
 			    	$(".alert").remove();
 			            $("#alarmaAqui")
 			                .append("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
 			                		+ "Propiedad " +  $("#propiedadUmbral option:selected").text() + " cambiada" + 
 			                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
 			                		+"<span aria-hidden='true'>&times;</span></button></div>");
+			            
+			            
 			           
 			        
 			}

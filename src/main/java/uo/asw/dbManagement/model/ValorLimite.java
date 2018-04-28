@@ -42,7 +42,7 @@ public class ValorLimite {
 	@Override
 	public String toString() {
 		return "ValorLimite [id=" + id + ", valorMax=" + valorMax + ", valorMin=" + valorMin + ", propiedad="
-				+ propiedad + "]";
+				+ propiedad + ", maxCritico=" + maxCritico + ", minCritico=" + minCritico + "]";
 	}
 
 	@Override
