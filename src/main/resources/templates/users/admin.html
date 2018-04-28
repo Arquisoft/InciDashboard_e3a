@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="fragments/priviliged/head" />
-<body >
+<body  id="panelUmbrales">
 	<nav th:replace="fragments/priviliged/navAdmin" />
 	
     
-	<div class="content-wrapper"id="alarmaAqui" id="panelUmbrales">
+	<div class="content-wrapper"  style="margin-top: 8%;">
 		<div class="container-fluid">
 		
 			<!-- ############### Cuadro de modificar umbrales ############### -->
-			<div class="card mb-3" style="margin-top: 8%;" >
+			<div class="card mb-3"  >
 				<div class="card-header">
 					<i class="fa fa-cog" aria-hidden="true"></i> Modificar Umbrales de Propiedades
 				</div>
@@ -115,9 +115,22 @@
 									<td class="text-center" th:if="${usuario.email != conectado}"th:text="${usuario.apellidos}">Apellidos del alumno</td>
 									<td class="text-center" th:if="${usuario.email != conectado}"><div>
 
-											<button type="button" th:id="${'addButton' + usuario.id}"
+											<button type="button" th:id="${'addButton' + usuario.identificador}"
 												class="btn btn-info">Ver Incidencias</button>
-											<script th:replace="fragments/verIncidenciasOperario" />
+											<script th:inline="javascript">
+												/*<![CDATA[*/
+												$("#addButton"+ [[${usuario.identificador}]]).click(function() {
+													
+													$(".alert").remove();
+											        $("#panelLista")
+											            .append("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
+											            		+ " [[${usuario.nombre}]]" + 
+											            		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+											            		+"<span aria-hidden='true'>&times;</span></button></div>");
+													
+												});
+												/*]]>*/
+											</script>
 
 										</div></td>
 								</tr>

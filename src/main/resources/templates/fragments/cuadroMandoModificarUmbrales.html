@@ -55,8 +55,8 @@
 				});
 		            
 			    	$(".alert").remove();
-			            $("#alarmaAqui")
-			                .append("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
+			            $("#update")
+			                .prepend ("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
 			                		+ "Propiedad " +  $("#propiedadUmbral option:selected").text() + " cambiada" + 
 			                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
 			                		+"<span aria-hidden='true'>&times;</span></button></div>");
@@ -68,7 +68,7 @@
 			function cancelar() {
 				comprobador();
 				
-	            $("#alarmaAqui")
+	            $("#update")
 	                .append("<div role='alert' class='alert " + 'alert-warning alert-dismissible fade show' + "'>" 
 	                		+ "Se han vuelto a los valores anteriores de la propiedad " +  $("#propiedadUmbral option:selected").text() + 
 	                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
@@ -83,7 +83,7 @@
 				});
 				
 				$('#moverUmbrales').click(function(){  //referimos el elemento ( clase o identificador de acción )
-					$('html, body').animate({scrollTop:$("#panelUmbrales").offset().top}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
+					$('html, body').animate({scrollTop:0}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
 					return false;
 				});
 			});
