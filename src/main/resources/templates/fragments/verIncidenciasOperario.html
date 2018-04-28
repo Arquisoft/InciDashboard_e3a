@@ -1,0 +1,9 @@
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$("#addButton[[${usuario.id}]]").click(function() {
+		$.get("/admin/[[${usuario.id}]]/incidencias", function(data) {
+		})
+	});
+	/*]]>*/
+</script>

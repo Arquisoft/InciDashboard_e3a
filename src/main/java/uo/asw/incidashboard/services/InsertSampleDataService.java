@@ -151,28 +151,28 @@ public class InsertSampleDataService {
 //		incidenciaService.addIncidencia(inci2);
 //		incidenciaService.addIncidencia(inci3);
 //		incidenciaService.addIncidencia(inci4);
-//		usuarioService.addUsuario(op1);
-//		usuarioService.addUsuario(op2);
-//		usuarioService.addUsuario(op3);
-//		usuarioService.addUsuario(op4);
-//		usuarioService.addUsuario(op5);
+		usuarioService.addUsuario(op1);
+		usuarioService.addUsuario(op2);
+		usuarioService.addUsuario(op3);
+		usuarioService.addUsuario(op4);
+		usuarioService.addUsuario(op5);
 //		incidenciaService.init();
 		
-		ValorLimite valorLimite1 = new ValorLimite(100, 10, "TEMPERATURA", true, false);
-		ValorLimite valorLimite2 = new ValorLimite(90, 10, "HUMEDAD", false, false);
-		ValorLimite valorLimite3 = new ValorLimite(110, 5, "PRESION", false, false);
-		ValorLimite valorLimite4 = new ValorLimite(320, 30, "VELOCIDAD_CIRCULACION", true, true);
-		ValorLimite valorLimite5 = new ValorLimite(400, 1,"VELOCIDAD_VIENTO", true, false);
-		ValorLimite valorLimite6 = new ValorLimite(200, 10, "NIVEL_POLUCION", true, false);
-		ValorLimite valorLimite7 = new ValorLimite(100, 0, "CALIDAD_AIRE", true, false);
-		
-		valorLimiteService.addValorLimite(valorLimite1);
-		valorLimiteService.addValorLimite(valorLimite2);
-		valorLimiteService.addValorLimite(valorLimite3);
-		valorLimiteService.addValorLimite(valorLimite4);
-		valorLimiteService.addValorLimite(valorLimite5);
-		valorLimiteService.addValorLimite(valorLimite6);
-		valorLimiteService.addValorLimite(valorLimite7);
+//		ValorLimite valorLimite1 = new ValorLimite(100, 10, "TEMPERATURA", true, false);
+//		ValorLimite valorLimite2 = new ValorLimite(90, 10, "HUMEDAD", false, false);
+//		ValorLimite valorLimite3 = new ValorLimite(110, 5, "PRESION", false, false);
+//		ValorLimite valorLimite4 = new ValorLimite(320, 30, "VELOCIDAD_CIRCULACION", true, true);
+//		ValorLimite valorLimite5 = new ValorLimite(400, 1,"VELOCIDAD_VIENTO", true, false);
+//		ValorLimite valorLimite6 = new ValorLimite(200, 10, "NIVEL_POLUCION", true, false);
+//		ValorLimite valorLimite7 = new ValorLimite(100, 0, "CALIDAD_AIRE", true, false);
+//		
+//		valorLimiteService.addValorLimite(valorLimite1);
+//		valorLimiteService.addValorLimite(valorLimite2);
+//		valorLimiteService.addValorLimite(valorLimite3);
+//		valorLimiteService.addValorLimite(valorLimite4);
+//		valorLimiteService.addValorLimite(valorLimite5);
+//		valorLimiteService.addValorLimite(valorLimite6);
+//		valorLimiteService.addValorLimite(valorLimite7);
 	}
 	
 	//@PreDestroy

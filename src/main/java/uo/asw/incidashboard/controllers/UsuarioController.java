@@ -62,7 +62,7 @@ public class UsuarioController {
 				break;
 			}
 		}
-		model.addAttribute("operariosList", operarios.getContent());
+		model.addAttribute("usuarioList", operarios.getContent());
 		model.addAttribute("page", operarios);
 		model.addAttribute("conectado", "operario4@prueba.es");
 		return "/users/admin";
