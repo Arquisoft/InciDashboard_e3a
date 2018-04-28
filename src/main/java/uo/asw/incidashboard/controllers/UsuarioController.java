@@ -134,5 +134,8 @@ public class UsuarioController {
 		model.addAttribute("gCircular", incidenciaService.getDataCircle());
 		return "/users/analisis";
 	}
+	
+	
+	
 
 }

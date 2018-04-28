@@ -91,7 +91,7 @@
 			<!-- ###############  Fin de cuadro de modificar umbrales ############## -->
 
 			<!-- ###############  Inicio de lista de usuarios ############## -->
-			<div class="card mb-3" style="margin-top: 4%; margin-bottom: 5%;" id="panelLista" >
+			<div class="card mb-3" style="margin-top: 4%; margin-bottom: 20%;" id="panelLista" >
 				<div class="card-header" >
 					<i class="fa fa-id-card" aria-hidden="true"></i> Lista de Operarios
 				</div>
@@ -104,7 +104,7 @@
 									<th class="col-xs-4 text-center">Email</th>
 									<th class="col-xs-4 text-center">Nombre</th>
 									<th class="col-xs-4 text-center">Apellidos</th>
-									<th class="col-xs-4 text-center"></th>
+									<th class="col-xs-4 text-center">Perfil</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,26 +113,8 @@
 									<td class="text-center" th:if="${usuario.email != conectado}"th:text="${usuario.email}">pepe@uniovi.es</td>
 									<td class="text-center" th:if="${usuario.email != conectado}"th:text="${usuario.nombre}">Nombre del alumno</td>
 									<td class="text-center" th:if="${usuario.email != conectado}"th:text="${usuario.apellidos}">Apellidos del alumno</td>
-									<td class="text-center" th:if="${usuario.email != conectado}"><div>
-
-											<button type="button" th:id="${'addButton' + usuario.identificador}"
-												class="btn btn-info">Ver Incidencias</button>
-											<script th:inline="javascript">
-												/*<![CDATA[*/
-												$("#addButton"+ [[${usuario.identificador}]]).click(function() {
-													
-													$(".alert").remove();
-											        $("#panelLista")
-											            .append("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
-											            		+ " [[${usuario.nombre}]]" + 
-											            		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
-											            		+"<span aria-hidden='true'>&times;</span></button></div>");
-													
-												});
-												/*]]>*/
-											</script>
-
-										</div></td>
+									<td class="text-center" th:if="${usuario.email != conectado}"th:text="${usuario.perfil}">admin</td>
+									
 								</tr>
 							</tbody>
 						</table>
