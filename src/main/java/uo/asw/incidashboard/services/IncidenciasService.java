@@ -218,12 +218,18 @@ public class IncidenciasService {
 		
 		if(nuevoEstado.toCharArray()[0]=='E')
 			inciF.setEstado(EstadoTipos.EN_PROCESO);
+		
 		else if (nuevoEstado.toCharArray()[1]=='N')
 			inciF.setEstado(EstadoTipos.ANULADA);
+		
 		else if (nuevoEstado.toCharArray()[0]=='C')
 			inciF.setEstado(EstadoTipos.CERRADA);
+		
 		else if (nuevoEstado.toCharArray()[1]=='B')
 			inciF.setEstado(EstadoTipos.ABIERTA);
+		
+		else
+			return;
 		
 		incidenciaRepository.save(inciF);
 	}
