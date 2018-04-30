@@ -2,11 +2,10 @@
 <html lang="en">
 <head th:replace="fragments/priviliged/head" />
 <body>
-	<nav th:replace="fragments/priviliged/navAdmin" />
-	<div class="content-wrapper" style="margin-top: 4%;">
-		<div class="container-fluid">
+	<nav th:replace="fragments/priviliged/navOper" />
+	
 
-			<div class="card mb-3" style="margin-top: 4%; margin-bottom: 20%;"
+			<div class="card mb-3 text-center" style="margin-top: 6%; margin-bottom: 3%; margin-left: 4%; margin-right: 4%;"
 				id="panelLista">
 				<div class="card-header" >
 					<i class="fa fa-id-card" aria-hidden="true" th:text="${nameUser}"></i>
@@ -67,13 +66,11 @@
 							</tr>
 						</tbody>
 					</table>
+					
+					</div>
+					<footer  th:replace="fragments/pagination" />
 				</div>
-				<footer th:replace="fragments/pagination" />
-			</div>
-		</div>
-	</div>
 
-	</div>
 	
 	<!-- Bootstrap core JavaScript-->
 		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
