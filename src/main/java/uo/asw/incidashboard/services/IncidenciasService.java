@@ -198,15 +198,33 @@ public class IncidenciasService {
 
 	public void changeState(String id, String nuevoEstado) {
 		// TODO Auto-generated method stub
-		Incidencia inci = incidenciaRepository.findOne(new ObjectId(id));
-		if(nuevoEstado =="EN PROCESO")
-			inci.setEstado(EstadoTipos.EN_PROCESO);
-		else if (nuevoEstado=="ANULADA")
-			inci.setEstado(EstadoTipos.ANULADA);
-		else if (nuevoEstado=="CERRADA")
-			inci.setEstado(EstadoTipos.CERRADA);
-		else if (nuevoEstado=="ABIERTA")
-			inci.setEstado(EstadoTipos.ABIERTA);
+		Incidencia inciF = null;
+		for(Incidencia inci: incidenciaRepository.findAll()) {	
+			char[] st = inci.getId().toString().toCharArray();
+			char[] idb = id.toCharArray();
+			boolean igual = true;
+			
+			for(int i =0;i<st.length;i++) {
+				if(st[i] != idb[i+1]) {
+					igual = false;
+					break;
+				}
+			}
+			if (igual ==true) {
+				inciF = inci;
+				break;
+			}
+		}
 		
+		if(nuevoEstado =="EN PROCESO")
+			inciF.setEstado(EstadoTipos.EN_PROCESO);
+		else if (nuevoEstado=="ANULADA")
+			inciF.setEstado(EstadoTipos.ANULADA);
+		else if (nuevoEstado.toCharArray()[0]=='C')
+			inciF.setEstado(EstadoTipos.CERRADA);
+		else if (nuevoEstado=="ABIERTA")
+			inciF.setEstado(EstadoTipos.ABIERTA);
+		
+		incidenciaRepository.save(inciF);
 	}
 }
