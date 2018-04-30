@@ -1,44 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head" />
+<head th:replace="fragments/priviliged/head" />
 <body>
-	<nav th:replace="fragments/nav" />
-	<div class="container">
-		<h2 th:text="${nameUser}">Nombre operario</h2>
+	<nav th:replace="fragments/priviliged/navAdmin" />
+	<div class="content-wrapper" style="margin-top: 8%;">
+		<div class="container-fluid">
 
-		<form class="form-horizontal" method="post" action="/operario">
-			<div class="table-responsive">
-				<table class="table table-hover" th:fragment="tableInci"
-					id="tableInci">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Descripción</th>
-							<th>Fecha de Entrada</th>
-							<th>Fecha de Caducidad</th>
-							<th>Estado</th>
-							<th class="col-md-1"></th>
-							<th class="col-md-1"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="inci : ${incidenciasList}">
-							<td style="width: 250px; vertical-align: middle"
-								th:text="${inci.nombreIncidencia}">Nombre</td>
-							<td style="width: 250px; vertical-align: middle"
-								th:text="${inci.descripcion}">Descripción</td>
-							<td style="width: 250px; vertical-align: middle"
-								th:text="${inci.fechaEntrada}">Fecha de Entrada</td>
-							<td style="width: 250px; vertical-align: middle"
-								th:text="${inci.fechaCaducidad}">Fecha de Caducidad</td>
-							<td style="width: 250px; vertical-align: middle"
-								th:text="${inci.estado}">Estado</td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="card mb-3" style="margin-top: 4%; margin-bottom: 20%;"
+				id="panelLista">
+				<div class="card-header" >
+					<i class="fa fa-id-card" aria-hidden="true" th:text="${nameUser}"></i>
+				</div>
+				<div class="mb-0 mt-3">
+					<table class="table table-bordered" th:fragment="tableInci"
+						id="tableInci">
+						<thead>
+							<tr>
+								<th class="col-xs-3 text-center">Nombre</th>
+								<th class="col-xs-3 text-center">Descripción</th>
+								<th class="col-xs-3 text-center">Fecha de Entrada</th>
+								<th class="col-xs-3 text-center">Fecha de Caducidad</th>
+								<th class="col-xs-3 text-center">Estado</th>
+								<th class="col-xs-4 text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="inci : ${incidenciasList}">
+								<td class="text-center" th:text="${inci.nombreIncidencia}">Nombre</td>
+								<td class="text-center" th:text="${inci.descripcion}">Descripción</td>
+								<td class="text-center" th:text="${inci.fechaEntrada}">Fecha
+									de Entrada</td>
+								<td class="text-center" th:text="${inci.fechaCaducidad}">Fecha
+									de Caducidad</td>
+								<td class="text-center"
+									th:text="${inci.estado}">Estado</td>
+								<td class="text-center">
+									<div class="input-group">
+										<select class="custom-select" id="inputGroupSelect04">
+											<option selected>Estado...</option>
+											<option value="ABIERTA">ABIERTA</option>
+											<option value="EN PROCESO">EN PROCESO</option>
+											<option value="CERRADA">CERRADA</option>
+											<option value="ANULADA">ANULADA</option>
+										</select>
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="button" th:id="${'addButton' + inci.id_string}">Cambiar Estado</button>
+											<script th:inline="javascript">
+											/*<![CDATA[*/
+												
+												$("#addButton"+[[${inci.id_string}]]).click(function() {
+													$.get("/users/[[${inci.id_string}]]/cambiarEstado/"+ $("#inputGroupSelect04 option:selected").val(), function(data){
+														
+														var numberPage = [[${param.page}]];
+														var urlUpdate = '/users/operario/update';
+														if( numberPage != null){
+															urlUpdate += "?page="+numberPage[0];
+														}											
+														$("#tableInci").load(urlUpdate);
+													})
+												});
+											/*]]>*/
+											</script>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<footer th:replace="fragments/pagination" />
 			</div>
-			<footer th:replace="fragments/pagination" />
+		</div>
 	</div>
-	<footer th:replace="fragments/footer" />
+
+	</div>
+	
+	<!-- Bootstrap core JavaScript-->
+		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
+		<script
+			src="/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script
+			src="/startbootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Page level plugin JavaScript-->
+		<script src="/startbootstrap/vendor/chart.js/Chart.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="/startbootstrap/js/sb-admin.min.js"></script>
+	<!-- <footer th:replace="fragments/footer" /> -->
 </body>
 </html>

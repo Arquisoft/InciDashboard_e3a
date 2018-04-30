@@ -36,7 +36,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private ValorLimiteService valorLimiteService;
 
-//	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		Usuario op1 = new Usuario("nombre1", "apellido1", "operario1@prueba.es", "Id1", "123456", PerfilTipos.OPERARIO);
 		Usuario op2 = new Usuario("nombre2", "apellido2", "operario2@prueba.es", "Id2", "123456", PerfilTipos.OPERARIO);
@@ -143,19 +143,19 @@ public class InsertSampleDataService {
 //		c.addCategoria(c4);
 //		c.addCategoria(c5);
 //		c.addCategoria(c6);
-//		inci1.setOperario(op1);
-//		inci2.setOperario(op1);
-//		inci3.setOperario(op1);
-//		inci4.setOperario(op1);
-//		incidenciaService.addIncidencia(inci1);
-//		incidenciaService.addIncidencia(inci2);
-//		incidenciaService.addIncidencia(inci3);
-//		incidenciaService.addIncidencia(inci4);
-		usuarioService.addUsuario(op1);
-		usuarioService.addUsuario(op2);
-		usuarioService.addUsuario(op3);
-		usuarioService.addUsuario(op4);
-		usuarioService.addUsuario(op5);
+		inci1.setOperario(usuarioService.getUsuarioByIdentificador("Id1"));
+		inci2.setOperario(usuarioService.getUsuarioByIdentificador("Id1"));
+		inci3.setOperario(usuarioService.getUsuarioByIdentificador("Id1"));
+		inci4.setOperario(usuarioService.getUsuarioByIdentificador("Id1"));
+		incidenciaService.addIncidencia(inci1);
+		incidenciaService.addIncidencia(inci2);
+		incidenciaService.addIncidencia(inci3);
+		incidenciaService.addIncidencia(inci4);
+//		usuarioService.addUsuario(op1);
+//		usuarioService.addUsuario(op2);
+//		usuarioService.addUsuario(op3);
+//		usuarioService.addUsuario(op4);
+//		usuarioService.addUsuario(op5);
 //		incidenciaService.init();
 		
 //		ValorLimite valorLimite1 = new ValorLimite(100, 10, "TEMPERATURA", true, false);

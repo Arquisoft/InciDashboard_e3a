@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import scala.annotation.meta.setter;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
@@ -79,7 +80,11 @@ public class IncidenciasService {
 	}
 
 	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario u) {
-		return incidenciaRepository.findByOperario(u, pageable);
+		Page<Incidencia> incis = incidenciaRepository.findByOperario(u, pageable);
+		for (Incidencia inci: incis.getContent()) {
+			inci.setId_string(inci.getId().toHexString());
+		}
+		return incis;
 	}
 
 	public void deleteIncidencia(ObjectId id) {
@@ -189,5 +194,19 @@ public class IncidenciasService {
 
 	public List<Incidencia> getAllIncidencias() {
 		return incidenciaRepository.findAll();
+	}
+
+	public void changeState(String id, String nuevoEstado) {
+		// TODO Auto-generated method stub
+		Incidencia inci = incidenciaRepository.findOne(new ObjectId(id));
+		if(nuevoEstado =="EN PROCESO")
+			inci.setEstado(EstadoTipos.EN_PROCESO);
+		else if (nuevoEstado=="ANULADA")
+			inci.setEstado(EstadoTipos.ANULADA);
+		else if (nuevoEstado=="CERRADA")
+			inci.setEstado(EstadoTipos.CERRADA);
+		else if (nuevoEstado=="ABIERTA")
+			inci.setEstado(EstadoTipos.ABIERTA);
+		
 	}
 }

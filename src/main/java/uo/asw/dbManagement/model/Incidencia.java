@@ -47,6 +47,8 @@ public class Incidencia {
 	private Set<Categoria> categorias = new HashSet<Categoria>();
 
 
+	private String id_string;
+	
 	public Incidencia() {
 	}
 
@@ -353,4 +355,14 @@ public class Incidencia {
 
 	}
 
+	public String getId_string() {
+		return id_string;
+	}
+
+	public void setId_string(String id_string) {
+		this.id_string = id_string;
+	}
+
+	
+	
 }
