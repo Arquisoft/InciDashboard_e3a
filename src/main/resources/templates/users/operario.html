@@ -35,7 +35,7 @@
 									th:text="${inci.estado}">Estado</td>
 								<td class="text-center">
 									<div class="input-group">
-										<select class="custom-select" id="inputGroupSelect04">
+										<select class="custom-select" th:id="${'select' + inci.id_string}">
 											<option value="KK" selected>Estado...</option>
 											<option value="ABIERTA">ABIERTA</option>
 											<option value="EN PROCESO">EN PROCESO</option>
@@ -48,7 +48,7 @@
 											/*<![CDATA[*/
 												
 												$("#addButton"+[[${inci.id_string}]]).click(function() {
-													$.get("/users/[[${inci.id_string}]]/cambiarEstado/"+ $("#inputGroupSelect04 option:selected").val(), function(data){
+													$.get("/users/[[${inci.id_string}]]/cambiarEstado/"+ $("#select"+ [[${inci.id_string}]]+" option:selected").val(), function(data){
 														
 														var numberPage = [[${param.page}]];
 														var urlUpdate = '/users/operario/update';
