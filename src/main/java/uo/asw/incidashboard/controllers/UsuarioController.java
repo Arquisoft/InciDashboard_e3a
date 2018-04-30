@@ -132,7 +132,7 @@ public class UsuarioController {
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);
 		model.addAttribute("incidenciasList", incidencias.getContent());
-		model.addAttribute("nameUser", "    Incidencias de " + user.getNombre());
+		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
 		return "/users/operario";
 	}	
@@ -145,7 +145,7 @@ public class UsuarioController {
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);
 		model.addAttribute("incidenciasList", incidencias.getContent());
-		model.addAttribute("nameUser", "    Incidencias de " + user.getNombre());
+		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
 		return "/users/operario :: tableInci";
 	}
