@@ -81,25 +81,11 @@
 					return false;
 				});
 			});
-		
-		function cargarInfo() {
-	        $.ajax({
-	            url: "http://localhost:8081/users/analisis",
-	            type: "GET",
-	            data: {},
-	            dataType: 'json',
-	            success: function (respuesta) {
-	                canciones = respuesta;
-	                actualizarTabla(canciones);
-	            },
-	        });
-	    }
-		
-		setInterval(function() {
-			cargarInfo(); // Refresco el contenido
+
+		setInterval(function(){ 
+			$("#myInLineTable").load("http://localhost:8081/refresh-table"); 
+			console.log("Actualizando contenido de la tabla");
 			}, 2000);
 		
-		
-
 		/*]]>*/
 		</script>

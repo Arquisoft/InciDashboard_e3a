@@ -16,37 +16,39 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import scala.annotation.meta.setter;
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
-import uo.asw.kafkaConsumer.KafkaConsumer;
-import uo.asw.kafkaConsumer.KafkaConsumerConfig;
 
 @Service
 public class IncidenciasService {
 
 	@Autowired
 	private IncidenciaRepository incidenciaRepository;
-
 	@Autowired
 	private UsuarioService usuarioService;
 	@Autowired
-	private KafkaConsumer kafkaConsumer;
-	@Autowired
 	private PropiedadesService pService;
 
-	private List<Incidencia> listaIncidenciasKafka;
+	private List<Incidencia> lInciKafka = new ArrayList<Incidencia>();
 
 	public void init() {
-		listaIncidenciasKafka = new ArrayList<Incidencia>();
 		asignacionIncidencias();
 	}
 
 	public void addIncidenciaDesdeKafka(Incidencia incidencia) {
-		listaIncidenciasKafka.add(incidencia);
+		if(lInciKafka.size() < 8) 
+			lInciKafka.add(0, incidencia);
+		else {
+			lInciKafka.remove(lInciKafka.size());
+			lInciKafka.add(0, incidencia);
+		}
+	}
+	
+	public List<Incidencia> getLInciKafka(){
+		return lInciKafka;
 	}
 
 	public void asignacionIncidencias() {
@@ -56,7 +58,6 @@ public class IncidenciasService {
 					&& incidencias.get(i).getOperario() == null) {
 				Usuario user = usuarioService.getUsuarioConMenosIncis();
 				getIncidencias().get(i).setOperario(user);
-
 				incidenciaRepository.save(getIncidencias().get(i));
 
 			}
@@ -66,7 +67,6 @@ public class IncidenciasService {
 	public List<Incidencia> getIncidencias() {
 		List<Incidencia> incidencias = new ArrayList<Incidencia>();
 		incidenciaRepository.findAll().forEach(incidencias::add);
-
 		return incidencias;
 	}
 
@@ -75,7 +75,6 @@ public class IncidenciasService {
 	}
 
 	public void addIncidencia(Incidencia incidencia) {
-
 		incidenciaRepository.save(incidencia);
 	}
 

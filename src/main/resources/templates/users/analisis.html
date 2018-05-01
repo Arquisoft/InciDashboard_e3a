@@ -77,26 +77,31 @@
 			<!-- Area Chart Example-->
 			<div class="card mb-3" id="panelGraficoInci10">
 				<div class="card-header">
-					<i class="fa fa-bar-chart"></i> Gráfico de número de incidencias en los últimos 10 días
+					<i class="fa fa-bar-chart"></i> Gráfico de número de incidencias en
+					los últimos 10 días
 				</div>
 				<div class="card-body">
-					<select style="margin-bottom: 5%; margin-right: 4%;"class="form-control" name="category" id="category" onchange="comprobador()">
-	       				<option value="TODAS" selected="selected">Cualquier Categoría</option>
-	       				<option value="ACCIDENTE_CARRETERA">Accidente en Carretera</option>
-	       				<option value="ACCIDENTE_AEREO">Accidente Aéreo</option>
-	        			<option value="FUEGO">Incendio</option>
-	        			<option value="INUNDACION">Inundación</option>
-	        			<option value="METEOROLOGICA">Meteorología</option>
-	        			<option value="AMBIENTE">Ambiente</option>
-	        			<option value="AUTOMATICO">Automático</option>
-	        			<option value="CONTAMINACION">Contaminación</option>
-	        			<option value="VALOR_NO_ASIGNADO">Otro</option>
-      				</select>
-      				
-      				
+					<select style="margin-bottom: 5%; margin-right: 4%;"
+						class="form-control" name="category" id="category"
+						onchange="comprobador()">
+						<option value="TODAS" selected="selected">Cualquier
+							Categoría</option>
+						<option value="ACCIDENTE_CARRETERA">Accidente en
+							Carretera</option>
+						<option value="ACCIDENTE_AEREO">Accidente Aéreo</option>
+						<option value="FUEGO">Incendio</option>
+						<option value="INUNDACION">Inundación</option>
+						<option value="METEOROLOGICA">Meteorología</option>
+						<option value="AMBIENTE">Ambiente</option>
+						<option value="AUTOMATICO">Automático</option>
+						<option value="CONTAMINACION">Contaminación</option>
+						<option value="VALOR_NO_ASIGNADO">Otro</option>
+					</select>
+
+
 					<canvas id="myAreaChart" width="100%" height="30"></canvas>
 				</div>
-			<!-- <div class="card-footer small text-muted">Updated yesterday at
+				<!-- <div class="card-footer small text-muted">Updated yesterday at
 					11:59 PM</div> -->
 			</div>
 			<div class="row">
@@ -107,52 +112,21 @@
 							<i class="fa fa-bar-chart"></i> Incidencias en línea
 						</div>
 						<div class="card-body">
-							<table class="table table-bordered" id="myInLineTable">
-							    <thead>
-							      <tr>
-							        <th>Nombre</th>
-							        <th>Agente</th>
-							        <th>Operario</th>
-							      </tr>
-							    </thead>
-							    <tbody>
-							      <tr>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							      </tr>
-							      <tr>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							      </tr>
-							      <tr>
-							        <td></td>
-							        <td></td>
-							        <td></td>
-							      </tr>
-							      <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>
-							    </tbody>
-						  </table>
+							<table class="table table-bordered" id="myInLineTable"
+								th:fragment="refreshFragment">
+								<thead>
+									<tr>
+										<th>Nombre Incidencia</th>
+										<th>Agente</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="dT : ${dataTable}">
+										<td th:text="${dT.nombreIncidencia}"></td>
+										<td th:text="${dT.idAgente}"></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<div class="card-footer small text-muted">Updated yesterday
 							at 11:59 PM</div>
@@ -251,8 +225,8 @@
 		<a class="scroll-to-top rounded" href="#page-top"> <i
 			class="fa fa-angle-up"></i>
 		</a>
-		
-		
+
+
 		<!-- Bootstrap core JavaScript-->
 		<script src="/startbootstrap/vendor/jquery/jquery.min.js"></script>
 		<script

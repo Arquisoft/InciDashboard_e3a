@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,21 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 import uo.asw.dbManagement.model.Incidencia;
-import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.incidashboard.services.IncidenciasService;
-import uo.asw.incidashboard.services.PropiedadesService;
 import uo.asw.incidashboard.services.UsuarioService;
 import uo.asw.incidashboard.services.ValorLimiteService;
 
@@ -35,11 +28,8 @@ public class UsuarioController {
 
 	@Autowired
 	private IncidenciasService incidenciaService;
-
 	@Autowired
 	private ValorLimiteService valorLimiteService;
-	
-	
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -122,8 +112,11 @@ public class UsuarioController {
 		return "/users/analisis";
 	}
 	
-	
-
+	@RequestMapping(value="/refresh-table")
+	public String getValuesTable(Model model) {
+	    model.addAttribute("dataTable",incidenciaService.getLInciKafka());
+	    return "/users/analisis :: #myInLineTable";
+	}
 
 	@RequestMapping("/users/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
