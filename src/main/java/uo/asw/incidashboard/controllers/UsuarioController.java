@@ -134,7 +134,7 @@ public class UsuarioController {
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
 		return "/users/operario";
-	}	
+	}	 //
 	
 	
 	@RequestMapping("/users/operario/update") 
