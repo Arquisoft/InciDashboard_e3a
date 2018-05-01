@@ -197,7 +197,6 @@ public class IncidenciasService {
 	}
 
 	public void changeState(String id, String nuevoEstado) {
-		// TODO Auto-generated method stub
 		Incidencia inciF = null;
 		for(Incidencia inci: incidenciaRepository.findAll()) {	
 			char[] st = inci.getId().toString().toCharArray();
