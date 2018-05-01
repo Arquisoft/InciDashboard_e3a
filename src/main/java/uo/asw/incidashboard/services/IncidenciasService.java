@@ -31,6 +31,8 @@ public class IncidenciasService {
 	private UsuarioService usuarioService;
 	@Autowired
 	private PropiedadesService pService;
+	@Autowired
+	private ValorLimiteService vLimService;
 
 	private List<Incidencia> lInciKafka = new ArrayList<Incidencia>();
 
@@ -42,7 +44,7 @@ public class IncidenciasService {
 		if(lInciKafka.size() < 8) 
 			lInciKafka.add(0, incidencia);
 		else {
-			lInciKafka.remove(lInciKafka.size());
+			lInciKafka.remove(lInciKafka.size() - 1);
 			lInciKafka.add(0, incidencia);
 		}
 	}
@@ -230,5 +232,24 @@ public class IncidenciasService {
 			return;
 		
 		incidenciaRepository.save(inciF);
+	}
+	
+	public boolean incidenciaConValorLimite(Incidencia i) {
+		for(Propiedad p: i.getPropiedades()) {
+			if(vLimService.findByPropiedad(p.getPropiedad().toString()) != null)
+				return true;
+		}
+		return false;
+	}
+
+	public List<String> getIdWithCritis(List<Incidencia> incis) {
+		List<String> ids = new ArrayList<String>();
+		for(Incidencia i: incis) {
+			if(incidenciaConValorLimite(i))
+				ids.add(i.getId_string());
+			else
+				ids.add("none");
+		}
+		return ids;
 	}
 }

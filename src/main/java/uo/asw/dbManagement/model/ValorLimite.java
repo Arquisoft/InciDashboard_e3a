@@ -4,8 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import uo.asw.dbManagement.tipos.PropiedadTipos;
-
 @Document(collection = "valores")
 public class ValorLimite {
 

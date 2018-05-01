@@ -1,6 +1,7 @@
 package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		model.addAttribute("datos", incidenciaService.getNum(incidencias));
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
-		
+
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
 			if(numMax < incidenciaService.getNum(incidencias)[i]) numMax = incidenciaService.getNum(incidencias)[i];
@@ -114,7 +115,9 @@ public class UsuarioController {
 	
 	@RequestMapping(value="/refresh-table")
 	public String getValuesTable(Model model) {
-	    model.addAttribute("dataTable",incidenciaService.getLInciKafka());
+		List<Incidencia> incis = incidenciaService.getLInciKafka();
+	    model.addAttribute("dataTable",incis);
+	    model.addAttribute("vCritics", incidenciaService.getIdWithCritis(incis));
 	    return "/users/analisis :: #myInLineTable";
 	}
 

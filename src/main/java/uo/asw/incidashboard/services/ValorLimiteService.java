@@ -41,4 +41,8 @@ public class ValorLimiteService {
 		vL.setValorMin(Double.parseDouble(valorMinimo));
 		valorLimiteRepository.save(vL);
 	}
+	
+	public ValorLimite findByPropiedad(String propiedad) {
+		return valorLimiteRepository.findByPropiedad(propiedad);
+	}
 }
