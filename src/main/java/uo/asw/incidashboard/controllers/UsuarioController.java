@@ -37,6 +37,7 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		incidenciaService.inicializarListaNotificaciones();
 		return "login";
 	}
 
@@ -175,13 +176,7 @@ public class UsuarioController {
 	    return "/users/operario :: scriptNot";
 	}
 	
-	
-//	//Puede que no valga para nada
-//	@RequestMapping(value="/refresh-alert/red", method=RequestMethod.GET) 
-//	public String sendResquest(Model model){
-//		 
-//		return "redirect:/users/operario";
-//	}
+
 	
 	@RequestMapping(value="/eliminar/notificacion/{id}", method=RequestMethod.GET) 
 	public String eliminarNotif(Model model, @PathVariable String id , Principal principal){
