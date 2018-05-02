@@ -9,35 +9,21 @@
 		aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarResponsive"
-				th:fragment="navbarResponsive">
+	<div class="collapse navbar-collapse" id="navbarResponsive">
 
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item dropdown" id="notificaciones"
-				th:fragment="notificaciones"><a
+			<li class="nav-item dropdown" ><a
 				class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown"
 				href="#" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <i class="fa fa-fw fa-bell"></i> <span
-					>Notificaciones 
-				</span> <span class="indicator text-warning d-none d-lg-block" th:if="${num > 0}"> <i
+				aria-expanded="false"> <i class="fa fa-fw fa-bell"></i> 
+				<span id="notificaciones">Notificaciones 
+				</span> <!--  <span class="indicator text-warning d-none d-lg-block"> <i
 						class="fa fa-fw fa-circle" ></i>
-				</span>
+				</span>-->
 			</a>
-				<div class="dropdown-menu" aria-labelledby="alertsDropdown">
+				<div class="dropdown-menu" aria-labelledby="alertsDropdown" id="recibir">
 					<h6 class="dropdown-header">Nuevas incidencias:</h6>
-					<div class="dropdown-divider"></div>
-
-					<div th:each="inci : ${inicidencias}" >
-						<a class="dropdown-item" href="#"> <span class="text-success">
-								<strong> <i class="fa fa-envelope-o" th:text="${inci.nombreIncidencia}">nombre</i>
-							</strong>
-						</span> <span class="small  text-muted" th:text="${inci.fechaEntrada}" >11:21 AM</span>
-							 <div class="dropdown-message small"> </div>
-						</a>
-						
-						<div class="dropdown-divider"></div>
-						
-					</div>
+					<div class="dropdown-divider" ></div>
 
 
 				</div></li>
@@ -59,13 +45,5 @@
 		<script src="/startbootstrap/js/sb-admin.min.js"></script>
 		<!-- Custom scripts for this page-->
 		
-		<script th:inline="javascript">
-		/*<![CDATA[*/
-		setInterval(function(){ 
-			$("#notificaciones").load("/refresh-alert"); 
-			console.log("Actualizando notificaciones");
-			}, 5000);
-			
-		/*]]>*/
-		</script>
+		
 </nav>

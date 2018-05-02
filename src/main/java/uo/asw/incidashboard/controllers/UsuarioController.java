@@ -2,6 +2,7 @@ package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -146,6 +147,8 @@ public class UsuarioController {
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
+		
+		model.addAttribute("num", 1);
 		return "/users/operario :: tableInci";
 	}
 	
@@ -156,14 +159,25 @@ public class UsuarioController {
 		return "redirect:/users/operario";
 	}
 	
+	
 	@RequestMapping(value="/refresh-alert")
-	public String getValuesAlert(Model model) {
+	public String getValuesAlert(Model model, Pageable pageable, Principal principal) {
 		List<Incidencia> incis = incidenciaService.getLInciKafka();
 		
-		
-		
-	    model.addAttribute("inicidencias",incidenciaService.getAllIncidencias());
-	    model.addAttribute("num", 1);
-	    return "/users/operario :: notificaciones";
+		 model.addAttribute("incidencias",incidenciaService.getAllIncidencias().toArray());
+	    model.addAttribute("num",incidenciaService.getAllIncidencias().size());
+	    Date hoy = new Date();
+	    int min = hoy.getMinutes();
+	    if(min<=9)
+	    	model.addAttribute("fecha","  "+ hoy.getHours() +":0"+min);
+	    else
+	    	model.addAttribute("fecha","  "+ hoy.getHours() +":"+min);
+	    return "/users/operario :: scriptNot";
+	}
+	
+	@RequestMapping(value="/refresh-alert/red", method=RequestMethod.GET) 
+	public String sendResquest(Model model){
+		 
+		return "redirect:/users/operario";
 	}
 }

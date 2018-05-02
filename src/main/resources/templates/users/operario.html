@@ -85,5 +85,41 @@
 		<!-- Custom scripts for all pages-->
 		<script src="/startbootstrap/js/sb-admin.min.js"></script>
 	<!-- <footer th:replace="fragments/footer" /> -->
+	<script th:inline="javascript" th:fragment="scriptNot" id="scriptNot">
+		/*<![CDATA[*/
+		setInterval(function(){ 
+
+				var numberPage = [[${param.page}]];
+				var urlUpdate = '/refresh-alert';
+				if( numberPage != null){
+					urlUpdate += "?page="+numberPage[0];
+				}											
+				$("#scriptNot").load(urlUpdate);
+			console.log("Actualizando notificaciones");
+			}, 2000);
+		
+		if([[${num}]]>0){
+			$(".indicator text-warning d-none d-lg-block").remove();
+			 $("#notificaciones")
+             .append ("<span class='indicator text-warning d-none d-lg-block'> <i class='fa fa-fw fa-circle' ></i> </span>");
+			
+			 $(".aniadido").remove();
+			 for (var i = 0; i < [[${num}]]; i++) {
+				 
+				 $("#recibir")
+	             .append ("<div class='aniadido'>"+
+	            		 "<a class='dropdown-item' href='#'> <span class='text-success'>"+
+	            		 "<strong> <i class='fa fa-envelope-o'>"+[[${incidencias}]][i].nombreIncidencia+"</i></strong>"+
+				"</span> <span class='small  text-muted'>"+[[${fecha}]]+"</span>"+
+					" <div class='dropdown-message small'> </div>"+
+				"</a><div class='dropdown-divider'></div></div>");
+				
+			 }
+			 
+			 
+		}
+			
+		/*]]>*/
+		</script>
 </body>
 </html>
