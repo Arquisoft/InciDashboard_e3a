@@ -1,7 +1,6 @@
 package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -103,6 +102,7 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		model.addAttribute("datos", incidenciaService.getNum(incidencias));
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
+		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
 
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {

@@ -252,4 +252,20 @@ public class IncidenciasService {
 		}
 		return ids;
 	}
+
+	public List<Incidencia> getUrlImgs(List<Incidencia> incidencias) {
+		List<Incidencia> urls = new ArrayList<Incidencia>();
+		String urlBase = "http://localhost:8090/incidencia/";
+		for(Incidencia i: incidencias) {
+			if(i.getImageURL() != null) { // OJO: no guardo en BD.
+				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio del nombre, hasta que empieza el jpg
+				i.setImageURL(urlBase + nombreImg); 
+				System.out.println(i.getImageURL());
+				urls.add(i);
+			}
+			if(urls.size() == 4)
+				return urls;
+		}
+		return urls;
+	}
 }
