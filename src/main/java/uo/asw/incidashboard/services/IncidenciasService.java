@@ -80,17 +80,9 @@ public class IncidenciasService {
 	public void eliminarIncidencia(String id) {
 		Incidencia inciF = null;
 		for(Incidencia inci: incidenciaRepository.findAll()) {	
-			char[] st = inci.getId().toString().toCharArray();
-			char[] idb = id.toCharArray();
-			boolean igual = true;
-			
-			for(int i =0;i<st.length;i++) {
-				if(st[i] != idb[i+1]) {
-					igual = false;
-					break;
-				}
-			}
-			if (igual ==true) {
+			String param= id.split("'")[1];
+			String casa = inci.getId().toString();
+			if (param.equalsIgnoreCase(casa) ==true) {
 				inciF = inci;
 				break;
 			}
@@ -251,7 +243,6 @@ public class IncidenciasService {
 		for(Incidencia inci: incidenciaRepository.findAll()) {	
 			String param= id.split("'")[1];
 			String casa = inci.getId().toString();
-			
 			if (param.equalsIgnoreCase(casa) ==true) {
 				inciF = inci;
 				break;
