@@ -21,6 +21,7 @@ import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.incidashboard.services.IncidenciasService;
+import uo.asw.incidashboard.services.SecurityService;
 import uo.asw.incidashboard.services.UsuarioService;
 import uo.asw.incidashboard.services.ValorLimiteService;
 
@@ -33,12 +34,17 @@ public class UsuarioController {
 	private ValorLimiteService valorLimiteService;
 	@Autowired
 	private UsuarioService usuarioService;
-
+	 @Autowired
+	 private SecurityService securityService;
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		incidenciaService.inicializarListaNotificaciones();
+		model.addAttribute("user", new Usuario());	
 		return "login";
 	}
+	
 
 	@RequestMapping("/users/admin")
 	public String getListado(Model model, Pageable pageable, Principal principal) {
@@ -125,23 +131,22 @@ public class UsuarioController {
 
 	@RequestMapping("/users/operario")
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
-		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		String mail = principal.getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
-		if(user ==null) {
-			return "redirect:/login";
-		}
+
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
 		return "/users/operario";
-	}	 //
+	}	 
 	
 	
 	@RequestMapping("/users/operario/update") 
 	public String updateListInci(Model model, Pageable pageable, Principal principal){
-		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		String mail = principal.getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);

@@ -1,4 +1,4 @@
-package uo.asw;
+package uo.asw.incidashboard.services;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Usuario;
-import uo.asw.incidashboard.services.UsuarioService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -20,15 +19,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UsuarioService usuarioService;
 
 	@Override
-	public UserDetails loadUserByUsername(String inden) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String inden) {
 		Usuario usuario = usuarioService.getUsuarioByIdentificador(inden);
-		if (usuario != null) {
+		
 			Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
 			return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getContrasena(),
 					grantedAuthorities);
-		}
-		throw new UsernameNotFoundException(inden);
+		
+		//throw new UsernameNotFoundException(inden);
 	}
 
 }
