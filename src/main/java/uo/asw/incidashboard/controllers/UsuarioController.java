@@ -1,7 +1,7 @@
 package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +36,7 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		incidenciaService.inicializarListaNotificaciones();
 		return "login";
 	}
 
@@ -103,6 +104,7 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		model.addAttribute("datos", incidenciaService.getNum(incidencias));
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
+		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
 
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
@@ -125,13 +127,16 @@ public class UsuarioController {
 	public String getOperarios(Model model, Pageable pageable, Principal principal) {
 		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
 		Usuario user = usuarioService.getUsuarioByMail(mail);
+		if(user ==null) {
+			return "redirect:/login";
+		}
 		Page<Incidencia> incidencias = new PageImpl<Incidencia>(new LinkedList<Incidencia>());
 		incidencias = incidenciaService.getUserIncidencias(pageable, user);
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
 		return "/users/operario";
-	}	
+	}	 //
 	
 	
 	@RequestMapping("/users/operario/update") 
@@ -143,12 +148,40 @@ public class UsuarioController {
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
+		
+		model.addAttribute("num", 1);
 		return "/users/operario :: tableInci";
 	}
 	
 	@RequestMapping(value="/users/{id}/cambiarEstado/{nuevoEstado}", method=RequestMethod.GET) 
 	public String sendResquest(Model model, @PathVariable String id , @PathVariable String nuevoEstado, Principal principal){
 		incidenciaService.changeState(id, nuevoEstado);
+
 		return "redirect:/users/operario";
+	}
+	
+	
+	@RequestMapping(value="/refresh-alert")
+	public String getValuesAlert(Model model, Pageable pageable, Principal principal) {
+		List<Incidencia> incis = incidenciaService.getLInciKafka();
+		
+		 model.addAttribute("incidencias",incis.toArray());
+	    model.addAttribute("num",incis.size());
+	    Date hoy = new Date();
+	    int min = hoy.getMinutes();
+	    if(min<=9)
+	    	model.addAttribute("fecha","  "+ hoy.getHours() +":0"+min);
+	    else
+	    	model.addAttribute("fecha","  "+ hoy.getHours() +":"+min);
+	    return "/users/operario :: scriptNot";
+	}
+	
+
+	
+	@RequestMapping(value="/eliminar/notificacion/{id}", method=RequestMethod.GET) 
+	public String eliminarNotif(Model model, @PathVariable String id , Principal principal){
+		// llamada al método de servici que quitará un elemento de la lista
+
+		return "redirect:/users/operario/update";
 	}
 }

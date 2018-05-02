@@ -14,17 +14,20 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.tipos.EstadoTipos;
+import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 
 @Service
 public class IncidenciasService {
 
+	private List<Incidencia> notificacionesKafka = new ArrayList<Incidencia>();
 	@Autowired
 	private IncidenciaRepository incidenciaRepository;
 	@Autowired
@@ -41,12 +44,50 @@ public class IncidenciasService {
 	}
 
 	public void addIncidenciaDesdeKafka(Incidencia incidencia) {
+		//¿?¿? Prueba para ver si asigna la incidencia según entra por kafka
+		asignacionIncidencias();
+		
+		//Para notificaciones a operarios
+		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+		Usuario user = usuarioService.getUsuarioByMail(mail);
+		
 		if(lInciKafka.size() < 8) 
 			lInciKafka.add(0, incidencia);
 		else {
 			lInciKafka.remove(lInciKafka.size() - 1);
 			lInciKafka.add(0, incidencia);
 		}
+		
+		if(user.getPerfil()== PerfilTipos.OPERARIO) {
+			comprobarIncidencia(incidencia);
+		}
+	}
+	
+	private void comprobarIncidencia(Incidencia incidencia) {
+		if(!notificacionesKafka.contains(incidencia)) {
+			String mail = SecurityContextHolder.getContext().getAuthentication().getName();
+			Usuario user = usuarioService.getUsuarioByMail(mail);
+			if(incidencia.getOperario().getIdentificador().equals(user.getIdentificador())) {
+				notificacionesKafka.add(incidencia);
+			}
+		}
+	}
+	
+	public void inicializarListaNotificaciones() {
+		notificacionesKafka = new ArrayList<Incidencia>();
+	}
+	
+	public void eliminarIncidencia(String id) {
+		Incidencia inciF = null;
+		for(Incidencia inci: incidenciaRepository.findAll()) {	
+			String param= id.split("'")[1];
+			String casa = inci.getId().toString();
+			if (param.equalsIgnoreCase(casa) ==true) {
+				inciF = inci;
+				break;
+			}
+		}
+		notificacionesKafka.remove(inciF);
 	}
 	
 	public List<Incidencia> getLInciKafka(){
@@ -200,17 +241,9 @@ public class IncidenciasService {
 	public void changeState(String id, String nuevoEstado) {
 		Incidencia inciF = null;
 		for(Incidencia inci: incidenciaRepository.findAll()) {	
-			char[] st = inci.getId().toString().toCharArray();
-			char[] idb = id.toCharArray();
-			boolean igual = true;
-			
-			for(int i =0;i<st.length;i++) {
-				if(st[i] != idb[i+1]) {
-					igual = false;
-					break;
-				}
-			}
-			if (igual ==true) {
+			String param= id.split("'")[1];
+			String casa = inci.getId().toString();
+			if (param.equalsIgnoreCase(casa) ==true) {
 				inciF = inci;
 				break;
 			}
@@ -251,5 +284,21 @@ public class IncidenciasService {
 				ids.add("none");
 		}
 		return ids;
+	}
+
+	public List<Incidencia> getUrlImgs(List<Incidencia> incidencias) {
+		List<Incidencia> urls = new ArrayList<Incidencia>();
+		String urlBase = "http://localhost:8090/incidencia/";
+		for(Incidencia i: incidencias) {
+			if(i.getImageURL() != null) { // OJO: no guardo en BD.
+				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio del nombre, hasta que empieza el jpg
+				i.setImageURL(urlBase + nombreImg); 
+				System.out.println(i.getImageURL());
+				urls.add(i);
+			}
+			if(urls.size() == 4)
+				return urls;
+		}
+		return urls;
 	}
 }

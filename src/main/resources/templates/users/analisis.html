@@ -137,61 +137,18 @@
 					<hr class="mt-2">
 					<div class="card-columns">
 						<!-- Example Social Card-->
-						<div class="card mb-3">
-							<a href="#"> <img class="card-img-top img-fluid w-100"
-								src="https://unsplash.it/700/450?image=610" alt="">
-							</a>
+						<div class="card mb-3" th:each = "url : ${urlImg}">
+							<img class="card-img-top img-fluid w-100"
+								th:src="@{${url.imageURL}}" alt="">
 							<div class="card-body">
 								<h6 class="card-title mb-1">
-									<a href="#">Agente 1</a>
+									<div th:text="${url.idAgente}"></div>
 								</h6>
-								<p class="card-text small">Descripción de la incidencia</p>
+								<p class="card-text small" th:text="${url.descripcion}"></p>
 							</div>
-							<div class="card-footer small text-muted">Posted 32 mins
-								ago</div>
-						</div>
-						<!-- Example Social Card-->
-						<div class="card mb-3">
-							<a href="#"> <img class="card-img-top img-fluid w-100"
-								src="https://unsplash.it/700/450?image=180" alt="">
-							</a>
-							<div class="card-body">
-								<h6 class="card-title mb-1">
-									<a href="#">Agente 007</a>
-								</h6>
-								<p class="card-text small">Descripción de la incidencia</p>
-							</div>
-							<div class="card-footer small text-muted">Posted 46 mins
-								ago</div>
-						</div>
-						<!-- Example Social Card-->
-						<div class="card mb-3">
-							<a href="#"> <img class="card-img-top img-fluid w-100"
-								src="https://unsplash.it/700/450?image=281" alt="">
-							</a>
-							<div class="card-body">
-								<h6 class="card-title mb-1">
-									<a href="#">Agente 34</a>
-								</h6>
-								<p class="card-text small">Descripción de la incidencia</p>
-							</div>
-							<div class="card-footer small text-muted">Posted 1 hr ago</div>
-						</div>
-						<!-- Example Social Card-->
-						<div class="card mb-3">
-							<a href="#"> <img class="card-img-top img-fluid w-100"
-								src="https://unsplash.it/700/450?image=185" alt="">
-							</a>
-							<div class="card-body">
-								<h6 class="card-title mb-1">
-									<a href="#">Agente 92</a>
-								</h6>
-								<p class="card-text small">Descripción de la incidencia</p>
-							</div>
-							<div class="card-footer small text-muted">Posted yesterday</div>
+							<div class="card-footer small text-muted" th:text="${url.fechaEntrada}"></div>
 						</div>
 					</div>
-					<!-- /Card Columns-->
 				</div>
 				<div class="col-lg-4">
 					<!-- Example Pie Chart Card-->
