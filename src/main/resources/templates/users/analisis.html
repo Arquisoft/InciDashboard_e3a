@@ -171,7 +171,7 @@
 							<div id="map" style="width:500px; height:500px;">
 							</div>
 						</div>
-						<button id="pintar" onclick="initMap()">Mostrar Mapa</button>
+						<button id="pintar" onclick="initMap()">Recargar Mapa</button>
 						<div class="list-group list-group-flush small"></div>
 						<div class="card-footer small text-muted">Updated yesterday
 							at 11:59 PM</div>
@@ -179,6 +179,57 @@
 				</div>
 			</div>
 		</div>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			
+			var incidenceList = [[${incidenciasList}]];
+			var marker;
+
+			function initMap() {
+				if (incidenceList.length > 0){
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom : 13,
+					center : {
+						lat : parseFloat(incidenceList[0].latitud),
+						lng : parseFloat(incidenceList[0].longitud)
+					}
+				});
+				} else {
+					var map = new google.maps.Map(document.getElementById('map'), {
+						zoom : 13,
+						center : {
+							lat : 40.758541,
+							lng : -73.984994
+						}
+					});
+				}
+				
+				for (i = 0; i < incidenceList.length; i++) {
+					marker = new google.maps.Marker({
+						map : map,
+						draggable : true,
+						animation : google.maps.Animation.DROP,
+						position : {
+							lat : parseFloat(incidenceList[i].latitud),
+							lng : parseFloat(incidenceList[i].longitud)
+						}
+					});
+					marker.addListener('click', toggleBounce);
+			    }
+			}
+
+			function toggleBounce() {
+				if (marker.getAnimation() !== null) {
+					marker.setAnimation(null);
+				} else {
+					marker.setAnimation(google.maps.Animation.BOUNCE);
+				}
+			}
+
+			$(document).ready(initMap());
+
+			/*]]>*/
+		</script>
 		<!-- /.container-fluid-->
 		<!-- /.content-wrapper-->
 		<footer th:replace="fragments/footer" />
