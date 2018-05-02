@@ -164,8 +164,8 @@ public class UsuarioController {
 	public String getValuesAlert(Model model, Pageable pageable, Principal principal) {
 		List<Incidencia> incis = incidenciaService.getLInciKafka();
 		
-		 model.addAttribute("incidencias",incidenciaService.getAllIncidencias().toArray());
-	    model.addAttribute("num",incidenciaService.getAllIncidencias().size());
+		 model.addAttribute("incidencias",incis.toArray());
+	    model.addAttribute("num",incis.size());
 	    Date hoy = new Date();
 	    int min = hoy.getMinutes();
 	    if(min<=9)
