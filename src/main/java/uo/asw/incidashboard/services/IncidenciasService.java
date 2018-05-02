@@ -25,6 +25,7 @@ import uo.asw.incidashboard.repositories.IncidenciaRepository;
 @Service
 public class IncidenciasService {
 
+	private List<Incidencia> notificacionesKafka = new ArrayList<Incidencia>();
 	@Autowired
 	private IncidenciaRepository incidenciaRepository;
 	@Autowired

@@ -175,9 +175,18 @@ public class UsuarioController {
 	    return "/users/operario :: scriptNot";
 	}
 	
-	@RequestMapping(value="/refresh-alert/red", method=RequestMethod.GET) 
-	public String sendResquest(Model model){
-		 
-		return "redirect:/users/operario";
+	
+//	//Puede que no valga para nada
+//	@RequestMapping(value="/refresh-alert/red", method=RequestMethod.GET) 
+//	public String sendResquest(Model model){
+//		 
+//		return "redirect:/users/operario";
+//	}
+	
+	@RequestMapping(value="/eliminar/notificacion/{id}", method=RequestMethod.GET) 
+	public String eliminarNotif(Model model, @PathVariable String id , Principal principal){
+		// llamada al método de servici que quitará un elemento de la lista
+
+		return "redirect:/users/operario/update";
 	}
 }
