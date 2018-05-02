@@ -19,15 +19,17 @@ import uo.asw.dbManagement.tipos.EstadoTipos;
 
 @Document(collection = "incidencias")
 public class Incidencia {
+	
 	@Id
 	private ObjectId id = new ObjectId();
-
 	@NotNull
 	private String nombreIncidencia;
+	
 	private String descripcion;
 	private String latitud;
 	private String longitud;
 	private EstadoTipos estado;
+	
 	@Column(name = "fecha_entrada")
 	@Temporal(TemporalType.DATE)
 	private Date fechaEntrada;
@@ -36,21 +38,17 @@ public class Incidencia {
 	private Date fechaCaducidad;
 	@NotNull
 	private String idAgente;
-
 	@DBRef
 	private Usuario operario;
-
 	@DBRef
 	private Set<Propiedad> propiedades = new HashSet<Propiedad>();
-
 	@DBRef
 	private Set<Categoria> categorias = new HashSet<Categoria>();
 
-
+	private String imageURL;
 	private String id_string;
 	
-	public Incidencia() {
-	}
+	public Incidencia() {}
 
 	/**
 	 * Constructor que crea una incidencia desde parámetros String
@@ -93,6 +91,16 @@ public class Incidencia {
 		this.idAgente = idAgente;
 		this.propiedades = propiedades;
 		this.categorias = categorias;
+	}
+	
+	
+	
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 
 	public ObjectId getId() {
