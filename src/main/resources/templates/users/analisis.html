@@ -167,7 +167,7 @@
 						<div class="card-header">
 							<i class="fa fa-bell-o"></i> Localizaciones de las incidencias
 						</div>
-						<div class="card-body">
+						<div class="card-body" style="overflow:auto;">
 							<div id="map" style="width:500px; height:500px;">
 							</div>
 						</div>
@@ -209,9 +209,10 @@
 						map : map,
 						draggable : true,
 						animation : google.maps.Animation.DROP,
+						title : incidenceList[i].nombreIncidencia,
 						position : {
 							lat : parseFloat(incidenceList[i].latitud),
-							lng : parseFloat(incidenceList[i].longitud)
+							lng : parseFloat(incidenceList[i].longitud),
 						}
 					});
 					marker.addListener('click', toggleBounce);
