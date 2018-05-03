@@ -1,6 +1,8 @@
-<script th:inline="javascript">
+<script th:inline="javascript" id="update" th:fragment="update">
 			/*<![CDATA[*/
 
+				var listavalores = [[${valoresList}]];
+				
 			function comprobador() {
 				$(".alert").remove();
 				var seleccionado = $("#propiedadUmbral option:selected").text();
@@ -23,7 +25,7 @@
 			}
 
 			function controlador(unidadMedida, seleccionado) {
-				[[${valoresList}]].forEach(function(valor) {
+				listavalores.forEach(function(valor) {
 					var value = $("#propiedadUmbral option:selected").val();
 					if(valor.propiedad == value){
 						$('#valorMinimo').val(valor.valorMin);
@@ -49,28 +51,29 @@
 			    		'criticoMin': $('#criticoMin').prop('checked'),  
 			    		'criticoMax': $('#criticoMax').prop('checked')
 			    		}),function(data){
-						
-						//var urlUpdate = '/users/admin/update';										
-						//$("#update").load(urlUpdate);							
-				});
+			    							
+							$(".alert").remove();
+				            $("#updateA")
+				                .prepend ("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
+				                		+ "Propiedad " +  $("#propiedadUmbral option:selected").text() + " cambiada" + 
+				                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+				                		+"<span aria-hidden='true'>&times;</span></button></div>");
+				           
+				            setTimeout(location.reload(), 2000);
+				            	
+			    	});
+			    	
+				
 		            
-			    	$(".alert").remove();
-			            $("#update")
-			                .prepend ("<div role='alert' class='alert " + 'alert-success alert-dismissible fade show' + "'>" 
-			                		+ "Propiedad " +  $("#propiedadUmbral option:selected").text() + " cambiada" + 
-			                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
-			                		+"<span aria-hidden='true'>&times;</span></button></div>");
-			            
-			            
-			           
-			        
+		            listavalores = [[${valoresList}]];
 			}
+			
 			function cancelar() {
 				comprobador();
 				
-	            $("#update")
+	            $("#updateA")
 	                .append("<div role='alert' class='alert " + 'alert-warning alert-dismissible fade show' + "'>" 
-	                		+ "Se han vuelto a los valores anteriores de la propiedad " +  $("#propiedadUmbral option:selected").text() + 
+	                		+ "Vuelta a los valores de " +  $("#propiedadUmbral option:selected").text() + " existentes en la base de datos"+ 
 	                		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
 	                		+"<span aria-hidden='true'>&times;</span></button></div>");
             }

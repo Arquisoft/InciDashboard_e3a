@@ -63,30 +63,11 @@ public class UsuarioController {
 		}
 		model.addAttribute("usuarioList", operarios.getContent());
 		model.addAttribute("page", operarios);
-		model.addAttribute("conectado", "operario4@prueba.es");
+		model.addAttribute("conectado", principal.getName());
 		return "/users/admin";
 	}
 
-	@RequestMapping("/users/admin/update") 
-	public String updateList(Model model, Pageable pageable, Principal principal){
-		Page<Usuario> operarios = new PageImpl<Usuario>(new LinkedList<Usuario>());
-		operarios = usuarioService.findAll(pageable);
-		
-		Page<ValorLimite> valoresLimite = new PageImpl<ValorLimite>(new LinkedList<ValorLimite>());
-		valoresLimite = valorLimiteService.findAll(pageable);
-		
-		model.addAttribute("valoresList", valoresLimite.getContent());
-		for(ValorLimite vL:valoresLimite) {
-			if (vL.getPropiedad().equals("TEMPERATURA")) {
-				model.addAttribute("temp", vL);
-				break;
-			}
-		}
-		model.addAttribute("operariosList", operarios.getContent());
-		model.addAttribute("page", operarios);
-		model.addAttribute("conectado", "operario4@prueba.es");
-		return "/users/admin :: update";
-	}
+
 	
 	@RequestMapping(value = "/admin/cambiarUmbral", method = RequestMethod.POST)
 	public String cambiarUmbral(Model model,Pageable pageable, @RequestBody String json) {
