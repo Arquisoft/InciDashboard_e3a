@@ -14,12 +14,12 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
+import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.dbManagement.tipos.PerfilTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
@@ -36,81 +36,66 @@ public class IncidenciasService {
 	private PropiedadesService pService;
 	@Autowired
 	private ValorLimiteService vLimService;
-
+	
+	private Usuario userConnected;
+	
 	private List<Incidencia> lInciKafka = new ArrayList<Incidencia>();
 
-	public void init() {
-		asignacionIncidencias();
-	}
-
 	public void addIncidenciaDesdeKafka(Incidencia incidencia) {
-		//¿?¿? Prueba para ver si asigna la incidencia según entra por kafka
-		asignacionIncidencias();
-		
-		//Para notificaciones a operarios
-		String mail = SecurityContextHolder.getContext().getAuthentication().getName();
-		Usuario user = usuarioService.getUsuarioByMail(mail);
-		
-		if(lInciKafka.size() < 8) 
+		incidencia = asignacionIncidencias(incidencia);
+
+		// Para notificaciones a operarios
+
+		if (lInciKafka.size() < 8)
 			lInciKafka.add(0, incidencia);
 		else {
 			lInciKafka.remove(lInciKafka.size() - 1);
 			lInciKafka.add(0, incidencia);
 		}
-		
-		if(user.getPerfil()== PerfilTipos.OPERARIO) {
+
+		if (userConnected.getPerfil() == PerfilTipos.OPERARIO) {
 			comprobarIncidencia(incidencia);
 		}
 	}
 	
+	public void setUserConnected(String email) {
+		userConnected = usuarioService.getUsuarioByMail(email);
+	}
+
 	private void comprobarIncidencia(Incidencia incidencia) {
-		if(!notificacionesKafka.contains(incidencia)) {
-			String mail = SecurityContextHolder.getContext().getAuthentication().getName();
-			Usuario user = usuarioService.getUsuarioByMail(mail);
-			if(incidencia.getOperario().getIdentificador().equals(user.getIdentificador())) {
+		if (!notificacionesKafka.contains(incidencia)) {
+			if (incidencia.getOperario().getIdentificador().equals(userConnected.getIdentificador())) {
 				notificacionesKafka.add(incidencia);
 			}
 		}
 	}
-	
+
 	public void inicializarListaNotificaciones() {
 		notificacionesKafka = new ArrayList<Incidencia>();
 	}
-	
+
 	public void eliminarIncidencia(String id) {
 		Incidencia inciF = null;
-		for(Incidencia inci: incidenciaRepository.findAll()) {	
-			String param= id.split("'")[1];
+		for (Incidencia inci : incidenciaRepository.findAll()) {
+			String param = id.split("'")[1];
 			String casa = inci.getId().toString();
-			if (param.equalsIgnoreCase(casa) ==true) {
+			if (param.equalsIgnoreCase(casa) == true) {
 				inciF = inci;
 				break;
 			}
 		}
 		notificacionesKafka.remove(inciF);
 	}
-	
-	public List<Incidencia> getLInciKafka(){
-		return lInciKafka;
+
+	public List<Incidencia> getLInciKafka() {
+		return setCritics(lInciKafka);
 	}
 
-	public void asignacionIncidencias() {
-		List<Incidencia> incidencias = getIncidencias();
-		for (int i = 0; i < incidencias.size(); i++) {
-			if (incidencias.get(i).getEstado().equals(EstadoTipos.ABIERTA)
-					&& incidencias.get(i).getOperario() == null) {
-				Usuario user = usuarioService.getUsuarioConMenosIncis();
-				getIncidencias().get(i).setOperario(user);
-				incidenciaRepository.save(getIncidencias().get(i));
-
-			}
-		}
-	}
-
-	public List<Incidencia> getIncidencias() {
-		List<Incidencia> incidencias = new ArrayList<Incidencia>();
-		incidenciaRepository.findAll().forEach(incidencias::add);
-		return incidencias;
+	public Incidencia asignacionIncidencias(Incidencia incidencia) {
+		Usuario user = usuarioService.getUsuarioConMenosIncis();
+		incidencia.setOperario(user);
+		incidenciaRepository.save(incidencia);
+		return incidencia;
 	}
 
 	public Page<Incidencia> getIncis(Pageable pageable) {
@@ -123,7 +108,7 @@ public class IncidenciasService {
 
 	public Page<Incidencia> getUserIncidencias(Pageable pageable, Usuario u) {
 		Page<Incidencia> incis = incidenciaRepository.findByOperario(u, pageable);
-		for (Incidencia inci: incis.getContent()) {
+		for (Incidencia inci : incis.getContent()) {
 			inci.setId_string(inci.getId().toHexString());
 		}
 		return incis;
@@ -240,63 +225,66 @@ public class IncidenciasService {
 
 	public void changeState(String id, String nuevoEstado) {
 		Incidencia inciF = null;
-		for(Incidencia inci: incidenciaRepository.findAll()) {	
-			String param= id.split("'")[1];
+		for (Incidencia inci : incidenciaRepository.findAll()) {
+			String param = id.split("'")[1];
 			String casa = inci.getId().toString();
-			if (param.equalsIgnoreCase(casa) ==true) {
+			if (param.equalsIgnoreCase(casa) == true) {
 				inciF = inci;
 				break;
 			}
 		}
-		
-		if(nuevoEstado.toCharArray()[0]=='E')
+
+		if (nuevoEstado.toCharArray()[0] == 'E')
 			inciF.setEstado(EstadoTipos.EN_PROCESO);
-		
-		else if (nuevoEstado.toCharArray()[1]=='N')
+
+		else if (nuevoEstado.toCharArray()[1] == 'N')
 			inciF.setEstado(EstadoTipos.ANULADA);
-		
-		else if (nuevoEstado.toCharArray()[0]=='C')
+
+		else if (nuevoEstado.toCharArray()[0] == 'C')
 			inciF.setEstado(EstadoTipos.CERRADA);
-		
-		else if (nuevoEstado.toCharArray()[1]=='B')
+
+		else if (nuevoEstado.toCharArray()[1] == 'B')
 			inciF.setEstado(EstadoTipos.ABIERTA);
-		
+
 		else
 			return;
-		
+
 		incidenciaRepository.save(inciF);
 	}
-	
+
 	public boolean incidenciaConValorLimite(Incidencia i) {
-		for(Propiedad p: i.getPropiedades()) {
-			if(vLimService.findByPropiedad(p.getPropiedad().toString()) != null)
-				return true;
+		for (Propiedad p : i.getPropiedades()) {
+			ValorLimite vL = vLimService.findByPropiedad(p.getPropiedad().toString());
+			if (vL != null)
+				return vL.isMaxCritico() || vL.isMinCritico();
 		}
 		return false;
 	}
 
-	public List<String> getIdWithCritis(List<Incidencia> incis) {
-		List<String> ids = new ArrayList<String>();
-		for(Incidencia i: incis) {
-			if(incidenciaConValorLimite(i))
-				ids.add(i.getId_string());
+	public List<Incidencia> setCritics(List<Incidencia> incis) {
+		List<Incidencia> aux = new ArrayList<Incidencia>(incis);
+		for (Incidencia i : aux) {
+			if (incidenciaConValorLimite(i))
+				i.setCritics(true);
 			else
-				ids.add("none");
+				i.setCritics(false);
 		}
-		return ids;
+		return aux;
 	}
 
 	public List<Incidencia> getUrlImgs(List<Incidencia> incidencias) {
 		List<Incidencia> urls = new ArrayList<Incidencia>();
 		String urlBase = "http://localhost:8090/incidencia/";
-		for(Incidencia i: incidencias) {
-			if(i.getImageURL() != null) { // OJO: no guardo en BD.
-				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio del nombre, hasta que empieza el jpg
-				i.setImageURL(urlBase + nombreImg); 
+		for (Incidencia i : incidencias) {
+			if (i.getImageURL() != null) { // OJO: no guardo en BD.
+				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio
+																								// del nombre, hasta que
+																								// empieza el jpg
+				i.setImageURL(urlBase + nombreImg);
 				System.out.println(i.getImageURL());
 				urls.add(i);
 			}
-			if(urls.size() == 4)
+			if (urls.size() == 4)
 				return urls;
 		}
 		return urls;
