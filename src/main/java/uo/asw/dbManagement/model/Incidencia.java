@@ -47,6 +47,7 @@ public class Incidencia {
 
 	private String imageURL;
 	private String id_string;
+	private boolean critics;
 	
 	public Incidencia() {}
 
@@ -371,6 +372,11 @@ public class Incidencia {
 		this.id_string = id_string;
 	}
 
-	
-	
+	public boolean getCritics() {
+		return critics;
+	}
+
+	public void setCritics(boolean isCritics) {
+		this.critics = isCritics;
+	}
 }

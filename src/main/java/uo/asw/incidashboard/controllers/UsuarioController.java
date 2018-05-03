@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ import uo.asw.dbManagement.model.Incidencia;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.incidashboard.services.IncidenciasService;
-import uo.asw.incidashboard.services.SecurityService;
 import uo.asw.incidashboard.services.UsuarioService;
 import uo.asw.incidashboard.services.ValorLimiteService;
 
@@ -34,8 +32,6 @@ public class UsuarioController {
 	private ValorLimiteService valorLimiteService;
 	@Autowired
 	private UsuarioService usuarioService;
-	 @Autowired
-	 private SecurityService securityService;
 	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -64,6 +60,7 @@ public class UsuarioController {
 		model.addAttribute("usuarioList", operarios.getContent());
 		model.addAttribute("page", operarios);
 		model.addAttribute("conectado", principal.getName());
+		incidenciaService.setUserConnected(principal.getName());
 		return "/users/admin";
 	}
 
@@ -99,6 +96,7 @@ public class UsuarioController {
 		}
 		model.addAttribute("max", numMax+2);
 		model.addAttribute("gCircular", incidenciaService.getDataCircle());
+		incidenciaService.setUserConnected(principal.getName());
 		return "/users/analisis";
 	}
 	
@@ -106,7 +104,6 @@ public class UsuarioController {
 	public String getValuesTable(Model model) {
 		List<Incidencia> incis = incidenciaService.getLInciKafka();
 	    model.addAttribute("dataTable",incis);
-	    model.addAttribute("vCritics", incidenciaService.getIdWithCritis(incis));
 	    return "/users/analisis :: #myInLineTable";
 	}
 
@@ -121,6 +118,7 @@ public class UsuarioController {
 		model.addAttribute("incidenciasList", incidencias.getContent());
 		model.addAttribute("nameUser", "          Incidencias de " + user.getNombre());
 		model.addAttribute("page", incidencias);
+		incidenciaService.setUserConnected(principal.getName());
 		return "/users/operario";
 	}	 
 	
@@ -136,6 +134,7 @@ public class UsuarioController {
 		model.addAttribute("page", incidencias);
 		
 		model.addAttribute("num", 1);
+		incidenciaService.setUserConnected(principal.getName());
 		return "/users/operario :: tableInci";
 	}
 	

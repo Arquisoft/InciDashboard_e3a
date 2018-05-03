@@ -124,7 +124,8 @@
 								<tbody>
 									<tr th:each="dT : ${dataTable}">
 										<td th:text="${dT.nombreIncidencia}"></td>
-										<td th:text="${#lists.containsAll(vCritics, dT.id_string)}? 'CRITICO':'NO CRITICO'"></td>
+										<td class="table-danger" th:if="${dT.critics == true}">Crítico</td> 
+										<td th:if="${dT.critics == false}">No crítico</td> 
 									</tr>
 								</tbody>
 							</table>
