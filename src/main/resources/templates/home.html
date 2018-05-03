@@ -5,7 +5,7 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
 		<img src="/img/dashboard_home.png" alt="imgHome" />
-		<h2>Centro de Control de Incidencias</h2>
+		<h2 id="home">Centro de Control de Incidencias</h2>
 		<p>
 			Operario Autenticado como: <b th:inline="text">
 				[[${#httpServletRequest.remoteUser}]] </b>
