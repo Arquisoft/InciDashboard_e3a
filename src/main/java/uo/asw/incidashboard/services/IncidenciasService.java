@@ -36,9 +36,9 @@ public class IncidenciasService {
 	private PropiedadesService pService;
 	@Autowired
 	private ValorLimiteService vLimService;
-	
+
 	private Usuario userConnected;
-	
+
 	private List<Incidencia> lInciKafka = new ArrayList<Incidencia>();
 
 	public void addIncidenciaDesdeKafka(Incidencia incidencia) {
@@ -57,7 +57,7 @@ public class IncidenciasService {
 			comprobarIncidencia(incidencia);
 		}
 	}
-	
+
 	public void setUserConnected(String email) {
 		userConnected = usuarioService.getUsuarioByMail(email);
 	}
@@ -255,8 +255,10 @@ public class IncidenciasService {
 	public boolean incidenciaConValorLimite(Incidencia i) {
 		for (Propiedad p : i.getPropiedades()) {
 			ValorLimite vL = vLimService.findByPropiedad(p.getPropiedad().toString());
-			if (vL != null)
-				return vL.isMaxCritico() || vL.isMinCritico();
+			if (vL != null) {
+				return (vL.isMaxCritico() && (p.getValor() >= vL.getValorMax()))
+						|| (vL.isMinCritico() && (p.getValor() <= vL.getValorMin()));
+			}
 		}
 		return false;
 	}
@@ -272,17 +274,24 @@ public class IncidenciasService {
 		return aux;
 	}
 
+	/**
+	 * Este metodo devuelve una lista con las url de las imagenes de las ultimas 4
+	 * incidencias con imagenes OJO: no guardo en BD el setImageURL Para modificar
+	 * el nombreImg voy desde el principio del nombre, hasta queempieza el jpg
+	 * 
+	 * @param Todas
+	 *            las incidencias que van a la vista
+	 * @return las Url a las que se debe acceder desde la vista para ver las
+	 *         imagenes de las incidencias
+	 */
 	public List<Incidencia> getUrlImgs(List<Incidencia> incidencias) {
 		List<Incidencia> urls = new ArrayList<Incidencia>();
 		String urlBase = "http://localhost:8090/incidencia/";
-		for (Incidencia i : incidencias) {
-			if (i.getImageURL() != null) { // OJO: no guardo en BD.
-				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio
-																								// del nombre, hasta que
-																								// empieza el jpg
-				i.setImageURL(urlBase + nombreImg);
-				System.out.println(i.getImageURL());
-				urls.add(i);
+		for(int i = incidencias.size() - 1; i >= 0; i--){
+			if (incidencias.get(i).getImageURL() != null) { //
+				String nombreImg = incidencias.get(i).getImageURL().substring(10, incidencias.get(i).getImageURL().length() - 4);
+				incidencias.get(i).setImageURL(urlBase + nombreImg);
+				urls.add(incidencias.get(i));
 			}
 			if (urls.size() == 4)
 				return urls;

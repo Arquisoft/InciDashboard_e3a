@@ -20,13 +20,13 @@ import uo.asw.incidashboard.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
 	private UsuarioRepository usersRepository;
 
 	@Autowired
 	private IncidenciasService incidenciasService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcPass;
 
@@ -57,32 +57,48 @@ public class UsuarioService {
 		return usersRepository.findOne(objectId);
 	}
 
+	/**
+	 * Método que devuelve al usuario que tenga menos incidencias asignadas. En caso
+	 * de que no haya incidencias, recogemos al primer usuario, este caso podemos
+	 * considerarlo como el inicio del sistema.
+	 * 
+	 *  #1 Lo añadimos por si la incidencia a la que queremos asignarle operario,
+	 *  aparece en la lista, ya que debería estar en la BD.
+	 *  
+	 * @return El usuario con menos incidencias asignadas
+	 */
 	public Usuario getUsuarioConMenosIncis() {
 		List<Incidencia> incis = incidenciasService.getAllIncidencias();
-		Map<Usuario, Integer> cont = new HashMap<Usuario, Integer>();
-		for(Incidencia i: incis) {
-			if(i.getEstado() == EstadoTipos.ABIERTA) {
-				if(cont.get(i.getOperario()) == null)
-					cont.put(i.getOperario(), 1);
-				else
+		List<Usuario> users = usersRepository.findAll();
+		Map<Usuario, Integer> cont = getMapOperarios(users);
+		for (Incidencia i : incis) {
+			if (i.getEstado() == EstadoTipos.ABIERTA) {
+				if(i.getOperario() != null) /* #1 */
 					cont.put(i.getOperario(), cont.get(i.getOperario()) + 1);
 			}
 		}
 		int contador = -1;
-		Usuario user = null;
+		Usuario user = users.get(0);
 		for (Entry<Usuario, Integer> entry : cont.entrySet()) {
-		    if(contador == -1) {
-		    	contador = entry.getValue();
-		    	user = entry.getKey();
-		    }
-		    else {
-		    	if(contador > entry.getValue()) {
-		    		contador = entry.getValue();
-		    		user = entry.getKey();
-		    	}
-		    }
+			if (contador == -1) {
+				contador = entry.getValue();
+				user = entry.getKey();
+			} else {
+				if (contador > entry.getValue()) {
+					contador = entry.getValue();
+					user = entry.getKey();
+				}
+			}
 		}
+		System.out.println("nombre: " + user.getNombre() + " id: " + user.getIdentificador());
 		return user;
+	}
+
+	private Map<Usuario, Integer> getMapOperarios(List<Usuario> users) {
+		Map<Usuario, Integer> operarios = new HashMap<Usuario, Integer>();
+		for (Usuario u : users)
+			operarios.put(u, 0);
+		return operarios;
 	}
 
 	public void deleteAll() {
