@@ -328,29 +328,36 @@ public class IncidenciasService {
 			Propiedad p = incidencias.get(i).getPropertyByType(tp);
 			if(p != null) {
 				Calendar c1 = Calendar.getInstance(); c1.setTime(incidencias.get(i).getFechaEntrada());
-				aux.add(String.valueOf(c1.getTimeInMillis()));
+				aux.add(String.valueOf((new SimpleDateFormat("MM/dd/hh:mm")).format(c1.getTime())));
 			}
 		}
 		return aux.stream().toArray(String[]::new);
 	}
-	
+
 	/**
 	 * 
 	 * @param incidencias
-	 * @param tp
-	 * @param numInci
+	 * @param temperatura
+	 * @param lastIncis
 	 * @return
 	 */
-	public int[] getMaxHeight(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
+	public Map<String, Double[]> infoGraphics(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
+		List<Double> aux = new ArrayList<Double>();
+		Map<String, Double[]> ret = new HashMap<String, Double[]>();
 		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
 		double maxValue = 0;
 		for(int i = startLoop; i < incidencias.size(); i++) {
 			Propiedad p = incidencias.get(i).getPropertyByType(tp);
 			if(p != null) {
+				aux.add(p.getValor());
 				if(maxValue < p.getValor())
 					maxValue = p.getValor();
 			}
 		}
-		return new int[] { (int)maxValue};
+		ret.put("yAxis", aux.stream().toArray(Double[]::new));
+		ret.put("height", new Double[] {maxValue});
+		return ret;
 	}
+	
+
 }

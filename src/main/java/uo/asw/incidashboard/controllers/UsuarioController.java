@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -95,9 +96,13 @@ public class UsuarioController {
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
 		/* Imagenes incidencias */
 		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
+		/* INFO GENERICA PARA LAS 3 GRAFICAS*/
+		int lastIncis = 25;
 		/* Grafica de temperatura */
-		model.addAttribute("dataTemp", incidenciaService.getInfoProperty(incidencias, PropiedadTipos.TEMPERATURA, 30));
-		model.addAttribute("fechaTemp", incidenciaService.getDateProperty(incidencias, PropiedadTipos.TEMPERATURA, 30));
+		Map<String, Double[]> aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.TEMPERATURA, lastIncis);
+		model.addAttribute("dataTemp", aux.get("yAxis"));
+		model.addAttribute("fechaTemp", incidenciaService.getDateProperty(incidencias, PropiedadTipos.TEMPERATURA, lastIncis));
+		model.addAttribute("maxTemp", aux.get("height")[0].intValue());
 		/* Grafica de presion */
 		
 		/* Grafica de humedad */

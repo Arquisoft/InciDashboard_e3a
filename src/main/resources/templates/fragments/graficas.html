@@ -53,7 +53,7 @@
 				            data : {
 				                labels : [[${fechaTemp}]],
 				                datasets : [ {
-				                    label : "Incidencia",
+				                    label : "Temperatura",
 				                   lineTension : .3,
 				                    backgroundColor : "rgba(2,117,216,0.2)",
 				                    borderColor : "rgba(2,117,216,1)",
@@ -78,17 +78,25 @@
 				                        },
 				                        ticks : {
 				                            maxTicksLimit : 7
-				                        }
+				                        },
+				                        scaleLabel: {
+				                            display: true,
+				                            labelString: 'Tiempo'
+				                          }
 				                    } ],
 				                    yAxes : [ {
 				                        ticks : {
-				                            min : -30,
-				                            max : 600,
-				                            maxTicksLimit : 5
+				                            min : 0,
+				                            max : [[${maxTemp}]] + 10,
+				                            maxTicksLimit : [[${maxTemp}]]/10 + 1
 				                        },
 				                        gridLines : {
 				                            color : "rgba(0, 0, 0, .125)"
-				                        }
+				                        },
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Temperatura ºC'
+                                          }
 				                    } ]
 				                },
 				                legend : {
