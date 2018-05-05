@@ -28,7 +28,11 @@
 								},
 								ticks : {
 									maxTicksLimit : 7
-								}
+								},
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Tiempo'
+                                  }
 							} ],
 							yAxes : [ {
 								ticks : {
@@ -38,7 +42,11 @@
 								},
 								gridLines : {
 									color : "rgba(0, 0, 0, .125)"
-								}
+								},
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Nº incidencias'
+                                  }
 							} ]
 						},
 						legend : {
@@ -257,6 +265,11 @@
                 
                 $('#moverImagenes').click(function(){  //referimos el elemento ( clase o identificador de acción )
                     $('html, body').animate({scrollTop:$("#imagenesIncis").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
+                    return false;
+                });
+                
+                $('#moverPropiedades').click(function(){  //referimos el elemento ( clase o identificador de acción )
+                    $('html, body').animate({scrollTop:$("#panelPropTemp").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
                     return false;
                 });
 			});
