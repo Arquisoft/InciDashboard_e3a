@@ -1,6 +1,8 @@
 package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
+import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
+import uo.asw.dbManagement.tipos.PropiedadTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.UsuarioService;
 import uo.asw.incidashboard.services.ValorLimiteService;
@@ -86,15 +90,25 @@ public class UsuarioController {
 		List<Incidencia> incidencias = incidenciaService.getAllIncidencias();
 		model.addAttribute("incidenciasList", incidencias);
 		model.addAttribute("page", incidencias);
+		/* Grafico de barras */
 		model.addAttribute("datos", incidenciaService.getNum(incidencias));
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
+		/* Imagenes incidencias */
 		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
-
+		/* Grafica de temperatura */
+		model.addAttribute("dataTemp", incidenciaService.getDataTemp(incidencias));
+		model.addAttribute("fechaTemp", incidenciaService.getFechaTemp(incidencias));
+		/* Grafica de presion */
+		
+		/* Grafica de humedad */
+		
+		/* Grafico de barras */
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
 			if(numMax < incidenciaService.getNum(incidencias)[i]) numMax = incidenciaService.getNum(incidencias)[i];
 		}
 		model.addAttribute("max", numMax+2);
+		/* Grafico circular*/
 		model.addAttribute("gCircular", incidenciaService.getDataCircle());
 		incidenciaService.setUserConnected(principal.getName());
 		return "/users/analisis";

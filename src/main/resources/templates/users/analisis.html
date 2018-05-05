@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:include="fragments/priviliged/head" >
+<head th:include="fragments/priviliged/head">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<!-- Navigation-->
@@ -40,8 +40,8 @@
 								<tbody>
 									<tr th:each="dT : ${dataTable}">
 										<td th:text="${dT.nombreIncidencia}"></td>
-										<td class="table-danger" th:if="${dT.critics == true}">Crítico</td> 
-										<td th:if="${dT.critics == false}">No crítico</td> 
+										<td class="table-danger" th:if="${dT.critics == true}">Crítico</td>
+										<td th:if="${dT.critics == false}">No crítico</td>
 									</tr>
 								</tbody>
 							</table>
@@ -49,12 +49,13 @@
 					</div>
 					<!-- Card Columns Example Social Feed-->
 					<div class="mb-0 mt-4" id="imagenesIncis">
-						<i class="fa fa-newspaper-o"></i> Imágenes de las últimas incidencias
+						<i class="fa fa-newspaper-o"></i> Imágenes de las últimas
+						incidencias
 					</div>
 					<hr class="mt-2">
 					<div class="card-columns">
 						<!-- Example Social Card-->
-						<div class="card mb-3" th:each = "url : ${urlImg}">
+						<div class="card mb-3" th:each="url : ${urlImg}">
 							<img class="card-img-top img-fluid w-100"
 								th:src="@{${url.imageURL}}" alt="">
 							<div class="card-body">
@@ -63,7 +64,16 @@
 								</h6>
 								<p class="card-text small" th:text="${url.descripcion}"></p>
 							</div>
-							<div class="card-footer small text-muted" th:text="${url.fechaEntrada}"></div>
+							<div class="card-footer small text-muted"
+								th:text="${url.fechaEntrada}"></div>
+						</div>
+					</div>
+					<div class="card mb-3" id="panelPropTemp">
+						<div class="card-header">
+							<i class="fa fa-bar-chart"></i> Evolución temperatura
+						</div>
+						<div class="card-body">
+							<canvas id="myTempChart" width="100%" height="30"></canvas>
 						</div>
 					</div>
 				</div>
@@ -82,11 +92,11 @@
 						<div class="card-header">
 							<i class="fa fa-bell-o"></i> Localizaciones de las incidencias
 						</div>
-						<div class="card-body" style="overflow:auto;">
-							<div id="map" style="width:500px; height:500px;">
-							</div>
+						<div class="card-body" style="overflow: auto;">
+							<div id="map" style="width: 500px; height: 500px;"></div>
 						</div>
-						<button id="pintar" onclick="initMap()" class="btn btn-success">Recargar Mapa</button>
+						<button id="pintar" onclick="initMap()" class="btn btn-success">Recargar
+							Mapa</button>
 						<div class="list-group list-group-flush small"></div>
 					</div>
 				</div>

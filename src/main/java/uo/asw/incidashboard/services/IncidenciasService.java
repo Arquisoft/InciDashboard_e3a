@@ -1,5 +1,7 @@
 package uo.asw.incidashboard.services;
 
+import static org.mockito.Matchers.anyList;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.dbManagement.tipos.PerfilTipos;
+import uo.asw.dbManagement.tipos.PropiedadTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 
 @Service
@@ -288,5 +291,28 @@ public class IncidenciasService {
 				return urls;
 		}
 		return urls;
+	}
+
+	public Double[] getDataTemp(List<Incidencia> incidencias) {
+		List<Double> aux = new ArrayList<Double>();
+		for(Incidencia i: incidencias) {
+			Propiedad p = i.getPropertyByType(PropiedadTipos.TEMPERATURA);
+			if(p != null) {
+				aux.add(p.getValor());
+			}
+		}
+		return aux.stream().toArray(Double[]::new);
+	}
+
+	public String[] getFechaTemp(List<Incidencia> incidencias) {
+		List<String> aux = new ArrayList<String>();
+		for(Incidencia i: incidencias) {
+			Propiedad p = i.getPropertyByType(PropiedadTipos.TEMPERATURA);
+			if(p != null) {
+				Calendar c1 = Calendar.getInstance(); c1.setTime(i.getFechaEntrada());
+				aux.add();
+			}
+		}
+		return aux.stream().toArray(String[]::new);
 	}
 }
