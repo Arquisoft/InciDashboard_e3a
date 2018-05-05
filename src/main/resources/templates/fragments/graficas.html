@@ -80,12 +80,27 @@
 					$('html, body').animate({scrollTop:$("#graficaCircular").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
 					return false;
 				});
+			    
+				$('#moverIncisEnLinea').click(function(){  //referimos el elemento ( clase o identificador de acción )
+                    $('html, body').animate({scrollTop:$("#incisEnLinea").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
+                    return false;
+                });
+				
+                $('#moverMapa').click(function(){  //referimos el elemento ( clase o identificador de acción )
+                    $('html, body').animate({scrollTop:$("#mapIncis").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
+                    return false;
+                });
+                
+                $('#moverImagenes').click(function(){  //referimos el elemento ( clase o identificador de acción )
+                    $('html, body').animate({scrollTop:$("#imagenesIncis").offset().top - 70}, 'slow'); //seleccionamos etiquetas,clase o identificador destino, creamos animación hacia top de la página.
+                    return false;
+                });
 			});
 
 		setInterval(function(){ 
 			$("#myInLineTable").load("http://localhost:8081/refresh-table"); 
 			console.log("Actualizando contenido de la tabla");
-			}, 2000);
+			}, 500);
 		
 		/*]]>*/
 		</script>
