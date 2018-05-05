@@ -104,9 +104,15 @@ public class UsuarioController {
 		model.addAttribute("fechaTemp", incidenciaService.getDateProperty(incidencias, PropiedadTipos.TEMPERATURA, lastIncis));
 		model.addAttribute("maxTemp", aux.get("height")[0].intValue());
 		/* Grafica de presion */
-		
+		aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.PRESION, lastIncis);
+		model.addAttribute("dataPres", aux.get("yAxis"));
+		model.addAttribute("fechaPres", incidenciaService.getDateProperty(incidencias, PropiedadTipos.PRESION, lastIncis));
+		model.addAttribute("maxPres", aux.get("height")[0].intValue());
 		/* Grafica de humedad */
-		
+		aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.HUMEDAD, lastIncis);
+		model.addAttribute("dataHum", aux.get("yAxis"));
+		model.addAttribute("fechaHum", incidenciaService.getDateProperty(incidencias, PropiedadTipos.HUMEDAD, lastIncis));
+		model.addAttribute("maxHum", aux.get("height")[0].intValue());
 		/* Grafico de barras altura max */
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
