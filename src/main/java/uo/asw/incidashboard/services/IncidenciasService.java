@@ -280,12 +280,14 @@ public class IncidenciasService {
 		String urlBase = "http://localhost:8090/incidencia/";
 		for (Incidencia i : incidencias) {
 			if (i.getImageURL() != null) { // OJO: no guardo en BD.
-				String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio
-																								// del nombre, hasta que
-																								// empieza el jpg
-				i.setImageURL(urlBase + nombreImg);
-				System.out.println(i.getImageURL());
-				urls.add(i);
+				if(!i.getImageURL().equals("/img/post/")) {
+					String nombreImg = i.getImageURL().substring(10, i.getImageURL().length() - 4); // Desde el principio
+																									// del nombre, hasta que
+																									// empieza el jpg
+					i.setImageURL(urlBase + nombreImg);
+					System.out.println(i.getImageURL());
+					urls.add(i);
+				}
 			}
 			if (urls.size() == 4)
 				return urls;
@@ -293,10 +295,18 @@ public class IncidenciasService {
 		return urls;
 	}
 
-	public Double[] getDataTemp(List<Incidencia> incidencias) {
+	/**
+	 * 
+	 * @param incidencias
+	 * @param tp
+	 * @param numInci
+	 * @return
+	 */
+	public Double[] getInfoProperty(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
 		List<Double> aux = new ArrayList<Double>();
-		for(Incidencia i: incidencias) {
-			Propiedad p = i.getPropertyByType(PropiedadTipos.TEMPERATURA);
+		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
+		for(int i = startLoop; i < incidencias.size(); i++) {
+			Propiedad p = incidencias.get(i).getPropertyByType(tp);
 			if(p != null) {
 				aux.add(p.getValor());
 			}
@@ -304,15 +314,43 @@ public class IncidenciasService {
 		return aux.stream().toArray(Double[]::new);
 	}
 
-	public String[] getFechaTemp(List<Incidencia> incidencias) {
+	/**
+	 * 
+	 * @param incidencias
+	 * @param tp
+	 * @param numInci
+	 * @return
+	 */
+	public String[] getDateProperty(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
 		List<String> aux = new ArrayList<String>();
-		for(Incidencia i: incidencias) {
-			Propiedad p = i.getPropertyByType(PropiedadTipos.TEMPERATURA);
+		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
+		for(int i = startLoop; i < incidencias.size(); i++) {
+			Propiedad p = incidencias.get(i).getPropertyByType(tp);
 			if(p != null) {
-				Calendar c1 = Calendar.getInstance(); c1.setTime(i.getFechaEntrada());
-				aux.add();
+				Calendar c1 = Calendar.getInstance(); c1.setTime(incidencias.get(i).getFechaEntrada());
+				aux.add(String.valueOf(c1.getTimeInMillis()));
 			}
 		}
 		return aux.stream().toArray(String[]::new);
+	}
+	
+	/**
+	 * 
+	 * @param incidencias
+	 * @param tp
+	 * @param numInci
+	 * @return
+	 */
+	public int[] getMaxHeight(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
+		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
+		double maxValue = 0;
+		for(int i = startLoop; i < incidencias.size(); i++) {
+			Propiedad p = incidencias.get(i).getPropertyByType(tp);
+			if(p != null) {
+				if(maxValue < p.getValor())
+					maxValue = p.getValor();
+			}
+		}
+		return new int[] { (int)maxValue};
 	}
 }

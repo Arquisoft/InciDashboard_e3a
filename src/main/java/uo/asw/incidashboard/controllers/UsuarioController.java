@@ -96,13 +96,13 @@ public class UsuarioController {
 		/* Imagenes incidencias */
 		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
 		/* Grafica de temperatura */
-		model.addAttribute("dataTemp", incidenciaService.getDataTemp(incidencias));
-		model.addAttribute("fechaTemp", incidenciaService.getFechaTemp(incidencias));
+		model.addAttribute("dataTemp", incidenciaService.getInfoProperty(incidencias, PropiedadTipos.TEMPERATURA, 30));
+		model.addAttribute("fechaTemp", incidenciaService.getDateProperty(incidencias, PropiedadTipos.TEMPERATURA, 30));
 		/* Grafica de presion */
 		
 		/* Grafica de humedad */
 		
-		/* Grafico de barras */
+		/* Grafico de barras altura max */
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
 			if(numMax < incidenciaService.getNum(incidencias)[i]) numMax = incidenciaService.getNum(incidencias)[i];
