@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import uo.asw.dbManagement.tipos.EstadoTipos;
+import uo.asw.dbManagement.tipos.PropiedadTipos;
 
 @Document(collection = "incidencias")
 public class Incidencia {
@@ -378,5 +379,13 @@ public class Incidencia {
 
 	public void setCritics(boolean isCritics) {
 		this.critics = isCritics;
+	}
+	
+	public Propiedad getPropertyByType(PropiedadTipos pt) {
+		for(Propiedad p: this.propiedades) {
+			if(p.getPropiedad() == pt)
+				return p;
+		}
+		return null;
 	}
 }

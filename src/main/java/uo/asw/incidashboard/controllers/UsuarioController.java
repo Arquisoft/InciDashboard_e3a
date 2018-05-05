@@ -1,9 +1,12 @@
 package uo.asw.incidashboard.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uo.asw.dbManagement.model.Incidencia;
+import uo.asw.dbManagement.model.Propiedad;
 import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
+import uo.asw.dbManagement.tipos.PropiedadTipos;
 import uo.asw.incidashboard.services.IncidenciasService;
 import uo.asw.incidashboard.services.UsuarioService;
 import uo.asw.incidashboard.services.ValorLimiteService;
@@ -86,15 +91,35 @@ public class UsuarioController {
 		List<Incidencia> incidencias = incidenciaService.getAllIncidencias();
 		model.addAttribute("incidenciasList", incidencias);
 		model.addAttribute("page", incidencias);
+		/* Grafico de barras */
 		model.addAttribute("datos", incidenciaService.getNum(incidencias));
 		model.addAttribute("fechas", incidenciaService.getDays(incidencias));
+		/* Imagenes incidencias */
 		model.addAttribute("urlImg", incidenciaService.getUrlImgs(incidencias));
-
+		/* INFO GENERICA PARA LAS 3 GRAFICAS*/
+		int lastIncis = 25;
+		/* Grafica de temperatura */
+		Map<String, Double[]> aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.TEMPERATURA, lastIncis);
+		model.addAttribute("dataTemp", aux.get("yAxis"));
+		model.addAttribute("fechaTemp", incidenciaService.getDateProperty(incidencias, PropiedadTipos.TEMPERATURA, lastIncis));
+		model.addAttribute("maxTemp", aux.get("height")[0].intValue());
+		/* Grafica de presion */
+		aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.PRESION, lastIncis);
+		model.addAttribute("dataPres", aux.get("yAxis"));
+		model.addAttribute("fechaPres", incidenciaService.getDateProperty(incidencias, PropiedadTipos.PRESION, lastIncis));
+		model.addAttribute("maxPres", aux.get("height")[0].intValue());
+		/* Grafica de humedad */
+		aux = incidenciaService.infoGraphics(incidencias, PropiedadTipos.HUMEDAD, lastIncis);
+		model.addAttribute("dataHum", aux.get("yAxis"));
+		model.addAttribute("fechaHum", incidenciaService.getDateProperty(incidencias, PropiedadTipos.HUMEDAD, lastIncis));
+		model.addAttribute("maxHum", aux.get("height")[0].intValue());
+		/* Grafico de barras altura max */
 		int numMax =0;
 		for(int i=0;i<incidenciaService.getNum(incidencias).length;i++) {
 			if(numMax < incidenciaService.getNum(incidencias)[i]) numMax = incidenciaService.getNum(incidencias)[i];
 		}
 		model.addAttribute("max", numMax+2);
+		/* Grafico circular*/
 		model.addAttribute("gCircular", incidenciaService.getDataCircle());
 		incidenciaService.setUserConnected(principal.getName());
 		return "/users/analisis";

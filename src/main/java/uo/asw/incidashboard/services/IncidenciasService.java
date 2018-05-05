@@ -1,5 +1,7 @@
 package uo.asw.incidashboard.services;
 
+import static org.mockito.Matchers.anyList;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ import uo.asw.dbManagement.model.Usuario;
 import uo.asw.dbManagement.model.ValorLimite;
 import uo.asw.dbManagement.tipos.EstadoTipos;
 import uo.asw.dbManagement.tipos.PerfilTipos;
+import uo.asw.dbManagement.tipos.PropiedadTipos;
 import uo.asw.incidashboard.repositories.IncidenciaRepository;
 
 @Service
@@ -288,14 +291,70 @@ public class IncidenciasService {
 		List<Incidencia> urls = new ArrayList<Incidencia>();
 		String urlBase = "http://localhost:8090/incidencia/";
 		for(int i = incidencias.size() - 1; i >= 0; i--){
-			if (incidencias.get(i).getImageURL() != null) { //
-				String nombreImg = incidencias.get(i).getImageURL().substring(10, incidencias.get(i).getImageURL().length() - 4);
-				incidencias.get(i).setImageURL(urlBase + nombreImg);
-				urls.add(incidencias.get(i));
+			if (incidencias.get(i).getImageURL() != null) { 
+				if(!incidencias.get(i).getImageURL().equals("/img/post/")) {
+					String nombreImg = incidencias.get(i).getImageURL().substring(10, incidencias.get(i).getImageURL().length() - 4);
+					incidencias.get(i).setImageURL(urlBase + nombreImg);
+					urls.add(incidencias.get(i));
+				}
 			}
 			if (urls.size() == 4)
 				return urls;
 		}
 		return urls;
 	}
+
+	/**
+	 * Devuelve una lista de String[] con las fechas en formato MM/dd/hh:mm
+	 * de las lista de incidencias que se pasa, pero solo de las últimas numInci
+	 * y de aquellas que tengan la propiedad pasada como parámetro.
+	 * El metodo se utiliza para llenar las graficas del analista.
+	 * @param La lista de incidencias de la que se desea obtener las fechas
+	 * @param La propiedad a buscar en las incidencias
+	 * @param El numero de las ultimas incidencias que queremos tener en cuenta
+	 * @return Una lista de String[] con las fechas de las incidencias
+	 */
+	public String[] getDateProperty(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
+		List<String> aux = new ArrayList<String>();
+		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
+		for(int i = startLoop; i < incidencias.size(); i++) {
+			Propiedad p = incidencias.get(i).getPropertyByType(tp);
+			if(p != null) {
+				Calendar c1 = Calendar.getInstance(); c1.setTime(incidencias.get(i).getFechaEntrada());
+				aux.add(String.valueOf((new SimpleDateFormat("MM/dd/hh:mm")).format(c1.getTime())));
+			}
+		}
+		return aux.stream().toArray(String[]::new);
+	}
+
+	/**
+	 * Devuelve un map que tiene 2 claves, una 'yAxis' y la otra 'height'.
+	 * yAxis me devuelve una lista Double[] con los valores de la propiedad pasada como parametro
+	 * en las ultimas numIncis de la lista de incidencias.
+	 * height me devuelve de la lista yAxis el valor mas alto, esto se utiliza para marcar
+	 * el punto mas alto en las graficas.
+	 * @param Incidencias de las que se desea obtener valores 
+	 * @param La propiedad de la que deseamos obtener los valores en las incidencias
+	 * @param El numero de las ultimas incidencias que queremos tener en cuenta
+	 * @return Un map que contiene los valores del eje 'y' y la altura maxima del grafico
+	 */
+	public Map<String, Double[]> infoGraphics(List<Incidencia> incidencias, PropiedadTipos tp, int numInci) {
+		List<Double> aux = new ArrayList<Double>();
+		Map<String, Double[]> ret = new HashMap<String, Double[]>();
+		int startLoop = numInci > incidencias.size() ? 0 : incidencias.size() - numInci;
+		double maxValue = 0;
+		for(int i = startLoop; i < incidencias.size(); i++) {
+			Propiedad p = incidencias.get(i).getPropertyByType(tp);
+			if(p != null) {
+				aux.add(p.getValor());
+				if(maxValue < p.getValor())
+					maxValue = p.getValor();
+			}
+		}
+		ret.put("yAxis", aux.stream().toArray(Double[]::new));
+		ret.put("height", new Double[] {maxValue});
+		return ret;
+	}
+	
+
 }

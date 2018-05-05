@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:include="fragments/priviliged/head" >
+<head th:include="fragments/priviliged/head">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 	<!-- Navigation-->
@@ -8,73 +8,7 @@
 	<div id="OperarioDashboard" class="content-wrapper">
 		<div class="container-fluid">
 			<!-- Breadcrumbs-->
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-				<li class="breadcrumb-item active" >My Dashboard</li>
-			</ol>
 			<!-- Icon Cards-->
-			<div class="row">
-				<div class="col-xl-3 col-sm-6 mb-3">
-					<div class="card text-white bg-primary o-hidden h-100">
-						<div class="card-body">
-							<div class="card-body-icon">
-								<i class="fa fa-bookmark-o"></i>
-							</div>
-							<div class="mr-5">LIBRE</div>
-						</div>
-						<a class="card-footer text-white clearfix small z-1" href="#">
-							<span class="float-left">Detalles</span> <span
-							class="float-right"> <i class="fa fa-angle-right"></i>
-						</span>
-						</a>
-					</div>
-				</div>
-				<div class="col-xl-3 col-sm-6 mb-3">
-					<div class="card text-white bg-warning o-hidden h-100">
-						<div class="card-body">
-							<div class="card-body-icon">
-								<i class="fa fa-bookmark-o"></i>
-							</div>
-							<div class="mr-5">LIBRE</div>
-						</div>
-						<a class="card-footer text-white clearfix small z-1" href="#">
-							<span class="float-left">Detalles</span> <span
-							class="float-right"> <i class="fa fa-angle-right"></i>
-						</span>
-						</a>
-					</div>
-				</div>
-				<div class="col-xl-3 col-sm-6 mb-3">
-					<div class="card text-white bg-success o-hidden h-100">
-						<div class="card-body">
-							<div class="card-body-icon">
-								<i class="fa fa-bookmark-o"></i>
-							</div>
-							<div class="mr-5">LIBRE</div>
-						</div>
-						<a class="card-footer text-white clearfix small z-1" href="#">
-							<span class="float-left">Detalles</span> <span
-							class="float-right"> <i class="fa fa-angle-right"></i>
-						</span>
-						</a>
-					</div>
-				</div>
-				<div class="col-xl-3 col-sm-6 mb-3">
-					<div class="card text-white bg-danger o-hidden h-100">
-						<div class="card-body">
-							<div class="card-body-icon">
-								<i class="fa fa-bookmark-o"></i>
-							</div>
-							<div class="mr-5">LIBRE</div>
-						</div>
-						<a class="card-footer text-white clearfix small z-1" href="#">
-							<span class="float-left">Detalles</span> <span
-							class="float-right"> <i class="fa fa-angle-right"></i>
-						</span>
-						</a>
-					</div>
-				</div>
-			</div>
 			<!-- Area Chart Example-->
 			<div class="card mb-3" id="panelGraficoInci10">
 				<div class="card-header">
@@ -82,24 +16,6 @@
 					los últimos 10 días
 				</div>
 				<div class="card-body">
-					<select style="margin-bottom: 5%; margin-right: 4%;"
-						class="form-control" name="category" id="category"
-						onchange="comprobador()">
-						<option value="TODAS" selected="selected">Cualquier
-							Categoría</option>
-						<option value="ACCIDENTE_CARRETERA">Accidente en
-							Carretera</option>
-						<option value="ACCIDENTE_AEREO">Accidente Aéreo</option>
-						<option value="FUEGO">Incendio</option>
-						<option value="INUNDACION">Inundación</option>
-						<option value="METEOROLOGICA">Meteorología</option>
-						<option value="AMBIENTE">Ambiente</option>
-						<option value="AUTOMATICO">Automático</option>
-						<option value="CONTAMINACION">Contaminación</option>
-						<option value="VALOR_NO_ASIGNADO">Otro</option>
-					</select>
-
-
 					<canvas id="myAreaChart" width="100%" height="30"></canvas>
 				</div>
 				<!-- <div class="card-footer small text-muted">Updated yesterday at
@@ -108,9 +24,9 @@
 			<div class="row">
 				<div class="col-lg-8">
 					<!-- Example Bar Chart Card-->
-					<div class="card mb-3">
+					<div class="card mb-3" id="incisEnLinea">
 						<div class="card-header">
-							<i class="fa fa-bar-chart"></i> Incidencias en línea
+							<i class="fa fa-table"></i> Incidencias en línea
 						</div>
 						<div class="card-body">
 							<table class="table table-bordered" id="myInLineTable"
@@ -124,21 +40,22 @@
 								<tbody>
 									<tr th:each="dT : ${dataTable}">
 										<td th:text="${dT.nombreIncidencia}"></td>
-										<td class="table-danger" th:if="${dT.critics == true}">Crítico</td> 
-										<td th:if="${dT.critics == false}">No crítico</td> 
+										<td class="table-danger" th:if="${dT.critics == true}">Crítico</td>
+										<td th:if="${dT.critics == false}">No crítico</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<!-- Card Columns Example Social Feed-->
-					<div class="mb-0 mt-4">
-						<i class="fa fa-newspaper-o"></i> Imagenes de algunas incidencias
+					<div class="mb-0 mt-4" id="imagenesIncis">
+						<i class="fa fa-image"></i> Imágenes de las últimas
+						incidencias
 					</div>
 					<hr class="mt-2">
 					<div class="card-columns">
 						<!-- Example Social Card-->
-						<div class="card mb-3" th:each = "url : ${urlImg}">
+						<div class="card mb-3" th:each="url : ${urlImg}">
 							<img class="card-img-top img-fluid w-100"
 								th:src="@{${url.imageURL}}" alt="">
 							<div class="card-body">
@@ -147,9 +64,34 @@
 								</h6>
 								<p class="card-text small" th:text="${url.descripcion}"></p>
 							</div>
-							<div class="card-footer small text-muted" th:text="${url.fechaEntrada}"></div>
+							<div class="card-footer small text-muted"
+								th:text="${url.fechaEntrada}"></div>
 						</div>
 					</div>
+					<div class="card mb-3" id="panelPropTemp">
+						<div class="card-header">
+							<i class="fa fa-info-circle"></i> Evolución de la temperatura
+						</div>
+						<div class="card-body">
+							<canvas id="myTempChart" width="100%" height="30"></canvas>
+						</div>
+					</div>
+					<div class="card mb-3" id="panelPropPres">
+                        <div class="card-header">
+                            <i class="fa fa-info-circle"></i> Evolución de la Presión
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myPresChart" width="100%" height="30"></canvas>
+                        </div>
+                    </div>
+                    <div class="card mb-3" id="panelPropHum">
+                        <div class="card-header">
+                            <i class="fa fa-info-circle"></i> Evolución de la Humedad
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myHumChart" width="100%" height="30"></canvas>
+                        </div>
+                    </div>
 				</div>
 				<div class="col-lg-4">
 					<!-- Example Pie Chart Card-->
@@ -160,22 +102,18 @@
 						<div class="card-body">
 							<canvas id="myPieChart" width="100%" height="100"></canvas>
 						</div>
-						<div class="card-footer small text-muted">Updated yesterday
-							at 11:59 PM</div>
 					</div>
 					<!-- Example Notifications Card-->
-					<div class="card mb-3">
+					<div class="card mb-3" id="mapIncis">
 						<div class="card-header">
-							<i class="fa fa-bell-o"></i> Localizaciones de las incidencias
+							<i class="fa fa-map-marker"></i> Localizaciones de las incidencias
 						</div>
-						<div class="card-body" style="overflow:auto;">
-							<div id="map" style="width:500px; height:500px;">
-							</div>
+						<div class="card-body" style="overflow: auto;">
+							<div id="map" style="width: 500px; height: 500px;"></div>
 						</div>
-						<button id="pintar" onclick="initMap()">Recargar Mapa</button>
+						<button id="pintar" onclick="initMap()" class="btn btn-success">Recargar
+							Mapa</button>
 						<div class="list-group list-group-flush small"></div>
-						<div class="card-footer small text-muted">Updated yesterday
-							at 11:59 PM</div>
 					</div>
 				</div>
 			</div>
