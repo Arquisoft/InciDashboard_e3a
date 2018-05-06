@@ -18,5 +18,6 @@ public class PO_LoginView extends PO_NavView {
 		//Pulsar el boton de Alta.
 		By boton = By.className("btn");
 		driver.findElement(boton).click();
+		
 	}
 }
