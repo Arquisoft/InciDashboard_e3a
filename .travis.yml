@@ -1,5 +1,6 @@
 language: java
 script: "mvn cobertura:cobertura"
+- codecov
 jdk:
 - oraclejdk8
 # git strips the wrapper jar file so we have to force its download during the build
@@ -8,7 +9,7 @@ install:
 #- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 after_success:
   - bash <(curl -s https://codecov.io/bash)
- # - bash <(curl -s https://codecov.io/bash) -t 7fc322a7f0fdb232155987d32eac33e52a0fc8a9
+  - bash <(curl -s https://codecov.io/bash) -t 9ffa0785-687c-4b20-80dc-14e5465f460a
  install:       #true
 - mvn -N io.takari:maven:wrapper
   before_script:
