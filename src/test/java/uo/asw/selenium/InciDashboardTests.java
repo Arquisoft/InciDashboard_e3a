@@ -15,7 +15,7 @@ import uo.asw.selenium.pageobjects.PO_NavView;
 
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class InciManagerTests {
+public class InciDashboardTests {
 
 	// En Windows (Debe ser la versión 46.0 y desactivar las actualizacioens
 		// automáticas)):
