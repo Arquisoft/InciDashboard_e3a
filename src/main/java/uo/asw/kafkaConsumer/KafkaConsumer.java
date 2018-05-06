@@ -17,7 +17,7 @@ public class KafkaConsumer {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@KafkaListener(topics = "${kafka.topic}")
+	@KafkaListener(topics = "${cloudkarafka.topic}")
 	public void processMessage(Incidencia incidencia) {
 		inci.addIncidenciaDesdeKafka(incidencia);
 		log.info("Incidencia " + incidencia.getId_string() + " recibida desde Apache Kafka");
