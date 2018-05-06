@@ -3,6 +3,7 @@ package uo.asw.kafkaConsumer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,29 +18,45 @@ import org.springframework.stereotype.Service;
 
 import uo.asw.dbManagement.model.Incidencia;
 
-@Service
-@EnableKafka
+
+
 @Configuration
+@EnableKafka
 public class KafkaConsumerConfig {
  
-	@Value("${kafka.bootstrap-servers}")
-	private String bootstrapServer;
+
 	
-	@Value("${kafka.consumer.group-id}")
-	private String groupId;
-	
+	@Value("${spring.kafka.producer.bootstrap-servers}")
+	String server;
+	@Value("${karafka.username}")
+	String username;
+	@Value("${karafka.password}")
+	String password;
+	@Value("${kafka.protocol}")
+	String protocol;
+
 	@Bean
 	public ConsumerFactory<String, Incidencia> consumerFactory() {
-	    Map<String, Object> props = new HashMap<>();
-	    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-	    props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-	    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-	    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-	    return new DefaultKafkaConsumerFactory<>(props,
-							    	      new StringDeserializer(), 
-							    	      new JsonDeserializer<>(Incidencia.class));
+		String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
+		String jaasCfg = String.format(jaasTemplate, username, password);
+
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, server);
+		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+		props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "es.uniovi");
+		props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, protocol);
+		props.put("sasl.mechanism", "SCRAM-SHA-256");
+		props.put("sasl.jaas.config", jaasCfg);
+		return new DefaultKafkaConsumerFactory<>(props,
+	    	      new StringDeserializer(), 
+	    	      new JsonDeserializer<>(Incidencia.class));
 	}
- 
+	
+	
+	
 	@Bean
 	public ConcurrentKafkaListenerContainerFactory<String, Incidencia> kafkaListenerContainerFactory() {
 	    ConcurrentKafkaListenerContainerFactory<String, Incidencia> factory = new ConcurrentKafkaListenerContainerFactory<>();
