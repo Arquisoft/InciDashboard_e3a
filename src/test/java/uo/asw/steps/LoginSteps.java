@@ -5,25 +5,29 @@ import static org.junit.Assert.assertEquals;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.es.Cuando;
-import cucumber.api.java.es.Dado;
-import cucumber.api.java.es.Entonces;
+import cucumber.api.java.es.*;
+import uo.asw.InciDashboardApplication;
 import uo.asw.selenium.pageobjects.PO_LoginView;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = { InciManagerE3aApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@ContextConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = { InciDashboardApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration
 public class LoginSteps {
 
 	private static final Logger LOGGER = Logger.getLogger(LoginSteps.class);
+	private static final int TIMEOUT = 15;
 
 	@Autowired
 	protected WebApplicationContext context;
@@ -34,14 +38,13 @@ public class LoginSteps {
 	private int port;
 
 	private String url;
-	private int timout = 15;
 
 	@Before
 	public void setUp() {
 		driver = new HtmlUnitDriver();
-		url = "http://localhost:" + 8081;
+		url = "http://localhost:" + port;
 		LOGGER.debug("BaseURL: '" + url + "'");
-		driver.manage().timeouts().implicitlyWait(timout, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
 	}
 
 	@Dado("^un operario de nombre \"([^\"]*)\" y contraseña \"([^\"]*)\" registrado en el sistema$")
