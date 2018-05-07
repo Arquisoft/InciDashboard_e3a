@@ -103,6 +103,11 @@ public class LoginSteps {
 		// Write code here that turns the phrase above into concrete actions
 		LOGGER.info("un analista de nombre " + arg1 + " contraseña " + arg2 + " no registrado en el sistema");
 	}
+	
+	@Cuando("^voy a la página \"([^\"]*)\"$")
+	public void voy_a_la_página(String arg1) throws Throwable {
+		driver.navigate().to(url + arg1);
+	}
 
 	@After
 	public void tearDown() {

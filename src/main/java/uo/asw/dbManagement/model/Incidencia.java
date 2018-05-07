@@ -80,20 +80,6 @@ public class Incidencia {
 		this.addListaCategorias(categorias);
 	}
 
-	public Incidencia(String nombreIncidencia, String descripcion, String latitud, String longitud, Date fechaEntrada,
-			Date fechaCaducidad, String idAgente, Set<Propiedad> propiedades, Set<Categoria> categorias) {
-		super();
-		this.nombreIncidencia = nombreIncidencia;
-		this.descripcion = descripcion;
-		this.latitud = latitud;
-		this.longitud = longitud;
-		this.estado = EstadoTipos.ABIERTA;
-		this.fechaEntrada = fechaEntrada;
-		this.fechaCaducidad = fechaCaducidad;
-		this.idAgente = idAgente;
-		this.propiedades = propiedades;
-		this.categorias = categorias;
-	}
 	
 	
 	
