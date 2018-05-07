@@ -1,7 +1,5 @@
 package uo.asw.incidashboard.services;
 
-import static org.mockito.Matchers.anyList;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
