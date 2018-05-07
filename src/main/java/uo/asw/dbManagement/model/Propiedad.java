@@ -130,6 +130,12 @@ public class Propiedad {
 			return PropiedadTipos.VELOCIDAD_VIENTO;
 		if (propiedad.toUpperCase().equals("VELOCIDAD_CIRCULACION"))
 			return PropiedadTipos.VELOCIDAD_CIRCULACION;
+		if (propiedad.toUpperCase().equals("NIVEL_POLUCION"))
+			return PropiedadTipos.NIVEL_POLUCION;
+		if (propiedad.toUpperCase().equals("CALIDAD_AIRE"))
+			return PropiedadTipos.CALIDAD_AIRE;
+		
+		
 		return PropiedadTipos.VALOR_NO_ASIGNADO;
 	}
 
