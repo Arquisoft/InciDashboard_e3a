@@ -33,7 +33,7 @@ public class PropiedadTest {
 	@Autowired
 	private PropiedadRepository propiedadRepository;
 	
-	public Propiedad pro1, pro2, pro3, pro4, pro5, pro6, pro7, pro8;
+	public Propiedad pro1, pro2, pro3, pro4, pro5, pro6, pro7, pro8, pro9, pro10, pro11;
 	
 	@Before
 	public void setUp() {
@@ -45,6 +45,9 @@ public class PropiedadTest {
 		pro6 = new Propiedad(PropiedadTipos.NIVEL_POLUCION, 200.0);
 		pro7 = new Propiedad("calidad_aire", 70.0);
 		pro8 = new Propiedad("no asignado", 70.0);
+		pro9 = new Propiedad("velocidad_viento", 70.0);
+		pro10 = new Propiedad("nivel_polucion", 70.0);
+		pro11 = new Propiedad("velocidad_circulacion", 70.0);
 	}
 
 	@Test
