@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -22,19 +21,18 @@ import uo.asw.dbManagement.model.Incidencia;
 @Configuration
 public class KafkaConsumerConfig {
  
-	@Value("${kafka.bootstrap-servers}")
-	private String bootstrapServer;
-	
-	@Value("${kafka.consumer.group-id}")
-	private String groupId;
-	
 	@Bean
 	public ConsumerFactory<String, Incidencia> consumerFactory() {
-	    Map<String, Object> props = new HashMap<>();
-	    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-	    props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-	    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-	    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		String usuario = "fsj71lf2";
+		String password = "1XUrUi1Zy9lopTAwx5q-Jho3UfkWSFZN";
+		String jaasConfig = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"" + usuario + "\" password=\"" + password + "\";";
+		String btServer = "ark-01.srvs.cloudkafka.com:9094,ark-02.srvs.cloudkafka.com:9094,ark-03.srvs.cloudkafka.com:9094";
+		Map<String, Object> props = new HashMap<>();
+	    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, btServer);
+		props.put("group.id", usuario + "-consumer");
+		props.put("security.protocol", "SASL_SSL");
+		props.put("sasl.mechanism", "SCRAM-SHA-256");
+		props.put("sasl.jaas.config", jaasConfig);
 	    return new DefaultKafkaConsumerFactory<>(props,
 							    	      new StringDeserializer(), 
 							    	      new JsonDeserializer<>(Incidencia.class));
