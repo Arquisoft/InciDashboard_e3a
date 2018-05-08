@@ -377,7 +377,7 @@ public class IncidenciasService {
 	 */
 	public List<Incidencia> getUrlImgs(List<Incidencia> incidencias) {
 		List<Incidencia> urls = new ArrayList<Incidencia>();
-		String urlBase = "http://localhost:8090/incidencia/";
+		String urlBase = "http://18.237.112.43:8090/incidencia/";
 		for(int i = incidencias.size() - 1; i >= 0; i--){
 			if (incidencias.get(i).getImageURL() != null) { 
 				if(!incidencias.get(i).getImageURL().equals("/img/post/")) {
