@@ -165,6 +165,8 @@
 						<exclude>**/SecurityService.**</exclude>
 						<exclude>**/PropiedadesService.**</exclude>
 						<exclude>**/UsuarioController.**</exclude>
+						<exclude>**/CategoriaService.**</exclude>
+						<exclude>**/DateUtil.**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
