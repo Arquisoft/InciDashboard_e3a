@@ -235,16 +235,16 @@ public class IncidenciasService {
 		Calendar c1 = Calendar.getInstance();
 		c1.setTime(hoy);
 
-		datos.put((new SimpleDateFormat("dd/MM/yyyy")).format(hoy), 0);
+		datos.put((new SimpleDateFormat("yyyy/MM/dd")).format(hoy), 0);
 		for (int i = 0; i < 9; i++) {
 			c1.add(Calendar.DAY_OF_MONTH, -1);
 			Date hace10dias = c1.getTime();
-			datos.put((new SimpleDateFormat("dd/MM/yyyy")).format(hace10dias), 0);
+			datos.put((new SimpleDateFormat("yyyy/MM/dd")).format(hace10dias), 0);
 			c1.setTime(hace10dias);
 		}
 
 		for (Incidencia inci : incidencias) {
-			String f = (new SimpleDateFormat("dd/MM/yyyy")).format(inci.getFechaEntrada());
+			String f = (new SimpleDateFormat("yyyy/MM/dd")).format(inci.getFechaEntrada());
 			if (datos.get(f) != null) {
 				datos.put(f, (datos.get(f) + 1));
 			}
