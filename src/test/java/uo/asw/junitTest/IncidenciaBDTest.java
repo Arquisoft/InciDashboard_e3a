@@ -16,14 +16,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import uo.asw.InciDashboardApplication;
-import uo.asw.dbManagement.model.Categoria;
-import uo.asw.dbManagement.model.Incidencia;
-import uo.asw.dbManagement.model.Propiedad;
-import uo.asw.dbManagement.model.Usuario;
-import uo.asw.dbManagement.tipos.EstadoTipos;
-import uo.asw.incidashboard.repositories.IncidenciaRepository;
-import uo.asw.incidashboard.util.DateUtil;
+import inciDashboard.uo.asw.InciDashboardApplication;
+import inciDashboard.uo.asw.dbManagement.model.Categoria;
+import inciDashboard.uo.asw.dbManagement.model.Incidencia;
+import inciDashboard.uo.asw.dbManagement.model.Propiedad;
+import inciDashboard.uo.asw.dbManagement.model.Usuario;
+import inciDashboard.uo.asw.dbManagement.tipos.EstadoTipos;
+import inciDashboard.uo.asw.mvc.repositories.IncidenciaRepository;
+import inciDashboard.uo.asw.mvc.util.DateUtil;
 
 /**
  * Prueba la creación de una incidencia, guardado y posterior borrado en la BD

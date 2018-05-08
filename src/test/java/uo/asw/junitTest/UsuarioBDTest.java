@@ -1,6 +1,8 @@
 package uo.asw.junitTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import uo.asw.InciDashboardApplication;
-import uo.asw.dbManagement.model.Incidencia;
-import uo.asw.dbManagement.model.Usuario;
-import uo.asw.dbManagement.tipos.PerfilTipos;
-import uo.asw.incidashboard.repositories.IncidenciaRepository;
-import uo.asw.incidashboard.repositories.UsuarioRepository;
-import uo.asw.incidashboard.util.DateUtil;
+import inciDashboard.uo.asw.InciDashboardApplication;
+import inciDashboard.uo.asw.dbManagement.model.Incidencia;
+import inciDashboard.uo.asw.dbManagement.model.Usuario;
+import inciDashboard.uo.asw.dbManagement.tipos.PerfilTipos;
+import inciDashboard.uo.asw.mvc.repositories.IncidenciaRepository;
+import inciDashboard.uo.asw.mvc.repositories.UsuarioRepository;
+import inciDashboard.uo.asw.mvc.util.DateUtil;
 
 
 /**

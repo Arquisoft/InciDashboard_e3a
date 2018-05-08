@@ -8,17 +8,19 @@ import org.apache.log4j.Logger;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.WebApplicationContext;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.es.*;
-import uo.asw.InciDashboardApplication;
+import cucumber.api.java.es.Cuando;
+import cucumber.api.java.es.Dado;
+import cucumber.api.java.es.Entonces;
+import inciDashboard.uo.asw.InciDashboardApplication;
 import uo.asw.selenium.pageobjects.PO_LoginView;
 
 @RunWith(SpringRunner.class)

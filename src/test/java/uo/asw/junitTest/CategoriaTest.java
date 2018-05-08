@@ -13,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import uo.asw.InciDashboardApplication;
-import uo.asw.dbManagement.model.Categoria;
-import uo.asw.dbManagement.model.Usuario;
-import uo.asw.dbManagement.tipos.CategoriaTipos;
-import uo.asw.incidashboard.repositories.CategoriaRepository;
+import inciDashboard.uo.asw.InciDashboardApplication;
+import inciDashboard.uo.asw.dbManagement.model.Categoria;
+import inciDashboard.uo.asw.dbManagement.model.Usuario;
+import inciDashboard.uo.asw.dbManagement.tipos.CategoriaTipos;
+import inciDashboard.uo.asw.mvc.repositories.CategoriaRepository;
 
 
 /**
