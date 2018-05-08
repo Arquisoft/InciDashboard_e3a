@@ -158,6 +158,17 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.9</version>
+				<configuration>
+					<excludes>
+						<exclude>**/UsuarioService.**</exclude>
+						<exclude>**/ValorLimiteService.**</exclude>
+						<exclude>**/SecurityService.**</exclude>
+						<exclude>**/PropiedadesService.**</exclude>
+						<exclude>**/UsuarioController.**</exclude>
+						<exclude>**/CategoriaService.**</exclude>
+						<exclude>**/DateUtil.**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
