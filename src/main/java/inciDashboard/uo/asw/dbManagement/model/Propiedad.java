@@ -16,6 +16,7 @@ public class Propiedad {
 	private Double valor;
 
 	public Propiedad() {
+		
 	}
 
 	public Propiedad(PropiedadTipos propiedad, Double valor) {
